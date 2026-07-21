@@ -1,0 +1,1 @@
+export function MetricCard({label,value,chip,tone="blue"}:{label:string;value:string|number;chip?:string;tone?:"blue"|"green"|"amber"|"red"}){return <div className="card metric"><strong>{value}</strong><span>{label}</span>{chip&&<div className={`chip ${tone}`}>{chip}</div>}</div>}
