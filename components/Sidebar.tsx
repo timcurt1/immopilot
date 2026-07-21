@@ -1,3 +1,35 @@
-import Link from "next/link";import{LayoutDashboard,FolderKanban,Home,UserRound,MessageSquare,Settings,LogIn}from"lucide-react";
-const items=[{href:"/dashboard",label:"Dashboard",icon:LayoutDashboard},{href:"/applications",label:"Candidatures",icon:FolderKanban},{href:"/properties",label:"Biens",icon:Home},{href:"/candidate",label:"Portail candidat",icon:UserRound},{href:"/messages",label:"Messages IA",icon:MessageSquare},{href:"/settings",label:"Réglages",icon:Settings}];
-export function Sidebar(){return <aside className="glass sidebar"><Link href="/dashboard" className="logoLine"><div className="logoBox"><img src="/logo.png" alt="ImmoPilot"/></div><div><b>ImmoPilot</b><span>Real SaaS Base</span></div></Link><nav className="nav">{items.map(i=>{const Icon=i.icon;return <Link key={i.href} href={i.href}><Icon size={18}/>{i.label}</Link>})}</nav><Link href="/login" className="btn primary"><LogIn size={16}/> Se connecter</Link></aside>}
+import Link from "next/link";
+import { LogIn, LogOut } from "lucide-react";
+import { SidebarNav } from "./SidebarNav";
+import { getSupabaseUser, supabaseConfigured } from "@/lib/supabaseServer";
+import { signOut } from "@/lib/actions";
+
+export async function Sidebar() {
+  const user = supabaseConfigured ? await getSupabaseUser() : null;
+
+  return (
+    <aside className="glass sidebar">
+      <Link href="/dashboard" className="logoLine">
+        <div className="logoBox">
+          <img src="/logo.png" alt="ImmoPilot" />
+        </div>
+        <div>
+          <b>ImmoPilot</b>
+          <span>Real SaaS Base</span>
+        </div>
+      </Link>
+      <SidebarNav />
+      {user ? (
+        <form action={signOut}>
+          <button className="btn ghost" style={{ width: "100%" }} type="submit">
+            <LogOut size={16} /> Se déconnecter
+          </button>
+        </form>
+      ) : (
+        <Link href="/login" className="btn primary">
+          <LogIn size={16} /> Se connecter
+        </Link>
+      )}
+    </aside>
+  );
+}

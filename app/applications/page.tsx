@@ -1,1 +1,28 @@
-import{Sidebar}from"@/components/Sidebar";import{Topbar}from"@/components/Topbar";import{ApplicationTable}from"@/components/ApplicationTable";import{getApplications}from"@/lib/data";export default async function ApplicationsPage(){const applications=await getApplications();return <main className="appShell"><Topbar title="Candidatures" subtitle="Liste filtrable des dossiers locatifs."/><div className="layout"><Sidebar/><section className="main"><section className="glass hero"><span className="kicker">Flux locatif</span><h2>Traiter les dossiers<br/><span className="grad">avec méthode.</span></h2><p>Chaque dossier est relié à un bien, des documents, une timeline, une visite et une prochaine action.</p></section><ApplicationTable applications={applications}/></section></div></main>}
+import { Sidebar } from "@/components/Sidebar";
+import { Topbar } from "@/components/Topbar";
+import { ApplicationTable } from "@/components/ApplicationTable";
+import { getApplications } from "@/lib/data";
+
+export default async function ApplicationsPage() {
+  const applications = await getApplications();
+  return (
+    <main className="appShell">
+      <Topbar title="Candidatures" subtitle="Liste filtrable des dossiers locatifs." />
+      <div className="layout">
+        <Sidebar />
+        <section className="main">
+          <section className="glass hero">
+            <span className="kicker">Flux locatif</span>
+            <h2>
+              Traiter les dossiers
+              <br />
+              <span className="grad">avec méthode.</span>
+            </h2>
+            <p>Chaque dossier est relié à un bien, des documents, une timeline, une visite et une prochaine action.</p>
+          </section>
+          <ApplicationTable applications={applications} />
+        </section>
+      </div>
+    </main>
+  );
+}

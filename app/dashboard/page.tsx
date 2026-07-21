@@ -1,1 +1,53 @@
-import{Sidebar}from"@/components/Sidebar";import{Topbar}from"@/components/Topbar";import{MetricCard}from"@/components/MetricCard";import{ActionList}from"@/components/ActionList";import{getApplications,getDocuments,getTasks,completionRate}from"@/lib/data";export default async function DashboardPage(){const[applications,documents,tasks]=await Promise.all([getApplications(),getDocuments(),getTasks()]);const ready=applications.filter(a=>a.stage==="Prêt à valider"||completionRate(documents.filter(d=>d.application_id===a.id))>=95).length;const missing=documents.filter(d=>d.status==="manquant"||d.status==="à vérifier").length;const signatures=applications.filter(a=>a.signature_probability>=75).length;return <main className="appShell"><Topbar title="Dashboard agence" subtitle="Actions du jour, dossiers prêts et priorités."/><div className="layout"><Sidebar/><section className="main"><div className="grid4"><MetricCard label="Actions ouvertes" value={tasks.length} chip="à traiter" tone="amber"/><MetricCard label="Dossiers prêts" value={ready} chip="validation" tone="green"/><MetricCard label="Documents à traiter" value={missing} chip="relances" tone="amber"/><MetricCard label="Signatures probables" value={signatures} chip="business" tone="green"/></div><div className="grid2"><section className="glass hero"><span className="kicker">Daily Operations</span><h2>Ouvrir l’app<br/><span className="grad">et savoir quoi faire.</span></h2><p>La version SaaS transforme chaque candidature en action concrète : relancer, demander un document, confirmer une visite ou valider le dossier.</p><div className="notice"><b>Prochaine étape recommandée</b><p>{tasks[0]?.title||"Aucune action urgente."}</p></div></section><section className="glass" style={{padding:14}}><h3 style={{marginTop:0,color:"var(--navy)"}}>Tâches du jour</h3><ActionList tasks={tasks} applications={applications} documents={documents}/></section></div></section></div></main>}
+import { Sidebar } from "@/components/Sidebar";
+import { Topbar } from "@/components/Topbar";
+import { MetricCard } from "@/components/MetricCard";
+import { ActionList } from "@/components/ActionList";
+import { getApplications, getDocuments, getTasks, completionRate } from "@/lib/data";
+
+export default async function DashboardPage() {
+  const [applications, documents, tasks] = await Promise.all([getApplications(), getDocuments(), getTasks()]);
+  const ready = applications.filter(
+    (a) => a.stage === "Prêt à valider" || completionRate(documents.filter((d) => d.application_id === a.id)) >= 95
+  ).length;
+  const missing = documents.filter((d) => d.status === "manquant" || d.status === "à vérifier").length;
+  const signatures = applications.filter((a) => a.signature_probability >= 75).length;
+
+  return (
+    <main className="appShell">
+      <Topbar title="Dashboard agence" subtitle="Actions du jour, dossiers prêts et priorités." />
+      <div className="layout">
+        <Sidebar />
+        <section className="main">
+          <div className="grid4">
+            <MetricCard label="Actions ouvertes" value={tasks.length} chip="à traiter" tone="amber" />
+            <MetricCard label="Dossiers prêts" value={ready} chip="validation" tone="green" />
+            <MetricCard label="Documents à traiter" value={missing} chip="relances" tone="amber" />
+            <MetricCard label="Signatures probables" value={signatures} chip="business" tone="green" />
+          </div>
+          <div className="grid2">
+            <section className="glass hero">
+              <span className="kicker">Daily Operations</span>
+              <h2>
+                Ouvrir l’app
+                <br />
+                <span className="grad">et savoir quoi faire.</span>
+              </h2>
+              <p>
+                La version SaaS transforme chaque candidature en action concrète : relancer, demander un document, confirmer
+                une visite ou valider le dossier.
+              </p>
+              <div className="notice">
+                <b>Prochaine étape recommandée</b>
+                <p>{tasks[0]?.title || "Aucune action urgente."}</p>
+              </div>
+            </section>
+            <section className="glass" style={{ padding: 14 }}>
+              <h3 style={{ marginTop: 0, color: "var(--navy)" }}>Tâches du jour</h3>
+              <ActionList tasks={tasks} applications={applications} documents={documents} />
+            </section>
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}

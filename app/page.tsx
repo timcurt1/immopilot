@@ -1,1 +1,28 @@
-import Link from "next/link";export default function Home(){return <main className="appShell" style={{display:"grid",placeItems:"center"}}><section className="glass hero" style={{maxWidth:980}}><span className="kicker">ImmoPilot V25 · SaaS Base</span><h2>La base SaaS<br/><span className="grad">prête pour une agence.</span></h2><p>Next.js + Supabase + Vercel-ready. Connexion, dashboard, candidatures, documents, biens, portail candidat, messages IA et réglages.</p><div style={{display:"flex",gap:10,marginTop:18}}><Link className="btn primary" href="/dashboard">Ouvrir l’app</Link><Link className="btn ghost" href="/login">Connexion</Link></div></section></main>}
+import Link from "next/link";
+
+export default function Home() {
+  return (
+    <main className="appShell" style={{ display: "grid", placeItems: "center" }}>
+      <section className="glass hero" style={{ maxWidth: 980 }}>
+        <span className="kicker">ImmoPilot V25 · SaaS Base</span>
+        <h2>
+          La base SaaS
+          <br />
+          <span className="grad">prête pour une agence.</span>
+        </h2>
+        <p>
+          Next.js + Supabase + Vercel-ready. Connexion, dashboard, candidatures, documents, biens, portail candidat, messages IA
+          et réglages.
+        </p>
+        <div style={{ display: "flex", gap: 10, marginTop: 18 }}>
+          <Link className="btn primary" href="/dashboard">
+            Ouvrir l’app
+          </Link>
+          <Link className="btn ghost" href="/login">
+            Connexion
+          </Link>
+        </div>
+      </section>
+    </main>
+  );
+}
