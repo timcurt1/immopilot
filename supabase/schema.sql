@@ -9,14 +9,39 @@ create table if not exists visits(id uuid primary key default gen_random_uuid(),
 create table if not exists messages(id uuid primary key default gen_random_uuid(),application_id uuid references applications(id) on delete cascade,sender text default 'ai',body text not null,created_at timestamptz default now());
 create table if not exists tasks(id uuid primary key default gen_random_uuid(),application_id uuid references applications(id) on delete cascade,agency_id uuid references agencies(id) on delete cascade,title text not null,type text not null,priority text check(priority in ('low','medium','high')) default 'medium',status text check(status in ('open','done','ignored')) default 'open',created_at timestamptz default now());
 create table if not exists timeline_events(id uuid primary key default gen_random_uuid(),application_id uuid references applications(id) on delete cascade,label text not null,created_at timestamptz default now());
+
+-- Sécurité : si les tables existaient déjà avant l'ajout de ces colonnes/contraintes, on les rattrape ici (sans effet si déjà présentes).
+alter table agencies add column if not exists plan text not null default 'starter';
+alter table agencies add column if not exists stripe_customer_id text;
+alter table agencies add column if not exists stripe_subscription_id text;
+alter table agencies add column if not exists subscription_status text;
+do $$ begin
+  if not exists (select 1 from pg_constraint where conname = 'agencies_plan_check') then
+    alter table agencies add constraint agencies_plan_check check (plan in ('starter','pro','agence'));
+  end if;
+end $$;
+do $$ begin
+  if not exists (select 1 from pg_constraint where conname = 'documents_application_id_type_key') then
+    alter table documents add constraint documents_application_id_type_key unique (application_id, type);
+  end if;
+end $$;
+
 alter table agencies enable row level security;alter table profiles enable row level security;alter table properties enable row level security;alter table applications enable row level security;alter table documents enable row level security;alter table visits enable row level security;alter table messages enable row level security;alter table tasks enable row level security;alter table timeline_events enable row level security;
+drop policy if exists "profile read own" on profiles;
 create policy "profile read own" on profiles for select using (id=auth.uid());
+drop policy if exists "agency applications access" on applications;
 create policy "agency applications access" on applications for all using (agency_id in (select agency_id from profiles where id=auth.uid()) or candidate_email=(select email from profiles where id=auth.uid())) with check (agency_id in (select agency_id from profiles where id=auth.uid()));
+drop policy if exists "agency properties access" on properties;
 create policy "agency properties access" on properties for all using (agency_id in (select agency_id from profiles where id=auth.uid())) with check (agency_id in (select agency_id from profiles where id=auth.uid()));
+drop policy if exists "documents linked access" on documents;
 create policy "documents linked access" on documents for all using (exists(select 1 from applications a where a.id=documents.application_id and (a.agency_id in (select agency_id from profiles where id=auth.uid()) or a.candidate_email=(select email from profiles where id=auth.uid()))));
+drop policy if exists "agency read own" on agencies;
 create policy "agency read own" on agencies for select using (id in (select agency_id from profiles where id=auth.uid()));
+drop policy if exists "visits linked access" on visits;
 create policy "visits linked access" on visits for all using (exists(select 1 from applications a where a.id=visits.application_id and (a.agency_id in (select agency_id from profiles where id=auth.uid()) or a.candidate_email=(select email from profiles where id=auth.uid())))) with check (exists(select 1 from applications a where a.id=visits.application_id and a.agency_id in (select agency_id from profiles where id=auth.uid())));
+drop policy if exists "messages linked access" on messages;
 create policy "messages linked access" on messages for all using (exists(select 1 from applications a where a.id=messages.application_id and (a.agency_id in (select agency_id from profiles where id=auth.uid()) or a.candidate_email=(select email from profiles where id=auth.uid())))) with check (exists(select 1 from applications a where a.id=messages.application_id and a.agency_id in (select agency_id from profiles where id=auth.uid())));
+drop policy if exists "timeline linked access" on timeline_events;
 create policy "timeline linked access" on timeline_events for all using (exists(select 1 from applications a where a.id=timeline_events.application_id and (a.agency_id in (select agency_id from profiles where id=auth.uid()) or a.candidate_email=(select email from profiles where id=auth.uid())))) with check (exists(select 1 from applications a where a.id=timeline_events.application_id and a.agency_id in (select agency_id from profiles where id=auth.uid())));
 
 -- Auto-provisioning : à l'inscription (signup=true dans les métadonnées auth), crée l'agence et le profil admin.
@@ -57,8 +82,10 @@ drop trigger if exists on_application_created on applications;
 create trigger on_application_created after insert on applications for each row execute function public.seed_default_documents();
 
 -- Formulaire public de candidature : un visiteur non authentifié peut créer une candidature si le bien ciblé est actif.
+drop policy if exists "public apply to active property" on applications;
 create policy "public apply to active property" on applications for insert with check (exists(select 1 from properties p where p.id=applications.property_id and p.status='active'));
 -- Un visiteur non authentifié peut consulter un bien actif pour remplir le formulaire de candidature.
+drop policy if exists "public read active properties" on properties;
 create policy "public read active properties" on properties for select using (status='active');
 
 -- Créer un bucket privé dans Supabase Storage : rental-documents
