@@ -1,6 +1,6 @@
-import { createSupabaseServerClient, getSupabaseUser, supabaseConfigured } from "./supabaseServer";
+import { createSupabaseServerClient, getCurrentProfile, getSupabaseUser, supabaseConfigured } from "./supabaseServer";
 import { demoApplications, demoDocuments, demoProperties, demoTasks } from "./demoData";
-import type { Application, Property, RentalDocument, Task } from "./types";
+import type { Application, Profile, Property, RentalDocument, Task } from "./types";
 
 export async function getApplications(): Promise<Application[]> {
   if (!supabaseConfigured) return demoApplications;
@@ -71,6 +71,33 @@ export async function getTasks(): Promise<Task[]> {
     return demoTasks;
   }
   return (data as Task[]) ?? demoTasks;
+}
+
+export async function getAgencyTeam(): Promise<Profile[]> {
+  if (!supabaseConfigured) return [];
+  const profile = await getCurrentProfile();
+  if (!profile) return [];
+  const supabase = createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("id, agency_id, role, full_name, email")
+    .eq("agency_id", profile.agency_id)
+    .order("created_at", { ascending: true });
+  if (error) {
+    console.error("getAgencyTeam:", error.message);
+    return [];
+  }
+  return (data as Profile[]) ?? [];
+}
+
+export async function getAgencyBilling(): Promise<{ plan: string; subscriptionStatus: string | null } | null> {
+  if (!supabaseConfigured) return null;
+  const profile = await getCurrentProfile();
+  if (!profile) return null;
+  const supabase = createSupabaseServerClient();
+  const { data, error } = await supabase.from("agencies").select("plan, subscription_status").eq("id", profile.agency_id).single();
+  if (error || !data) return null;
+  return { plan: data.plan as string, subscriptionStatus: data.subscription_status as string | null };
 }
 
 export async function getCurrentCandidateApplication(): Promise<Application | undefined> {

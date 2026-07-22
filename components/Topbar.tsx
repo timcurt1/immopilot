@@ -12,6 +12,9 @@ export async function Topbar({ title, subtitle }: { title: string; subtitle: str
       </div>
       <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
         <span className="chip blue">SaaS MVP</span>
+        <a className="btn ghost" href="mailto:support@immopilot.example" title="Contacter le support">
+          Support
+        </a>
         {user ? (
           <span className="chip green">{user.email}</span>
         ) : (

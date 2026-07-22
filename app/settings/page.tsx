@@ -1,14 +1,25 @@
 import { Sidebar } from "@/components/Sidebar";
 import { Topbar } from "@/components/Topbar";
+import { TeamInviteForm } from "@/components/TeamInviteForm";
+import { BillingSection } from "@/components/BillingSection";
+import { getAgencyBilling, getAgencyTeam } from "@/lib/data";
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
+  const [team, billing] = await Promise.all([getAgencyTeam(), getAgencyBilling()]);
+
   return (
     <main className="appShell">
       <Topbar title="Réglages" subtitle="Préparation agence, sécurité et RGPD." />
       <div className="layout">
         <Sidebar />
         <section className="main">
-          <div className="grid2">
+          <section className="glass hero" style={{ maxWidth: 560 }}>
+            <span className="kicker">Équipe</span>
+            <h2>Ton agence</h2>
+            <p>Invite tes collègues à rejoindre l’agence. Ils reçoivent un email pour créer leur accès.</p>
+            <TeamInviteForm team={team} />
+          </section>
+          <div className="grid2" style={{ marginTop: 14 }}>
             <section className="glass hero">
               <span className="kicker">Sécurité & RGPD</span>
               <h2>
@@ -63,6 +74,15 @@ export default function SettingsPage() {
               </div>
             </section>
           </div>
+          {billing ? (
+            <BillingSection currentPlan={billing.plan} subscriptionStatus={billing.subscriptionStatus} />
+          ) : (
+            <section className="glass hero" style={{ marginTop: 14 }}>
+              <span className="kicker">Abonnement</span>
+              <h2>Facturation</h2>
+              <p>La facturation par abonnement (Stripe) devient disponible une fois Supabase configuré pour cette agence.</p>
+            </section>
+          )}
           <section className="glass hero" style={{ marginTop: 14 }}>
             <span className="kicker">Déploiement</span>
             <h2>Vercel + Supabase</h2>

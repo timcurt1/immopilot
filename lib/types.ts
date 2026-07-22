@@ -47,3 +47,11 @@ export type Task = {
   priority: "low" | "medium" | "high";
   status: "open" | "done" | "ignored";
 };
+
+export type Profile = {
+  id: string;
+  agency_id: string;
+  role: string;
+  full_name: string | null;
+  email: string;
+};

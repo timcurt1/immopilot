@@ -1,6 +1,6 @@
 -- ImmoPilot V25 SaaS Base
 create extension if not exists "pgcrypto";
-create table if not exists agencies(id uuid primary key default gen_random_uuid(),name text not null,city text,created_at timestamptz default now());
+create table if not exists agencies(id uuid primary key default gen_random_uuid(),name text not null,city text,plan text check(plan in ('starter','pro','agence')) not null default 'starter',stripe_customer_id text,stripe_subscription_id text,subscription_status text,created_at timestamptz default now());
 create table if not exists profiles(id uuid primary key references auth.users(id) on delete cascade,agency_id uuid references agencies(id) on delete cascade,email text unique not null,full_name text,role text check(role in ('admin','manager','agent','candidate')) not null default 'agent',created_at timestamptz default now());
 create table if not exists properties(id uuid primary key default gen_random_uuid(),agency_id uuid references agencies(id) on delete cascade,title text not null,address text,city text,rent numeric not null,status text default 'active',created_at timestamptz default now());
 create table if not exists applications(id uuid primary key default gen_random_uuid(),agency_id uuid references agencies(id) on delete cascade,property_id uuid references properties(id) on delete set null,candidate_email text not null,first_name text not null,last_name text not null,phone text,city text,job_status text,income numeric default 0,guarantor_status text,guarantor_income numeric default 0,stage text default 'À compléter',activity text default 'Document manquant',visit_status text default 'À confirmer',score integer default 0,signature_probability integer default 0,note text,last_message text,assigned_to uuid references profiles(id),created_at timestamptz default now(),updated_at timestamptz default now());
@@ -20,6 +20,8 @@ create policy "messages linked access" on messages for all using (exists(select 
 create policy "timeline linked access" on timeline_events for all using (exists(select 1 from applications a where a.id=timeline_events.application_id and (a.agency_id in (select agency_id from profiles where id=auth.uid()) or a.candidate_email=(select email from profiles where id=auth.uid())))) with check (exists(select 1 from applications a where a.id=timeline_events.application_id and a.agency_id in (select agency_id from profiles where id=auth.uid())));
 
 -- Auto-provisioning : à l'inscription (signup=true dans les métadonnées auth), crée l'agence et le profil admin.
+-- Si invited=true (invitation d'un coéquipier via auth.admin.inviteUserByEmail), rattache le profil à l'agence
+-- et au rôle fournis dans les métadonnées au lieu de créer une nouvelle agence.
 create or replace function public.handle_new_user() returns trigger language plpgsql security definer set search_path = public as $$
 declare
   new_agency_id uuid;
@@ -27,6 +29,8 @@ begin
   if (new.raw_user_meta_data->>'signup') = 'true' then
     insert into agencies(name) values (coalesce(new.raw_user_meta_data->>'agency_name','Nouvelle agence')) returning id into new_agency_id;
     insert into profiles(id,agency_id,email,full_name,role) values (new.id,new_agency_id,new.email,trim(coalesce(new.raw_user_meta_data->>'first_name','')||' '||coalesce(new.raw_user_meta_data->>'last_name','')),'admin');
+  elsif (new.raw_user_meta_data->>'invited') = 'true' then
+    insert into profiles(id,agency_id,email,full_name,role) values (new.id,(new.raw_user_meta_data->>'agency_id')::uuid,new.email,new.raw_user_meta_data->>'full_name',coalesce(new.raw_user_meta_data->>'role','agent'));
   end if;
   return new;
 end;

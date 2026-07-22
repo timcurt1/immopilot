@@ -38,6 +38,16 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
+  const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+  const pathname = request.nextUrl.pathname;
+
+  if (profile?.role === "candidate" && !pathname.startsWith("/candidate")) {
+    return NextResponse.redirect(new URL("/candidate", request.url));
+  }
+  if (profile?.role === "agent" && pathname.startsWith("/settings")) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
+
   return response;
 }
 
