@@ -34,3 +34,12 @@ export async function getSupabaseUser() {
   } = await client.auth.getUser();
   return user;
 }
+
+export async function getCurrentProfile() {
+  const user = await getSupabaseUser();
+  if (!user) return null;
+  const client = createSupabaseServerClient();
+  const { data, error } = await client.from("profiles").select("id, agency_id, role, full_name, email").eq("id", user.id).single();
+  if (error || !data) return null;
+  return data as { id: string; agency_id: string; role: string; full_name: string | null; email: string };
+}

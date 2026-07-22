@@ -20,9 +20,17 @@ export default async function PropertiesPage() {
               <span className="grad">aussi par logement.</span>
             </h2>
             <p>Pour chaque bien : candidatures reçues, visites, dossiers prêts et candidat recommandé.</p>
+            <Link className="btn primary" style={{ marginTop: 14, width: "max-content" }} href="/properties/new">
+              + Ajouter un bien
+            </Link>
           </section>
           {properties.length === 0 ? (
-            <p className="emptyState">Aucun bien enregistré pour le moment.</p>
+            <div className="emptyState">
+              <p>Aucun bien enregistré pour le moment.</p>
+              <Link className="btn primary" href="/properties/new">
+                Ajouter ton premier bien
+              </Link>
+            </div>
           ) : (
             <div className="grid3">
               {properties.map((p) => {
@@ -51,11 +59,16 @@ export default async function PropertiesPage() {
                         <span style={{ fontSize: 11, color: "var(--muted)" }}>Prêts</span>
                       </div>
                     </div>
-                    {best && (
-                      <Link className="btn primary" style={{ marginTop: 14 }} href={`/applications/${best.id}`}>
-                        Ouvrir recommandé
+                    <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
+                      {best && (
+                        <Link className="btn primary" href={`/applications/${best.id}`}>
+                          Ouvrir recommandé
+                        </Link>
+                      )}
+                      <Link className="btn ghost" href={`/apply/${p.id}`} target="_blank">
+                        Lien de candidature ↗
                       </Link>
-                    )}
+                    </div>
                   </div>
                 );
               })}

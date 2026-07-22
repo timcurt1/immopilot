@@ -25,6 +25,18 @@ export async function getApplication(id: string): Promise<Application | undefine
   return (data as Application) ?? fallback;
 }
 
+export async function getPublicProperty(id: string): Promise<Property | undefined> {
+  const fallback = demoProperties.find((p) => p.id === id);
+  if (!supabaseConfigured) return fallback;
+  const supabase = createSupabaseServerClient();
+  const { data, error } = await supabase.from("properties").select("*").eq("id", id).eq("status", "active").single();
+  if (error) {
+    console.error("getPublicProperty:", error.message);
+    return fallback;
+  }
+  return (data as Property) ?? fallback;
+}
+
 export async function getProperties(): Promise<Property[]> {
   if (!supabaseConfigured) return demoProperties;
   const supabase = createSupabaseServerClient();

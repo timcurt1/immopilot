@@ -18,4 +18,43 @@ create policy "agency read own" on agencies for select using (id in (select agen
 create policy "visits linked access" on visits for all using (exists(select 1 from applications a where a.id=visits.application_id and (a.agency_id in (select agency_id from profiles where id=auth.uid()) or a.candidate_email=(select email from profiles where id=auth.uid())))) with check (exists(select 1 from applications a where a.id=visits.application_id and a.agency_id in (select agency_id from profiles where id=auth.uid())));
 create policy "messages linked access" on messages for all using (exists(select 1 from applications a where a.id=messages.application_id and (a.agency_id in (select agency_id from profiles where id=auth.uid()) or a.candidate_email=(select email from profiles where id=auth.uid())))) with check (exists(select 1 from applications a where a.id=messages.application_id and a.agency_id in (select agency_id from profiles where id=auth.uid())));
 create policy "timeline linked access" on timeline_events for all using (exists(select 1 from applications a where a.id=timeline_events.application_id and (a.agency_id in (select agency_id from profiles where id=auth.uid()) or a.candidate_email=(select email from profiles where id=auth.uid())))) with check (exists(select 1 from applications a where a.id=timeline_events.application_id and a.agency_id in (select agency_id from profiles where id=auth.uid())));
+
+-- Auto-provisioning : à l'inscription (signup=true dans les métadonnées auth), crée l'agence et le profil admin.
+create or replace function public.handle_new_user() returns trigger language plpgsql security definer set search_path = public as $$
+declare
+  new_agency_id uuid;
+begin
+  if (new.raw_user_meta_data->>'signup') = 'true' then
+    insert into agencies(name) values (coalesce(new.raw_user_meta_data->>'agency_name','Nouvelle agence')) returning id into new_agency_id;
+    insert into profiles(id,agency_id,email,full_name,role) values (new.id,new_agency_id,new.email,trim(coalesce(new.raw_user_meta_data->>'first_name','')||' '||coalesce(new.raw_user_meta_data->>'last_name','')),'admin');
+  end if;
+  return new;
+end;
+$$;
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created after insert on auth.users for each row execute function public.handle_new_user();
+
+-- À chaque nouvelle candidature, crée les 7 documents attendus (statut manquant) pour que le suivi soit immédiatement utilisable.
+create or replace function public.seed_default_documents() returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  insert into documents(application_id,type,label) values
+    (new.id,'id','Pièce d’identité'),
+    (new.id,'domicile','Justificatif domicile'),
+    (new.id,'contrat','Contrat / attestation'),
+    (new.id,'paie','Fiches de paie'),
+    (new.id,'impots','Avis d’imposition'),
+    (new.id,'rib','RIB'),
+    (new.id,'garant','Garant')
+  on conflict (application_id,type) do nothing;
+  return new;
+end;
+$$;
+drop trigger if exists on_application_created on applications;
+create trigger on_application_created after insert on applications for each row execute function public.seed_default_documents();
+
+-- Formulaire public de candidature : un visiteur non authentifié peut créer une candidature si le bien ciblé est actif.
+create policy "public apply to active property" on applications for insert with check (exists(select 1 from properties p where p.id=applications.property_id and p.status='active'));
+-- Un visiteur non authentifié peut consulter un bien actif pour remplir le formulaire de candidature.
+create policy "public read active properties" on properties for select using (status='active');
+
 -- Créer un bucket privé dans Supabase Storage : rental-documents
