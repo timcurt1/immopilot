@@ -4,6 +4,7 @@ import { Header } from "@/components/marketing/Header";
 import { Footer } from "@/components/marketing/Footer";
 import { PageHero } from "@/components/marketing/PageHero";
 import { Section } from "@/components/marketing/Section";
+import { CookieNotice } from "@/components/marketing/CookieNotice";
 
 export function LegalPage({ title, path, children }: { title: string; path?: string; children: ReactNode }) {
   return (
@@ -32,6 +33,7 @@ export function LegalPage({ title, path, children }: { title: string; path?: str
         </Section>
       </main>
       <Footer />
+      <CookieNotice />
     </div>
   );
 }

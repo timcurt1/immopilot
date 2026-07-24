@@ -6,14 +6,20 @@ import { X, ArrowRight } from "lucide-react";
 import { Button } from "./Button";
 
 const DISMISS_KEY = "immopilot_sticky_cta_dismissed";
+const COOKIE_NOTICE_KEY = "immopilot_cookie_notice_dismissed";
 
 export function StickyCtaBar() {
   const pathname = usePathname();
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
+  const [cookieNoticePending, setCookieNoticePending] = useState(true);
 
   useEffect(() => {
     setDismissed(sessionStorage.getItem(DISMISS_KEY) === "1");
+    setCookieNoticePending(localStorage.getItem(COOKIE_NOTICE_KEY) !== "1");
+    const onCookieDismissed = () => setCookieNoticePending(false);
+    window.addEventListener("immopilot:cookie-notice-dismissed", onCookieDismissed);
+    return () => window.removeEventListener("immopilot:cookie-notice-dismissed", onCookieDismissed);
   }, []);
 
   useEffect(() => {
@@ -25,7 +31,8 @@ export function StickyCtaBar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  if (dismissed || pathname === "/demande-demo") return null;
+  // Let the cookie notice have the bottom of the screen to itself first.
+  if (dismissed || cookieNoticePending || pathname === "/demande-demo") return null;
 
   return (
     <div
