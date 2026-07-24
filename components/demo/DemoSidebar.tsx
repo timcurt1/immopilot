@@ -4,9 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, Users, Building2, FolderOpen, Calendar, ListChecks,
-  MessageSquare, Workflow, BarChart3, Sparkles, Settings, HelpCircle, LogOut,
+  MessageSquare, Workflow, BarChart3, Sparkles, Settings, HelpCircle, LogOut, ArrowRight,
 } from "lucide-react";
 import { Logo } from "@/components/marketing/Logo";
+import { Button } from "@/components/marketing/Button";
 import { PresentationMode } from "@/components/demo/PresentationMode";
 
 const NAV = [
@@ -50,23 +51,28 @@ export function DemoSidebar() {
           );
         })}
       </nav>
-      <div className="border-t border-line p-3 grid gap-1">
-        <div className="flex items-center gap-2.5 rounded-lg px-3 py-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-50 text-brand-700 text-xs font-bold shrink-0">
-            LB
-          </span>
-          <div className="min-w-0">
-            <p className="text-xs font-semibold text-ink truncate">Léa Bonnet</p>
-            <p className="text-[11px] text-muted truncate">Agence Bellevue Immobilier</p>
+      <div className="border-t border-line p-3">
+        <Button href="/demande-demo" size="md" className="w-full !justify-between mb-2">
+          Demander une démo <ArrowRight size={14} />
+        </Button>
+        <div className="grid gap-1">
+          <div className="flex items-center gap-2.5 rounded-lg px-3 py-2">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-50 text-brand-700 text-xs font-bold shrink-0">
+              LB
+            </span>
+            <div className="min-w-0">
+              <p className="text-xs font-semibold text-ink truncate">Léa Bonnet</p>
+              <p className="text-[11px] text-muted truncate">Agence Bellevue Immobilier</p>
+            </div>
           </div>
+          <PresentationMode />
+          <Link href="/ressources" className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-ink-soft hover:bg-surface hover:text-ink transition-colors">
+            <HelpCircle size={16} /> Aide
+          </Link>
+          <Link href="/" className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-ink-soft hover:bg-surface hover:text-ink transition-colors">
+            <LogOut size={16} /> Quitter la démo
+          </Link>
         </div>
-        <PresentationMode />
-        <Link href="/ressources" className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-ink-soft hover:bg-surface hover:text-ink transition-colors">
-          <HelpCircle size={16} /> Aide
-        </Link>
-        <Link href="/" className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-ink-soft hover:bg-surface hover:text-ink transition-colors">
-          <LogOut size={16} /> Quitter la démo
-        </Link>
       </div>
     </aside>
   );

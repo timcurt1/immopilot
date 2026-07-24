@@ -8,7 +8,7 @@ import {
   LayoutDashboard, Users, Building2, FolderOpen, Calendar, ListChecks,
   MessageSquare, Workflow, BarChart3, Sparkles, Settings,
 } from "lucide-react";
-import { Logo } from "@/components/marketing/Logo";
+import { Button } from "@/components/marketing/Button";
 
 const NAV = [
   { href: "/demo", label: "Vue d'ensemble", icon: LayoutDashboard, exact: true },
@@ -61,6 +61,9 @@ export function DemoMobileNav() {
               </Link>
             );
           })}
+          <Button href="/demande-demo" size="md" className="w-full mt-2" onClick={() => setOpen(false)}>
+            Demander une démo
+          </Button>
         </nav>
       )}
     </div>
