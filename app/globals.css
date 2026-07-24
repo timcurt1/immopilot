@@ -33,6 +33,11 @@
 
   --animate-float: float 6s ease-in-out infinite;
   --animate-fade-up: fade-up 0.7s ease-out both;
+  --animate-drift-a: drift-a 18s ease-in-out infinite;
+  --animate-drift-b: drift-b 22s ease-in-out infinite;
+  --animate-spin-slow: spin 40s linear infinite;
+  --animate-dash: dash 2.4s linear infinite;
+  --animate-pulse-soft: pulse-soft 3s ease-in-out infinite;
 }
 
 @keyframes float {
@@ -42,6 +47,21 @@
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
+}
+@keyframes drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(4%, -6%) scale(1.08); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-5%, 5%) scale(1.05); }
+}
+@keyframes dash {
+  to { stroke-dashoffset: -24; }
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.15); }
 }
 
 /* --- Legacy app shell (dashboard, propriétés, candidatures...) ---

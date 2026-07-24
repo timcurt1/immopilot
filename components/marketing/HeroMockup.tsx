@@ -1,10 +1,14 @@
+"use client";
+
+import { useRef } from "react";
 import { AlertTriangle, Calendar, CheckCircle2, Clock, FileWarning, MessageSquare, Sparkles, Users } from "lucide-react";
+import { CountUp } from "./CountUp";
 
 const METRICS = [
-  { label: "Nouveaux prospects", value: "24", tone: "brand" },
-  { label: "Demandes à traiter", value: "9", tone: "amber" },
-  { label: "Visites programmées", value: "6", tone: "brand" },
-  { label: "Dossiers en attente", value: "4", tone: "amber" },
+  { label: "Nouveaux prospects", value: 24 },
+  { label: "Demandes à traiter", value: 9 },
+  { label: "Visites programmées", value: 6 },
+  { label: "Dossiers en attente", value: 4 },
 ];
 
 const TASKS = [
@@ -23,8 +27,29 @@ const FLOATING = [
 ];
 
 export function HeroMockup() {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `perspective(1400px) rotateY(${px * 5}deg) rotateX(${-py * 5}deg) translateZ(0)`;
+  }
+
+  function handleMouseLeave() {
+    if (cardRef.current) cardRef.current.style.transform = "perspective(1400px) rotateY(0deg) rotateX(0deg)";
+  }
+
   return (
-    <div className="relative mx-auto max-w-5xl">
+    <div
+      ref={wrapRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative mx-auto max-w-5xl [transform-style:preserve-3d]"
+    >
       <div className="hidden md:block">
         {FLOATING.map((f, i) => {
           const Icon = f.icon;
@@ -45,7 +70,10 @@ export function HeroMockup() {
         })}
       </div>
 
-      <div className="relative rounded-3xl border border-line bg-white shadow-[0_40px_120px_rgba(15,23,42,0.16)] overflow-hidden">
+      <div
+        ref={cardRef}
+        className="relative rounded-3xl border border-line bg-white shadow-[0_40px_120px_rgba(15,23,42,0.16)] overflow-hidden transition-transform duration-300 ease-out will-change-transform"
+      >
         <div className="flex items-center justify-between border-b border-line px-6 py-4 bg-surface/60">
           <div className="flex items-center gap-2">
             <span className="h-3 w-3 rounded-full bg-danger/70" />
@@ -72,7 +100,7 @@ export function HeroMockup() {
               {METRICS.map((m) => (
                 <div key={m.label} className="rounded-xl border border-line bg-white p-3.5">
                   <p className="text-[11px] text-muted mb-1.5 leading-tight">{m.label}</p>
-                  <p className="text-2xl font-display font-bold text-ink">{m.value}</p>
+                  <CountUp value={m.value} className="text-2xl font-display font-bold text-ink" />
                 </div>
               ))}
             </div>

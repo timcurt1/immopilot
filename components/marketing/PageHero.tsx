@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Reveal } from "./Reveal";
 import { Badge } from "./Badge";
+import { AmbientBackground } from "./AmbientBackground";
 
 export function PageHero({
   eyebrow,
@@ -15,11 +16,7 @@ export function PageHero({
 }) {
   return (
     <div className="relative overflow-hidden">
-      <div
-        className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 h-[420px] w-[820px] rounded-full opacity-30 blur-3xl"
-        style={{ background: "radial-gradient(closest-side, rgba(53,87,255,0.25), transparent)" }}
-        aria-hidden="true"
-      />
+      <AmbientBackground />
       <div className="mx-auto max-w-4xl px-6 lg:px-8 pt-20 pb-14 md:pt-28 md:pb-20 text-center relative">
         <Reveal>
           {eyebrow && <Badge>{eyebrow}</Badge>}

@@ -33,6 +33,8 @@ import { FaqAccordion } from "@/components/marketing/FaqAccordion";
 import { PricingCards } from "@/components/marketing/PricingCards";
 import { BeforeAfterSlider } from "@/components/marketing/BeforeAfterSlider";
 import { Reveal, RevealGroup, RevealItem } from "@/components/marketing/Reveal";
+import { AmbientBackground } from "@/components/marketing/AmbientBackground";
+import { IntegrationsConstellation } from "@/components/marketing/IntegrationsConstellation";
 import { GENERAL_FAQ } from "@/lib/marketingContent";
 
 const FEATURES = [
@@ -120,11 +122,6 @@ const BENEFITS = [
   },
 ];
 
-const INTEGRATIONS = [
-  "Outlook", "Gmail", "Google Calendar", "Microsoft 365", "Logiciels immobiliers",
-  "CRM", "Portails d'annonces", "Téléphonie", "Signature électronique", "Stockage documentaire",
-];
-
 const SECURITY_POINTS = [
   { icon: KeyRound, text: "Contrôle des accès et gestion des rôles" },
   { icon: Lock, text: "Chiffrement des échanges" },
@@ -153,11 +150,7 @@ export default function HomePage() {
     <>
       {/* 1. HERO */}
       <Section className="!pt-16 md:!pt-20 !pb-8 relative overflow-hidden">
-        <div
-          className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 h-[560px] w-[900px] rounded-full opacity-40 blur-3xl"
-          style={{ background: "radial-gradient(closest-side, rgba(53,87,255,0.22), transparent)" }}
-          aria-hidden="true"
-        />
+        <AmbientBackground />
         <div className="max-w-3xl mx-auto text-center relative">
           <Reveal>
             <Badge>
@@ -403,14 +396,10 @@ export default function HomePage() {
             Les intégrations disponibles dépendent de la configuration et du projet de déploiement.
           </p>
         </div>
-        <div className="flex flex-wrap justify-center gap-3 mb-10">
-          {INTEGRATIONS.map((i) => (
-            <span key={i} className="rounded-full bg-white border border-line px-4 py-2 text-sm font-medium text-ink-soft">
-              {i}
-            </span>
-          ))}
-        </div>
-        <div className="text-center">
+        <Reveal>
+          <IntegrationsConstellation />
+        </Reveal>
+        <div className="text-center mt-10">
           <Button href="/contact" variant="secondary">
             Parler de mon environnement logiciel
           </Button>
@@ -437,15 +426,18 @@ export default function HomePage() {
               Découvrir notre approche de la sécurité
             </Button>
           </div>
-          <div className="rounded-2xl bg-ink text-white p-8">
-            <ShieldCheck size={28} className="mb-4 text-brand-300" />
-            <p className="font-display font-bold text-xl mb-3">
-              ImmoPilot assiste vos collaborateurs. Il ne remplace pas leur jugement.
-            </p>
-            <p className="text-white/75 text-sm leading-relaxed">
-              Toutes les réponses, relances ou décisions importantes peuvent être contrôlées par un utilisateur avant
-              envoi ou validation.
-            </p>
+          <div className="relative overflow-hidden rounded-2xl bg-ink text-white p-8">
+            <AmbientBackground tone="dark" grid={false} />
+            <div className="relative">
+              <ShieldCheck size={28} className="mb-4 text-brand-300" />
+              <p className="font-display font-bold text-xl mb-3">
+                ImmoPilot assiste vos collaborateurs. Il ne remplace pas leur jugement.
+              </p>
+              <p className="text-white/75 text-sm leading-relaxed">
+                Toutes les réponses, relances ou décisions importantes peuvent être contrôlées par un utilisateur avant
+                envoi ou validation.
+              </p>
+            </div>
           </div>
         </div>
       </Section>
@@ -531,11 +523,7 @@ export default function HomePage() {
       <Section className="!py-0">
         <Reveal y={28}>
           <div className="relative overflow-hidden rounded-3xl bg-ink text-white px-8 py-16 md:py-20 text-center">
-            <div
-              className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 h-[420px] w-[820px] rounded-full opacity-30 blur-3xl"
-              style={{ background: "radial-gradient(closest-side, rgba(53,87,255,0.5), transparent)" }}
-              aria-hidden="true"
-            />
+            <AmbientBackground tone="dark" />
             <div className="relative">
               <h2 className="font-display font-bold text-3xl md:text-5xl tracking-tight mb-5 max-w-2xl mx-auto">
                 Et si votre agence retrouvait du temps pour ce qui compte vraiment ?

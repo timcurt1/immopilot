@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, Maximize2, Minimize2, RotateCcw, X, Presentation, Sparkles } from "lucide-react";
+import { AmbientBackground } from "@/components/marketing/AmbientBackground";
 
 const STEPS = [
   {
@@ -53,8 +54,9 @@ export function PresentationMode() {
   const current = STEPS[step];
 
   return (
-    <div className={`fixed inset-0 z-50 bg-ink text-white flex flex-col ${fullscreen ? "" : "p-4 sm:p-8"}`}>
-      <div className="flex items-center justify-between mb-8">
+    <div className={`fixed inset-0 z-50 bg-ink text-white flex flex-col overflow-hidden ${fullscreen ? "" : "p-4 sm:p-8"}`}>
+      <AmbientBackground tone="dark" />
+      <div className="relative flex items-center justify-between mb-8">
         <span className="flex items-center gap-2 text-sm font-semibold">
           <Sparkles size={16} className="text-brand-300" /> ImmoPilot — Mode présentation
         </span>
@@ -83,13 +85,13 @@ export function PresentationMode() {
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col items-center justify-center text-center max-w-xl mx-auto">
+      <div className="relative flex-1 flex flex-col items-center justify-center text-center max-w-xl mx-auto">
         <span className="text-xs font-semibold text-brand-300 mb-4">{current.tag}</span>
         <h2 className="font-display font-bold text-3xl md:text-4xl tracking-tight mb-5">{current.title}</h2>
         <p className="text-white/70 leading-relaxed">{current.body}</p>
       </div>
 
-      <div className="flex items-center justify-between mt-8">
+      <div className="relative flex items-center justify-between mt-8">
         <button
           onClick={() => setStep((s) => Math.max(0, s - 1))}
           disabled={step === 0}
