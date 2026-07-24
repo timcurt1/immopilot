@@ -25,6 +25,7 @@ export default function AProposPage() {
     <>
       <PageHero
         eyebrow="À propos"
+        path="/a-propos"
         title="ImmoPilot est né d'un constat simple : les professionnels de l'immobilier passent encore trop de temps à gérer l'information plutôt qu'à l'utiliser."
       />
 

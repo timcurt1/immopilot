@@ -38,6 +38,7 @@
   --animate-spin-slow: spin 40s linear infinite;
   --animate-dash: dash 2.4s linear infinite;
   --animate-pulse-soft: pulse-soft 3s ease-in-out infinite;
+  --animate-marquee: marquee 26s linear infinite;
 }
 
 @keyframes float {
@@ -62,6 +63,10 @@
 @keyframes pulse-soft {
   0%, 100% { opacity: 0.5; transform: scale(1); }
   50% { opacity: 1; transform: scale(1.15); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 /* --- Legacy app shell (dashboard, propriétés, candidatures...) ---

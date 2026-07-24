@@ -24,6 +24,7 @@ export default function TarifsPage() {
     <>
       <PageHero
         eyebrow="Tarifs"
+        path="/tarifs"
         title="Une offre adaptée à la taille et aux besoins de votre agence."
         description="Tarification établie selon le nombre d'utilisateurs, les fonctionnalités et le niveau d'intégration."
       />

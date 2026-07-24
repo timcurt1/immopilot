@@ -38,6 +38,7 @@ export default function SolutionPage() {
     <>
       <PageHero
         eyebrow="Solution"
+        path="/solution"
         title="Une couche d'intelligence au-dessus de l'activité de votre agence."
         description="ImmoPilot ne cherche pas à remplacer tous les logiciels existants, mais à connecter, comprendre et exploiter les informations plus efficacement."
       />

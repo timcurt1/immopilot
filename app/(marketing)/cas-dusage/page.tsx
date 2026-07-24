@@ -89,6 +89,7 @@ export default function CasDusagePage() {
     <>
       <PageHero
         eyebrow="Cas d'usage"
+        path="/cas-dusage"
         title="Six scénarios pour comprendre ImmoPilot au quotidien."
         description="Des situations concrètes, du premier contact au pilotage de l'agence, pour visualiser comment ImmoPilot s'intègre dans le travail de vos équipes."
       />

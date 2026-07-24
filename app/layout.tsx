@@ -29,10 +29,41 @@ export const metadata: Metadata = {
   },
 };
 
+const ORGANIZATION_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "ImmoPilot",
+  url: "https://immopilot.fr",
+  logo: "https://immopilot.fr/logo.png",
+  description:
+    "ImmoPilot est un copilote intelligent qui centralise les prospects, qualifie les demandes et accompagne le suivi quotidien des agences immobilières.",
+  sameAs: ["https://www.linkedin.com"],
+};
+
+const WEBSITE_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "ImmoPilot",
+  url: "https://immopilot.fr",
+  inLanguage: "fr-FR",
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className={`${inter.variable} ${jakarta.variable} ${jbmono.variable}`}>
-      <body className="font-sans antialiased text-ink bg-paper">{children}</body>
+      <body className="font-sans antialiased text-ink bg-paper">
+        {children}
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_JSON_LD) }}
+        />
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_JSON_LD) }}
+        />
+      </body>
     </html>
   );
 }

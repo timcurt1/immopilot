@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function ContactPage({ searchParams }: { searchParams: { error?: string } }) {
   return (
     <>
-      <PageHero eyebrow="Contact" title="Parlons de votre agence." description="Une question, un projet de déploiement ou votre environnement logiciel : notre équipe vous répond sous un jour ouvré." />
+      <PageHero eyebrow="Contact" path="/contact" title="Parlons de votre agence." description="Une question, un projet de déploiement ou votre environnement logiciel : notre équipe vous répond sous un jour ouvré." />
 
       <Section className="!pt-0 !pb-24">
         <div className="grid lg:grid-cols-[1fr_1.3fr] gap-12 max-w-4xl mx-auto">

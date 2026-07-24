@@ -28,6 +28,7 @@ import { Section, Eyebrow } from "@/components/marketing/Section";
 import { Badge } from "@/components/marketing/Badge";
 import { Button } from "@/components/marketing/Button";
 import { HeroMockup } from "@/components/marketing/HeroMockup";
+import { TrustBar } from "@/components/marketing/TrustBar";
 import { UseCaseTabs } from "@/components/marketing/UseCaseTabs";
 import { FaqAccordion } from "@/components/marketing/FaqAccordion";
 import { PricingCards } from "@/components/marketing/PricingCards";
@@ -197,6 +198,8 @@ export default function HomePage() {
           <HeroMockup />
         </Reveal>
       </div>
+
+      <TrustBar />
 
       {/* 2. PREUVE DE COMPRÉHENSION MÉTIER */}
       <Section surface>
@@ -517,6 +520,21 @@ export default function HomePage() {
         <div className="max-w-3xl">
           <FaqAccordion items={GENERAL_FAQ} />
         </div>
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: GENERAL_FAQ.map((f) => ({
+                "@type": "Question",
+                name: f.question,
+                acceptedAnswer: { "@type": "Answer", text: f.answer },
+              })),
+            }),
+          }}
+        />
       </Section>
 
       {/* 14. CTA FINAL */}

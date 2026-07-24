@@ -21,6 +21,7 @@ export default function RessourcesPage() {
     <>
       <PageHero
         eyebrow="Ressources"
+        path="/ressources"
         title="Guides et articles pour les professionnels de l'immobilier."
         description="Intelligence artificielle, productivité, sécurité et transformation numérique : nos analyses sur les sujets qui concernent votre agence."
       />

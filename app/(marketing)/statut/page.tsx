@@ -17,7 +17,7 @@ const SERVICES = [
 export default function StatutPage() {
   return (
     <>
-      <PageHero eyebrow="Statut" title="Statut du service ImmoPilot" description="Tous les systèmes fonctionnent normalement." />
+      <PageHero eyebrow="Statut" path="/statut" title="Statut du service ImmoPilot" description="Tous les systèmes fonctionnent normalement." />
       <Section className="!pt-0 !pb-24">
         <div className="max-w-xl mx-auto rounded-2xl border border-line bg-white overflow-hidden">
           {SERVICES.map((s, i) => (

@@ -159,6 +159,7 @@ export default function FonctionnalitesPage() {
     <>
       <PageHero
         eyebrow="Fonctionnalités"
+        path="/fonctionnalites"
         title="Un copilote pour chaque moment de la journée."
         description="Du premier contact jusqu'au pilotage de l'agence, chaque fonctionnalité est pensée pour rester sous le contrôle des équipes."
       />

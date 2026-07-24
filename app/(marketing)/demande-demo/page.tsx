@@ -22,6 +22,7 @@ export default function DemandeDemoPage({ searchParams }: { searchParams: { erro
     <>
       <PageHero
         eyebrow="Démonstration"
+        path="/demande-demo"
         title="Découvrez ImmoPilot dans le contexte de votre agence."
         description="Pendant cette démonstration, nous étudierons vos principales tâches répétitives, votre environnement logiciel et les fonctionnalités les plus pertinentes pour votre équipe."
       />

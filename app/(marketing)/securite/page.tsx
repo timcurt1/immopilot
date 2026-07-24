@@ -36,6 +36,7 @@ export default function SecuritePage() {
     <>
       <PageHero
         eyebrow="Sécurité"
+        path="/securite"
         title="Vos données restent sous votre contrôle."
         description="Une approche sérieuse de la sécurité, pensée pour rassurer les directions d'agence et les équipes techniques."
       />
