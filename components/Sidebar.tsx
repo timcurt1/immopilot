@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LogIn, LogOut } from "lucide-react";
 import { SidebarNav } from "./SidebarNav";
+import { LogoMark } from "@/components/marketing/Logo";
 import { getSupabaseUser, supabaseConfigured } from "@/lib/supabaseServer";
 import { signOut } from "@/lib/actions";
 
@@ -11,11 +12,11 @@ export async function Sidebar() {
     <aside className="glass sidebar">
       <Link href="/dashboard" className="logoLine">
         <div className="logoBox">
-          <img src="/logo.png" alt="ImmoPilot" />
+          <LogoMark size={30} />
         </div>
         <div>
           <b>ImmoPilot</b>
-          <span>Real SaaS Base</span>
+          <span>Espace agence</span>
         </div>
       </Link>
       <SidebarNav />

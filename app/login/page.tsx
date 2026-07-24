@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { supabase, supabaseConfigured } from "@/lib/supabaseClient";
+import { Logo } from "@/components/marketing/Logo";
 
 export default function LoginPage() {
   const [mode, setMode] = useState<"signin" | "signup">("signin");
@@ -39,13 +40,16 @@ export default function LoginPage() {
     <main className="appShell" style={{ display: "grid", placeItems: "center" }}>
       <section className="glass" style={{ width: "min(980px,100%)", display: "grid", gridTemplateColumns: "1fr 420px", gap: 18, padding: 18 }}>
         <div className="hero">
-          <span className="kicker">Connexion SaaS</span>
+          <Link href="/" style={{ display: "inline-block", marginBottom: 18 }}>
+            <Logo />
+          </Link>
+          <span className="kicker">Connexion</span>
           <h2>
             Accès agence,
             <br />
             <span className="grad">agent et candidat.</span>
           </h2>
-          <p>En production, chaque utilisateur aura un rôle : admin, manager, agent ou candidat.</p>
+          <p>Chaque utilisateur dispose d'un rôle adapté : admin, manager, agent ou candidat.</p>
         </div>
         <div className="card">
           <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
