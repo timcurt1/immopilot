@@ -2,7 +2,7 @@ import { LegalPage } from "@/components/LegalPage";
 
 export default function CguCgvPage() {
   return (
-    <LegalPage title="Conditions générales d’utilisation et de vente">
+    <LegalPage title="Conditions générales d’utilisation et de vente" path="/legal/cgu-cgv">
       <p>
         Les présentes conditions régissent l’accès et l’utilisation d’ImmoPilot, service SaaS de gestion locative édité par
         [Raison sociale], par toute agence immobilière cliente (« le Client »).

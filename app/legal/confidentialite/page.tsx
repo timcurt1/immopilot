@@ -2,7 +2,7 @@ import { LegalPage } from "@/components/LegalPage";
 
 export default function ConfidentialitePage() {
   return (
-    <LegalPage title="Politique de confidentialité">
+    <LegalPage title="Politique de confidentialité" path="/legal/confidentialite">
       <p>
         [Raison sociale] (« nous ») édite ImmoPilot, un logiciel de gestion locative destiné aux agences immobilières. Cette
         politique décrit comment les données des utilisateurs (agences, agents) et des candidats locataires sont traitées.

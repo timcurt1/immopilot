@@ -2,7 +2,7 @@ import { LegalPage } from "@/components/LegalPage";
 
 export default function CookiesPage() {
   return (
-    <LegalPage title="Politique relative aux cookies">
+    <LegalPage title="Politique relative aux cookies" path="/legal/cookies">
       <p>
         Ce site et l'application ImmoPilot utilisent un nombre limité de cookies et technologies similaires, nécessaires au
         fonctionnement du service ou destinés à mesurer son audience de façon respectueuse de la vie privée.

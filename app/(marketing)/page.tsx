@@ -36,6 +36,7 @@ import { BeforeAfterSlider } from "@/components/marketing/BeforeAfterSlider";
 import { Reveal, RevealGroup, RevealItem } from "@/components/marketing/Reveal";
 import { AmbientBackground } from "@/components/marketing/AmbientBackground";
 import { IntegrationsConstellation } from "@/components/marketing/IntegrationsConstellation";
+import { RoiCalculator } from "@/components/marketing/RoiCalculator";
 import { GENERAL_FAQ } from "@/lib/marketingContent";
 
 const FEATURES = [
@@ -387,6 +388,13 @@ export default function HomePage() {
             </RevealItem>
           ))}
         </RevealGroup>
+      </Section>
+
+      {/* CALCULATEUR DE TEMPS GAGNÉ */}
+      <Section id="calculateur">
+        <Reveal>
+          <RoiCalculator />
+        </Reveal>
       </Section>
 
       {/* 8. INTÉGRATIONS */}

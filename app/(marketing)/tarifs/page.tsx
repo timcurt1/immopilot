@@ -3,6 +3,7 @@ import { PageHero } from "@/components/marketing/PageHero";
 import { Section, Eyebrow } from "@/components/marketing/Section";
 import { Reveal, RevealGroup, RevealItem } from "@/components/marketing/Reveal";
 import { PricingCards } from "@/components/marketing/PricingCards";
+import { PricingComparisonTable } from "@/components/marketing/PricingComparisonTable";
 import { FaqAccordion } from "@/components/marketing/FaqAccordion";
 import { PRICING_FAQ } from "@/lib/marketingContent";
 
@@ -33,7 +34,17 @@ export default function TarifsPage() {
         <PricingCards />
       </Section>
 
-      <Section surface id="deploiement">
+      <Section surface className="!pt-0">
+        <div className="max-w-2xl mb-10">
+          <Eyebrow>Comparatif détaillé</Eyebrow>
+          <h2 className="font-display font-bold text-3xl text-ink tracking-tight">Toutes les fonctionnalités, formule par formule.</h2>
+        </div>
+        <Reveal>
+          <PricingComparisonTable />
+        </Reveal>
+      </Section>
+
+      <Section id="deploiement">
         <div className="max-w-2xl mb-14">
           <Eyebrow>Déploiement</Eyebrow>
           <h2 className="font-display font-bold text-3xl text-ink tracking-tight">

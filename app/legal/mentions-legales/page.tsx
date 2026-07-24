@@ -2,7 +2,7 @@ import { LegalPage } from "@/components/LegalPage";
 
 export default function MentionsLegalesPage() {
   return (
-    <LegalPage title="Mentions légales">
+    <LegalPage title="Mentions légales" path="/legal/mentions-legales">
       <p>
         <b>Éditeur du site</b>
         <br />
