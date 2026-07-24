@@ -5,6 +5,7 @@ import { Section, Eyebrow } from "@/components/marketing/Section";
 import { PageHero } from "@/components/marketing/PageHero";
 import { Button } from "@/components/marketing/Button";
 import { Reveal, RevealGroup, RevealItem } from "@/components/marketing/Reveal";
+import { FlowIllustration } from "@/components/marketing/illustrations/FlowIllustration";
 
 export const metadata: Metadata = {
   title: "Solution",
@@ -68,12 +69,17 @@ export default function SolutionPage() {
       </Section>
 
       <Section>
-        <div className="max-w-2xl mb-14">
+        <div className="max-w-2xl mb-10">
           <Eyebrow>Fonctionnement</Eyebrow>
           <h2 className="font-display font-bold text-3xl text-ink tracking-tight">
             Un flux d'information simple, de la demande à l'action.
           </h2>
         </div>
+        <Reveal>
+          <div className="max-w-xl mx-auto mb-14">
+            <FlowIllustration />
+          </div>
+        </Reveal>
         <RevealGroup className="grid md:grid-cols-4 gap-5 relative" stagger={0.1}>
           <div className="hidden md:block absolute top-7 left-[12%] right-[12%] h-px bg-line" />
           {FLOW_STEPS.map((s) => (

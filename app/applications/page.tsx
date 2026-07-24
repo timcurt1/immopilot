@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
 import { Sidebar } from "@/components/Sidebar";
 import { Topbar } from "@/components/Topbar";
 import { ApplicationTable } from "@/components/ApplicationTable";
 import { getApplications } from "@/lib/data";
+
+export const metadata: Metadata = { title: "Candidatures", robots: { index: false, follow: false } };
 
 export default async function ApplicationsPage() {
   const applications = await getApplications();

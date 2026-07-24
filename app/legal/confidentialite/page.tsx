@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import { LegalPage } from "@/components/LegalPage";
+
+export const metadata: Metadata = {
+  title: "Politique de confidentialité",
+  description: "Comment ImmoPilot collecte, utilise et protège les données des agences et des candidats locataires.",
+};
 
 export default function ConfidentialitePage() {
   return (

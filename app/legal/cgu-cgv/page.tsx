@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import { LegalPage } from "@/components/LegalPage";
+
+export const metadata: Metadata = {
+  title: "Conditions générales d’utilisation et de vente",
+  description: "Conditions générales d'utilisation et de vente du logiciel ImmoPilot.",
+};
 
 export default function CguCgvPage() {
   return (

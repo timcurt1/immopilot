@@ -1,5 +1,8 @@
+import type { Metadata } from "next";
 import { ApplyForm } from "@/components/ApplyForm";
 import { getPublicProperty } from "@/lib/data";
+
+export const metadata: Metadata = { title: "Candidater", robots: { index: false, follow: false } };
 
 export default async function ApplyPage({ params }: { params: { propertyId: string } }) {
   const property = await getPublicProperty(params.propertyId);

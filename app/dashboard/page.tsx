@@ -1,8 +1,11 @@
+import type { Metadata } from "next";
 import { Sidebar } from "@/components/Sidebar";
 import { Topbar } from "@/components/Topbar";
 import { MetricCard } from "@/components/MetricCard";
 import { ActionList } from "@/components/ActionList";
 import { getApplications, getDocuments, getTasks, completionRate } from "@/lib/data";
+
+export const metadata: Metadata = { title: "Tableau de bord", robots: { index: false, follow: false } };
 
 export default async function DashboardPage() {
   const [applications, documents, tasks] = await Promise.all([getApplications(), getDocuments(), getTasks()]);

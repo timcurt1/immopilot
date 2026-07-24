@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import { LegalPage } from "@/components/LegalPage";
+
+export const metadata: Metadata = {
+  title: "Politique relative aux cookies",
+  description: "Quels cookies utilise le site ImmoPilot et comment gérer vos préférences.",
+};
 
 export default function CookiesPage() {
   return (

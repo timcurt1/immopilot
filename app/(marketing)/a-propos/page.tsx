@@ -4,6 +4,7 @@ import { PageHero } from "@/components/marketing/PageHero";
 import { Section } from "@/components/marketing/Section";
 import { Reveal, RevealGroup, RevealItem } from "@/components/marketing/Reveal";
 import { Button } from "@/components/marketing/Button";
+import { OrbitIllustration } from "@/components/marketing/illustrations/OrbitIllustration";
 
 export const metadata: Metadata = {
   title: "À propos",
@@ -30,15 +31,20 @@ export default function AProposPage() {
       />
 
       <Section className="!pt-0">
-        <Reveal>
-          <div className="max-w-2xl mx-auto text-center">
+        <div className="grid lg:grid-cols-2 gap-10 items-center">
+          <Reveal>
             <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-3">Notre mission</p>
             <p className="font-display font-bold text-2xl md:text-3xl text-ink tracking-tight leading-snug">
               Aider les agences immobilières à intégrer l'intelligence artificielle de façon concrète, progressive et
               responsable.
             </p>
-          </div>
-        </Reveal>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="max-w-sm mx-auto">
+              <OrbitIllustration />
+            </div>
+          </Reveal>
+        </div>
       </Section>
 
       <Section surface>

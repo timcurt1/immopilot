@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import { LegalPage } from "@/components/LegalPage";
+
+export const metadata: Metadata = {
+  title: "Mentions légales",
+  description: "Mentions légales du site et du logiciel ImmoPilot.",
+};
 
 export default function MentionsLegalesPage() {
   return (

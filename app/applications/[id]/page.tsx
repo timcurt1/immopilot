@@ -1,9 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Sidebar } from "@/components/Sidebar";
 import { Topbar } from "@/components/Topbar";
 import { DocumentChecklist } from "@/components/DocumentChecklist";
 import { ApplicationActions } from "@/components/ApplicationActions";
 import { getApplication, getDocuments, completionRate, nextBestAction } from "@/lib/data";
+
+export const metadata: Metadata = { title: "Détail de candidature", robots: { index: false, follow: false } };
 
 export default async function ApplicationDetailPage({ params }: { params: { id: string } }) {
   const application = await getApplication(params.id);

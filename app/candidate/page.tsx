@@ -1,8 +1,11 @@
+import type { Metadata } from "next";
 import { Sidebar } from "@/components/Sidebar";
 import { Topbar } from "@/components/Topbar";
 import { DocumentChecklist } from "@/components/DocumentChecklist";
 import { CandidateUpload } from "@/components/CandidateUpload";
 import { getCurrentCandidateApplication, getDocuments, completionRate } from "@/lib/data";
+
+export const metadata: Metadata = { title: "Espace candidat", robots: { index: false, follow: false } };
 
 export default async function CandidatePage() {
   const application = await getCurrentCandidateApplication();

@@ -1,8 +1,11 @@
+import type { Metadata } from "next";
 import { Sidebar } from "@/components/Sidebar";
 import { Topbar } from "@/components/Topbar";
 import { TeamInviteForm } from "@/components/TeamInviteForm";
 import { BillingSection } from "@/components/BillingSection";
 import { getAgencyBilling, getAgencyTeam } from "@/lib/data";
+
+export const metadata: Metadata = { title: "Paramètres", robots: { index: false, follow: false } };
 
 export default async function SettingsPage() {
   const [team, billing] = await Promise.all([getAgencyTeam(), getAgencyBilling()]);

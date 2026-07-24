@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Sidebar } from "@/components/Sidebar";
 import { Topbar } from "@/components/Topbar";
 import { NewPropertyForm } from "@/components/NewPropertyForm";
+
+export const metadata: Metadata = { title: "Ajouter un bien", robots: { index: false, follow: false } };
 
 export default function NewPropertyPage() {
   return (

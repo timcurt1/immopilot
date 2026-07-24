@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Sidebar } from "@/components/Sidebar";
 import { Topbar } from "@/components/Topbar";
 import { getApplications, getProperties } from "@/lib/data";
+
+export const metadata: Metadata = { title: "Biens", robots: { index: false, follow: false } };
 
 export default async function PropertiesPage() {
   const [properties, applications] = await Promise.all([getProperties(), getApplications()]);
