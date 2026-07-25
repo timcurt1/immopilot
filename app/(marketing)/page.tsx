@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import {
   BarChart3,
   Bot,
@@ -35,58 +36,84 @@ import { PricingCards } from "@/components/marketing/PricingCards";
 import { BeforeAfterSlider } from "@/components/marketing/BeforeAfterSlider";
 import { Reveal, RevealGroup, RevealItem } from "@/components/marketing/Reveal";
 import { AmbientBackground } from "@/components/marketing/AmbientBackground";
+import { Spotlight } from "@/components/marketing/Spotlight";
+import { LiveTicker } from "@/components/marketing/LiveTicker";
 import { IntegrationsConstellation } from "@/components/marketing/IntegrationsConstellation";
 import { RoiCalculator } from "@/components/marketing/RoiCalculator";
 import { GENERAL_FAQ } from "@/lib/marketingContent";
 
-const FEATURES = [
+type FeatureTone = "brand" | "teal" | "rose" | "sun";
+
+const TONE_CLASSES: Record<FeatureTone, { bg: string; text: string; ring: string; glow: string }> = {
+  brand: { bg: "bg-brand-50", text: "text-brand-700", ring: "group-hover:border-brand-200", glow: "rgba(53,87,255,0.18)" },
+  teal: { bg: "bg-teal-50", text: "text-teal-600", ring: "group-hover:border-teal-500/30", glow: "rgba(13,148,136,0.16)" },
+  rose: { bg: "bg-rose-50", text: "text-rose-600", ring: "group-hover:border-rose-500/30", glow: "rgba(244,63,142,0.16)" },
+  sun: { bg: "bg-sun-50", text: "text-sun-600", ring: "group-hover:border-sun-500/30", glow: "rgba(251,146,60,0.18)" },
+};
+
+const BOLD_TONE: Record<FeatureTone, string> = {
+  brand: "bg-brand-600",
+  teal: "bg-teal-500",
+  rose: "bg-rose-500",
+  sun: "bg-sun-500",
+};
+
+const FEATURES: { icon: typeof FileSearch; title: string; body: string; href: string; tone: FeatureTone }[] = [
   {
     icon: FileSearch,
     title: "Qualification automatique des prospects",
     body: "ImmoPilot analyse les demandes entrantes et identifie le besoin, le type de bien, le budget, la localisation et le niveau de maturité.",
     href: "/fonctionnalites#qualification",
+    tone: "brand",
   },
   {
     icon: Users,
     title: "Fiche prospect intelligente",
     body: "Chaque contact dispose d'une fiche structurée regroupant ses critères, ses échanges, ses documents, son historique et les prochaines actions recommandées.",
     href: "/fonctionnalites#fiche-prospect",
+    tone: "teal",
   },
   {
     icon: ClipboardCheck,
     title: "Synthèse automatique des dossiers",
     body: "Le logiciel résume les informations importantes et signale les pièces manquantes ou incohérentes.",
     href: "/fonctionnalites#synthese",
+    tone: "rose",
   },
   {
     icon: Mail,
     title: "Relances assistées",
     body: "ImmoPilot détecte les prospects sans réponse et propose des relances personnalisées, prêtes à être vérifiées et envoyées.",
     href: "/fonctionnalites#relances",
+    tone: "sun",
   },
   {
     icon: Calendar,
     title: "Préparation des visites",
     body: "Le collaborateur retrouve les informations sur le bien, le client, ses critères et les éléments à vérifier pendant la visite.",
     href: "/fonctionnalites#visites",
+    tone: "teal",
   },
   {
     icon: CheckCircle2,
     title: "Compte rendu de visite",
     body: "Après une visite, ImmoPilot transforme les notes du collaborateur en compte rendu clair et exploitable.",
     href: "/fonctionnalites#comptes-rendus",
+    tone: "brand",
   },
   {
     icon: Bot,
     title: "Assistant métier",
     body: "Les équipes peuvent interroger ImmoPilot en langage naturel pour retrouver une information, préparer une réponse ou comprendre une situation.",
     href: "/fonctionnalites#assistant",
+    tone: "rose",
   },
   {
     icon: BarChart3,
     title: "Pilotage de l'agence",
     body: "Le responsable visualise l'activité, les délais de traitement, les demandes en attente et les opportunités nécessitant une action.",
     href: "/fonctionnalites#pilotage",
+    tone: "sun",
   },
 ];
 
@@ -101,26 +128,30 @@ const WORKFLOW_STEPS = [
   "Les prochaines relances sont planifiées",
 ];
 
-const BENEFITS = [
+const BENEFITS: { title: string; body: string; icon: typeof Workflow; tone: FeatureTone }[] = [
   {
     title: "Gagner du temps",
     body: "Réduire le temps passé à rechercher, reformuler, classer et relancer.",
     icon: Workflow,
+    tone: "brand",
   },
   {
     title: "Améliorer le suivi client",
     body: "Répondre plus rapidement et maintenir une continuité dans les échanges.",
     icon: MessageSquareText,
+    tone: "teal",
   },
   {
     title: "Réduire les oublis",
     body: "Identifier automatiquement les dossiers, prospects et actions nécessitant une attention.",
     icon: Inbox,
+    tone: "sun",
   },
   {
     title: "Harmoniser les pratiques",
     body: "Donner à chaque collaborateur un cadre de travail clair, tout en conservant son autonomie.",
     icon: Sparkles,
+    tone: "rose",
   },
 ];
 
@@ -190,6 +221,11 @@ export default function HomePage() {
             <p className="mt-4 text-xs text-muted">
               Présentation personnalisée · Sans engagement · Adaptée à votre organisation
             </p>
+          </Reveal>
+          <Reveal delay={0.3}>
+            <div className="mt-7 flex justify-center">
+              <LiveTicker />
+            </div>
           </Reveal>
         </div>
       </Section>
@@ -275,21 +311,25 @@ export default function HomePage() {
           </h2>
         </div>
         <RevealGroup className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {FEATURES.map((f) => (
-            <RevealItem
-              key={f.title}
-              className="group rounded-2xl border border-line bg-white p-6 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-[0_20px_50px_rgba(29,67,230,0.1)]"
-            >
-              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-700 transition-transform duration-300 group-hover:scale-110">
-                <f.icon size={20} />
-              </div>
-              <p className="font-semibold text-ink mb-2 leading-snug">{f.title}</p>
-              <p className="text-sm text-muted leading-relaxed mb-4 flex-1">{f.body}</p>
-              <Link href={f.href} className="text-sm font-semibold text-brand-600 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                En savoir plus <ArrowRight size={14} />
-              </Link>
-            </RevealItem>
-          ))}
+          {FEATURES.map((f) => {
+            const tone = TONE_CLASSES[f.tone];
+            return (
+              <RevealItem
+                key={f.title}
+                style={{ "--glow": tone.glow } as CSSProperties}
+                className={`group rounded-2xl border border-line bg-white p-6 flex flex-col transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_55px_var(--glow)] ${tone.ring}`}
+              >
+                <div className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl ${tone.bg} ${tone.text} transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6`}>
+                  <f.icon size={20} />
+                </div>
+                <p className="font-semibold text-ink mb-2 leading-snug">{f.title}</p>
+                <p className="text-sm text-muted leading-relaxed mb-4 flex-1">{f.body}</p>
+                <Link href={f.href} className={`text-sm font-semibold ${tone.text} inline-flex items-center gap-1 group-hover:gap-2 transition-all`}>
+                  En savoir plus <ArrowRight size={14} />
+                </Link>
+              </RevealItem>
+            );
+          })}
         </RevealGroup>
       </Section>
 
@@ -355,18 +395,22 @@ export default function HomePage() {
           </h2>
         </div>
         <RevealGroup className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {BENEFITS.map((b) => (
-            <RevealItem
-              key={b.title}
-              className="rounded-2xl border border-line bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(15,23,42,0.08)]"
-            >
-              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-ink text-white">
-                <b.icon size={19} />
-              </div>
-              <p className="font-semibold text-ink mb-2">{b.title}</p>
-              <p className="text-sm text-muted leading-relaxed">{b.body}</p>
-            </RevealItem>
-          ))}
+          {BENEFITS.map((b) => {
+            const tone = TONE_CLASSES[b.tone];
+            return (
+              <RevealItem
+                key={b.title}
+                style={{ "--glow": tone.glow } as CSSProperties}
+                className="rounded-2xl border border-line bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_var(--glow)]"
+              >
+                <div className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl ${BOLD_TONE[b.tone]} text-white transition-transform duration-300 hover:scale-110 hover:rotate-6`}>
+                  <b.icon size={19} />
+                </div>
+                <p className="font-semibold text-ink mb-2">{b.title}</p>
+                <p className="text-sm text-muted leading-relaxed">{b.body}</p>
+              </RevealItem>
+            );
+          })}
         </RevealGroup>
         <p className="mt-8 text-xs text-muted text-center max-w-xl mx-auto">
           Des statistiques réelles issues de pilotes clients viendront prochainement illustrer ces bénéfices.
@@ -548,7 +592,7 @@ export default function HomePage() {
       {/* 14. CTA FINAL */}
       <Section className="!py-0">
         <Reveal y={28}>
-          <div className="relative overflow-hidden rounded-3xl bg-ink text-white px-8 py-16 md:py-20 text-center">
+          <Spotlight dark className="relative overflow-hidden rounded-3xl bg-ink text-white px-8 py-16 md:py-20 text-center">
             <AmbientBackground tone="dark" />
             <div className="relative">
               <h2 className="font-display font-bold text-3xl md:text-5xl tracking-tight mb-5 max-w-2xl mx-auto">
@@ -567,7 +611,7 @@ export default function HomePage() {
               </div>
               <p className="text-xs text-white/50">Démonstration personnalisée · Aucun engagement · Réponse sous un jour ouvré</p>
             </div>
-          </div>
+          </Spotlight>
         </Reveal>
       </Section>
     </>

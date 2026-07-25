@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import type { ReactNode } from "react";
+import type { ReactNode, CSSProperties } from "react";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -60,15 +60,18 @@ export function RevealItem({
   children,
   className = "",
   y = 16,
+  style,
 }: {
   children: ReactNode;
   className?: string;
   y?: number;
+  style?: CSSProperties;
 }) {
   const reduced = useReducedMotion();
   return (
     <motion.div
       className={className}
+      style={style}
       variants={{
         hidden: reduced ? {} : { opacity: 0, y },
         show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE } },

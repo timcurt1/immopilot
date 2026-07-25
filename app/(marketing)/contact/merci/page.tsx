@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import { CheckCircle2 } from "lucide-react";
 import { Section } from "@/components/marketing/Section";
 import { Button } from "@/components/marketing/Button";
+import { Confetti } from "@/components/marketing/Confetti";
 
 export const metadata: Metadata = { title: "Message envoyé" };
 
 export default function ContactMerciPage() {
   return (
     <Section className="!py-28 text-center">
+      <Confetti />
       <div className="max-w-md mx-auto">
         <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-positive-soft text-green-600 mb-6">
           <CheckCircle2 size={28} />
