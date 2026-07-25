@@ -34,7 +34,7 @@ import { UseCaseTabs } from "@/components/marketing/UseCaseTabs";
 import { FaqAccordion } from "@/components/marketing/FaqAccordion";
 import { PricingCards } from "@/components/marketing/PricingCards";
 import { BeforeAfterSlider } from "@/components/marketing/BeforeAfterSlider";
-import { Reveal, RevealGroup, RevealItem } from "@/components/marketing/Reveal";
+import { Reveal, RevealGroup, RevealItem, RevealMask, ScrollDepth } from "@/components/marketing/Reveal";
 import { AmbientBackground } from "@/components/marketing/AmbientBackground";
 import { Spotlight } from "@/components/marketing/Spotlight";
 import { LiveTicker } from "@/components/marketing/LiveTicker";
@@ -180,15 +180,15 @@ export default function HomePage() {
               L'IA pensée pour les professionnels de l'immobilier
             </Badge>
           </Reveal>
-          <Reveal delay={0.08}>
-            <h1 className="mt-6 font-display font-extrabold text-[2.5rem] leading-[1.05] tracking-tight text-ink sm:text-6xl">
+          <RevealMask delay={0.08} className="mt-6">
+            <h1 className="font-display font-extrabold text-[2.5rem] leading-[1.05] tracking-tight text-ink sm:text-6xl">
               Moins de tâches répétitives.
               <br />
               <span className="bg-gradient-to-r from-brand-600 to-violet-500 bg-clip-text text-transparent">
                 Plus de temps pour vos clients.
               </span>
             </h1>
-          </Reveal>
+          </RevealMask>
           <Reveal delay={0.16}>
             <p className="mt-6 text-lg text-muted leading-relaxed max-w-2xl mx-auto">
               ImmoPilot centralise vos informations, automatise les actions répétitives et accompagne vos collaborateurs dans le
@@ -218,7 +218,9 @@ export default function HomePage() {
 
       <div className="pb-20 md:pb-28 px-6 lg:px-8">
         <Reveal delay={0.3} y={32}>
-          <HeroMockup />
+          <ScrollDepth strength={26}>
+            <HeroMockup />
+          </ScrollDepth>
         </Reveal>
       </div>
 
@@ -261,15 +263,17 @@ export default function HomePage() {
 
       {/* 3. PROPOSITION DE VALEUR */}
       <Section>
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <h2 className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight mb-4">
-            ImmoPilot transforme chaque information en prochaine action.
-          </h2>
-          <p className="text-muted leading-relaxed">
-            Le logiciel analyse l'activité de l'agence et aide les équipes à identifier ce qui doit être traité, par qui et
-            à quel moment.
-          </p>
-        </div>
+        <RevealGroup className="text-center max-w-2xl mx-auto mb-14">
+          <RevealItem className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight mb-4" scale>
+            <h2>ImmoPilot transforme chaque information en prochaine action.</h2>
+          </RevealItem>
+          <RevealItem className="text-muted leading-relaxed">
+            <p>
+              Le logiciel analyse l'activité de l'agence et aide les équipes à identifier ce qui doit être traité, par qui et
+              à quel moment.
+            </p>
+          </RevealItem>
+        </RevealGroup>
         <RevealGroup className="grid md:grid-cols-3 gap-6 relative" stagger={0.15}>
           <ScrollDrawLine />
           {[
@@ -290,12 +294,14 @@ export default function HomePage() {
 
       {/* 4. FONCTIONNALITÉS PRINCIPALES */}
       <Section surface>
-        <div className="max-w-2xl mb-14">
-          <Eyebrow>Fonctionnalités</Eyebrow>
-          <h2 className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight">
-            Un seul copilote pour les opérations essentielles de l'agence.
-          </h2>
-        </div>
+        <RevealGroup className="max-w-2xl mb-14">
+          <RevealItem y={12} scale={false}>
+            <Eyebrow>Fonctionnalités</Eyebrow>
+          </RevealItem>
+          <RevealItem className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight" scale>
+            <h2>Un seul copilote pour les opérations essentielles de l'agence.</h2>
+          </RevealItem>
+        </RevealGroup>
         <RevealGroup className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {FEATURES.map((f) => {
             const tone = TONE_CLASSES[f.tone];
@@ -321,65 +327,75 @@ export default function HomePage() {
 
       {/* 5. DÉMONSTRATION DU FONCTIONNEMENT */}
       <Section>
-        <div className="max-w-2xl mb-14">
-          <Eyebrow>Fonctionnement</Eyebrow>
-          <h2 className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight">
-            Du premier contact à la prochaine action, ImmoPilot accompagne chaque étape.
-          </h2>
-        </div>
-        <div className="grid md:grid-cols-4 gap-3 mb-14">
+        <RevealGroup className="max-w-2xl mb-14">
+          <RevealItem y={12} scale={false}>
+            <Eyebrow>Fonctionnement</Eyebrow>
+          </RevealItem>
+          <RevealItem className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight" scale>
+            <h2>Du premier contact à la prochaine action, ImmoPilot accompagne chaque étape.</h2>
+          </RevealItem>
+        </RevealGroup>
+        <RevealGroup className="grid md:grid-cols-4 gap-3 mb-14" stagger={0.07}>
           {WORKFLOW_STEPS.map((s, i) => (
-            <div key={s} className="rounded-xl border border-line bg-white p-4">
+            <RevealItem key={s} className="rounded-xl border border-line bg-white p-4">
               <span className="text-xs font-bold text-brand-600">Étape {i + 1}</span>
               <p className="text-sm text-ink mt-1.5 leading-snug">{s}</p>
-            </div>
+            </RevealItem>
           ))}
-        </div>
+        </RevealGroup>
 
-        <div className="rounded-2xl border border-line bg-white p-8 grid lg:grid-cols-[1fr_1.2fr] gap-8">
-          <div>
-            <Badge tone="brand">Exemple concret</Badge>
-            <p className="mt-4 text-ink-soft leading-relaxed">
-              Une candidate cherche un <strong className="text-ink">T2 à Clermont-Ferrand</strong>, avec un budget de{" "}
-              <strong className="text-ink">700 €</strong>, disponible rapidement et proche des transports.
-            </p>
-            <p className="mt-3 text-sm text-muted leading-relaxed">
-              ImmoPilot reconnaît automatiquement la zone recherchée, identifie le budget, enregistre le type de bien, détecte
-              l'urgence, crée la fiche, suggère les biens compatibles, propose une réponse et prépare une relance.
-            </p>
-          </div>
-          <div className="rounded-xl bg-surface border border-line p-5">
-            <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-3">Fiche générée par ImmoPilot</p>
-            <div className="rounded-lg bg-white border border-line p-4 grid gap-2 text-sm">
-              <div className="flex justify-between"><span className="text-muted">Type de bien</span><span className="font-medium text-ink">T2</span></div>
-              <div className="flex justify-between"><span className="text-muted">Zone</span><span className="font-medium text-ink">Clermont-Ferrand</span></div>
-              <div className="flex justify-between"><span className="text-muted">Budget</span><span className="font-medium text-ink">700 €/mois</span></div>
-              <div className="flex justify-between"><span className="text-muted">Urgence</span><span className="font-medium text-amber-600">Disponibilité rapide</span></div>
-              <div className="flex justify-between"><span className="text-muted">Score de qualification</span><span className="font-medium text-brand-600">87 / 100</span></div>
+        <Reveal y={24}>
+          <div className="rounded-2xl border border-line bg-white p-8 grid lg:grid-cols-[1fr_1.2fr] gap-8">
+            <div>
+              <Badge tone="brand">Exemple concret</Badge>
+              <p className="mt-4 text-ink-soft leading-relaxed">
+                Une candidate cherche un <strong className="text-ink">T2 à Clermont-Ferrand</strong>, avec un budget de{" "}
+                <strong className="text-ink">700 €</strong>, disponible rapidement et proche des transports.
+              </p>
+              <p className="mt-3 text-sm text-muted leading-relaxed">
+                ImmoPilot reconnaît automatiquement la zone recherchée, identifie le budget, enregistre le type de bien, détecte
+                l'urgence, crée la fiche, suggère les biens compatibles, propose une réponse et prépare une relance.
+              </p>
+            </div>
+            <div className="rounded-xl bg-surface border border-line p-5">
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-3">Fiche générée par ImmoPilot</p>
+              <div className="rounded-lg bg-white border border-line p-4 grid gap-2 text-sm">
+                <div className="flex justify-between"><span className="text-muted">Type de bien</span><span className="font-medium text-ink">T2</span></div>
+                <div className="flex justify-between"><span className="text-muted">Zone</span><span className="font-medium text-ink">Clermont-Ferrand</span></div>
+                <div className="flex justify-between"><span className="text-muted">Budget</span><span className="font-medium text-ink">700 €/mois</span></div>
+                <div className="flex justify-between"><span className="text-muted">Urgence</span><span className="font-medium text-amber-600">Disponibilité rapide</span></div>
+                <div className="flex justify-between"><span className="text-muted">Score de qualification</span><span className="font-medium text-brand-600">87 / 100</span></div>
+              </div>
             </div>
           </div>
-        </div>
+        </Reveal>
       </Section>
 
       {/* 6. CAS D'USAGE PAR MÉTIER */}
       <Section surface>
-        <div className="max-w-2xl mb-14">
-          <Eyebrow>Cas d'usage</Eyebrow>
-          <h2 className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight">
-            Une même plateforme, adaptée à chaque métier de l'agence.
-          </h2>
-        </div>
-        <UseCaseTabs />
+        <RevealGroup className="max-w-2xl mb-14">
+          <RevealItem y={12} scale={false}>
+            <Eyebrow>Cas d'usage</Eyebrow>
+          </RevealItem>
+          <RevealItem className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight" scale>
+            <h2>Une même plateforme, adaptée à chaque métier de l'agence.</h2>
+          </RevealItem>
+        </RevealGroup>
+        <Reveal delay={0.1}>
+          <UseCaseTabs />
+        </Reveal>
       </Section>
 
       {/* 7. GAINS ATTENDUS */}
       <Section>
-        <div className="max-w-2xl mb-14">
-          <Eyebrow>Bénéfices</Eyebrow>
-          <h2 className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight">
-            Des équipes mieux organisées, sans bouleverser leurs habitudes.
-          </h2>
-        </div>
+        <RevealGroup className="max-w-2xl mb-14">
+          <RevealItem y={12} scale={false}>
+            <Eyebrow>Bénéfices</Eyebrow>
+          </RevealItem>
+          <RevealItem className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight" scale>
+            <h2>Des équipes mieux organisées, sans bouleverser leurs habitudes.</h2>
+          </RevealItem>
+        </RevealGroup>
         <RevealGroup className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {BENEFITS.map((b) => {
             const tone = TONE_CLASSES[b.tone];
@@ -429,15 +445,15 @@ export default function HomePage() {
 
       {/* 8. INTÉGRATIONS */}
       <Section surface>
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <h2 className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight mb-4">
-            ImmoPilot s'intègre à votre environnement de travail.
-          </h2>
-          <p className="text-muted leading-relaxed text-sm">
-            Les intégrations disponibles dépendent de la configuration et du projet de déploiement.
-          </p>
-        </div>
-        <Reveal>
+        <RevealGroup className="text-center max-w-2xl mx-auto mb-10">
+          <RevealItem className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight mb-4" scale>
+            <h2>ImmoPilot s'intègre à votre environnement de travail.</h2>
+          </RevealItem>
+          <RevealItem className="text-muted leading-relaxed text-sm">
+            <p>Les intégrations disponibles dépendent de la configuration et du projet de déploiement.</p>
+          </RevealItem>
+        </RevealGroup>
+        <Reveal delay={0.1}>
           <IntegrationsConstellation />
         </Reveal>
         <div className="text-center mt-10">
@@ -450,24 +466,24 @@ export default function HomePage() {
       {/* 9. SÉCURITÉ */}
       <Section>
         <div className="grid lg:grid-cols-2 gap-14 items-center">
-          <div>
+          <Reveal y={24}>
             <Eyebrow>Sécurité</Eyebrow>
             <h2 className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight mb-6">
               Vos données immobilières méritent une protection à la hauteur de leur importance.
             </h2>
-            <div className="grid sm:grid-cols-2 gap-4 mb-8">
+            <RevealGroup className="grid sm:grid-cols-2 gap-4 mb-8" stagger={0.06}>
               {SECURITY_POINTS.map((p) => (
-                <div key={p.text} className="flex items-start gap-2.5 text-sm text-ink-soft">
+                <RevealItem key={p.text} className="flex items-start gap-2.5 text-sm text-ink-soft" y={10}>
                   <p.icon size={16} className="mt-0.5 text-brand-600 shrink-0" />
                   {p.text}
-                </div>
+                </RevealItem>
               ))}
-            </div>
+            </RevealGroup>
             <Button href="/securite" variant="secondary">
               Découvrir notre approche de la sécurité
             </Button>
-          </div>
-          <div className="relative overflow-hidden rounded-2xl bg-ink text-white p-8">
+          </Reveal>
+          <Reveal delay={0.15} y={24} className="relative overflow-hidden rounded-2xl bg-ink text-white p-8">
             <AmbientBackground tone="dark" grid={false} />
             <div className="relative">
               <ShieldCheck size={28} className="mb-4 text-brand-300" />
@@ -479,42 +495,48 @@ export default function HomePage() {
                 envoi ou validation.
               </p>
             </div>
-          </div>
+          </Reveal>
         </div>
       </Section>
 
       {/* 10. TÉMOIGNAGES (emplacement à venir) */}
       <Section surface>
-        <div className="max-w-2xl mb-14">
-          <Eyebrow>Retours terrain</Eyebrow>
-          <h2 className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight">
-            Les retours de nos premières agences pilotes.
-          </h2>
-          <p className="mt-3 text-muted text-sm leading-relaxed">
-            Nos premiers déploiements pilotes sont en cours. Les témoignages ci-dessous seront remplacés par des retours
-            réels dès qu'ils seront disponibles.
-          </p>
-        </div>
-        <div className="grid md:grid-cols-3 gap-5">
+        <RevealGroup className="max-w-2xl mb-14">
+          <RevealItem y={12} scale={false}>
+            <Eyebrow>Retours terrain</Eyebrow>
+          </RevealItem>
+          <RevealItem className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight" scale>
+            <h2>Les retours de nos premières agences pilotes.</h2>
+          </RevealItem>
+          <RevealItem className="mt-3 text-muted text-sm leading-relaxed">
+            <p>
+              Nos premiers déploiements pilotes sont en cours. Les témoignages ci-dessous seront remplacés par des retours
+              réels dès qu'ils seront disponibles.
+            </p>
+          </RevealItem>
+        </RevealGroup>
+        <RevealGroup className="grid md:grid-cols-3 gap-5">
           {["Objectif du pilote", "Résultat observé", "Retour de l'équipe"].map((label) => (
-            <div key={label} className="rounded-2xl border border-dashed border-line bg-white p-6">
+            <RevealItem key={label} className="rounded-2xl border border-dashed border-line bg-white p-6">
               <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-3">{label}</p>
               <p className="text-sm text-ink-soft leading-relaxed italic">
                 Contenu à venir — sera complété à l'issue de la phase pilote en cours.
               </p>
-            </div>
+            </RevealItem>
           ))}
-        </div>
+        </RevealGroup>
       </Section>
 
       {/* 11. DÉPLOIEMENT */}
       <Section>
-        <div className="max-w-2xl mb-14">
-          <Eyebrow>Déploiement</Eyebrow>
-          <h2 className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight">
-            Un déploiement progressif, adapté à votre organisation.
-          </h2>
-        </div>
+        <RevealGroup className="max-w-2xl mb-14">
+          <RevealItem y={12} scale={false}>
+            <Eyebrow>Déploiement</Eyebrow>
+          </RevealItem>
+          <RevealItem className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight" scale>
+            <h2>Un déploiement progressif, adapté à votre organisation.</h2>
+          </RevealItem>
+        </RevealGroup>
         <RevealGroup className="grid md:grid-cols-4 gap-6 relative" stagger={0.12}>
           <ScrollDrawLine top="top-6" inset="left-[12%] right-[12%]" />
           {DEPLOYMENT_STEPS.map((s, i) => (
@@ -531,33 +553,39 @@ export default function HomePage() {
 
       {/* 12. TARIFICATION */}
       <Section surface id="tarifs">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <h2 className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight mb-4">
-            Une offre adaptée à la taille et aux besoins de votre agence.
-          </h2>
-          <p className="text-muted text-sm">
-            Tarification établie selon le nombre d'utilisateurs, les fonctionnalités et le niveau d'intégration.
-          </p>
-        </div>
-        <PricingCards />
-        <div className="text-center mt-8">
-          <Link href="/tarifs" className="text-sm font-semibold text-brand-600 inline-flex items-center gap-1">
-            Voir le détail des formules et la FAQ tarifaire <ArrowRight size={14} />
-          </Link>
-        </div>
+        <RevealGroup className="text-center max-w-2xl mx-auto mb-14">
+          <RevealItem className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight mb-4" scale>
+            <h2>Une offre adaptée à la taille et aux besoins de votre agence.</h2>
+          </RevealItem>
+          <RevealItem className="text-muted text-sm">
+            <p>Tarification établie selon le nombre d'utilisateurs, les fonctionnalités et le niveau d'intégration.</p>
+          </RevealItem>
+        </RevealGroup>
+        <Reveal delay={0.1}>
+          <PricingCards />
+        </Reveal>
+        <Reveal delay={0.15}>
+          <div className="text-center mt-8">
+            <Link href="/tarifs" className="text-sm font-semibold text-brand-600 inline-flex items-center gap-1">
+              Voir le détail des formules et la FAQ tarifaire <ArrowRight size={14} />
+            </Link>
+          </div>
+        </Reveal>
       </Section>
 
       {/* 13. FAQ */}
       <Section>
-        <div className="max-w-2xl mb-14">
-          <Eyebrow>Questions fréquentes</Eyebrow>
-          <h2 className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight">
-            Tout ce que les directions d'agence nous demandent.
-          </h2>
-        </div>
-        <div className="max-w-3xl">
+        <RevealGroup className="max-w-2xl mb-14">
+          <RevealItem y={12} scale={false}>
+            <Eyebrow>Questions fréquentes</Eyebrow>
+          </RevealItem>
+          <RevealItem className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight" scale>
+            <h2>Tout ce que les directions d'agence nous demandent.</h2>
+          </RevealItem>
+        </RevealGroup>
+        <Reveal delay={0.1} className="max-w-3xl">
           <FaqAccordion items={GENERAL_FAQ} />
-        </div>
+        </Reveal>
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger

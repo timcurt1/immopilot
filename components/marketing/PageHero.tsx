@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { Reveal } from "./Reveal";
+import { Reveal, RevealMask } from "./Reveal";
 import { Badge } from "./Badge";
 import { AmbientBackground } from "./AmbientBackground";
 
@@ -35,12 +35,24 @@ export function PageHero({
             </span>
           </nav>
         )}
-        <Reveal>
-          {eyebrow && <Badge>{eyebrow}</Badge>}
-          <h1 className="mt-6 font-display font-extrabold text-4xl md:text-5xl tracking-tight text-ink">{title}</h1>
-          {description && <p className="mt-5 text-lg text-muted leading-relaxed max-w-2xl mx-auto">{description}</p>}
-          {children}
-        </Reveal>
+        {eyebrow && (
+          <Reveal y={12} scale={false}>
+            <Badge>{eyebrow}</Badge>
+          </Reveal>
+        )}
+        <RevealMask delay={0.08} className="mt-6">
+          <h1 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight text-ink">{title}</h1>
+        </RevealMask>
+        {description && (
+          <Reveal delay={0.22} y={16} scale={false}>
+            <p className="mt-5 text-lg text-muted leading-relaxed max-w-2xl mx-auto">{description}</p>
+          </Reveal>
+        )}
+        {children && (
+          <Reveal delay={0.3} y={16} scale={false}>
+            {children}
+          </Reveal>
+        )}
       </div>
 
       {eyebrow && path && (

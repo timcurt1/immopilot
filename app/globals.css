@@ -218,6 +218,11 @@ th { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: #
   .applicationsTable td::before { content: attr(data-label); font-size: 10px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
