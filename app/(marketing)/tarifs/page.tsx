@@ -7,6 +7,7 @@ import { PricingComparisonTable } from "@/components/marketing/PricingComparison
 import { PricingQuiz } from "@/components/marketing/PricingQuiz";
 import { FaqAccordion } from "@/components/marketing/FaqAccordion";
 import { ScrollDrawLine } from "@/components/marketing/ScrollDrawLine";
+import { AssistantChat } from "@/components/marketing/AssistantChat";
 import { PRICING_FAQ } from "@/lib/marketingContent";
 
 export const metadata: Metadata = {
@@ -92,6 +93,8 @@ export default function TarifsPage() {
           </Reveal>
         </div>
       </Section>
+
+      <AssistantChat context="tarifs" />
     </>
   );
 }

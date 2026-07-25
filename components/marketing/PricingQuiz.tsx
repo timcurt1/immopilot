@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Check, RotateCcw, Sparkles } from "lucide-react";
 import { PRICING_PLANS, type PricingPlanId } from "@/lib/marketingContent";
 import { Button } from "./Button";
+import { trackEvent } from "@/lib/analytics";
 
 type Scores = Record<PricingPlanId, number>;
 
@@ -57,7 +58,9 @@ export function PricingQuiz() {
     if (step + 1 < QUESTIONS.length) {
       setStep(step + 1);
     } else {
-      setResult(computeResult(next));
+      const plan = computeResult(next);
+      setResult(plan);
+      trackEvent("Quiz tarifaire — résultat", { plan });
     }
   }
 

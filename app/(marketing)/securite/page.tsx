@@ -9,6 +9,7 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/marketing/Reveal";
 import { Button } from "@/components/marketing/Button";
 import { Spotlight } from "@/components/marketing/Spotlight";
 import { TONE_CLASSES, toneAt } from "@/components/marketing/tones";
+import { AssistantChat } from "@/components/marketing/AssistantChat";
 
 export const metadata: Metadata = {
   title: "Sécurité",
@@ -114,6 +115,8 @@ export default function SecuritePage() {
           <Button href="/contact">Contacter notre équipe sécurité</Button>
         </div>
       </Section>
+
+      <AssistantChat context="securite" />
     </>
   );
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { X, ArrowRight } from "lucide-react";
 import { Button } from "./Button";
+import { trackEvent } from "@/lib/analytics";
 
 const DISMISS_KEY = "immopilot_sticky_cta_dismissed";
 const COOKIE_NOTICE_KEY = "immopilot_cookie_notice_dismissed";
@@ -46,7 +47,12 @@ export function StickyCtaBar() {
             Prêt à voir ImmoPilot dans le contexte de votre agence ?
           </p>
           <p className="sm:hidden text-sm font-medium flex-1">Voir ImmoPilot en contexte ?</p>
-          <Button href="/demande-demo" size="md" className="!bg-white !text-ink hover:!bg-white/90 shrink-0">
+          <Button
+            href="/demande-demo"
+            size="md"
+            className="!bg-white !text-ink hover:!bg-white/90 shrink-0"
+            onClick={() => trackEvent("CTA collant — clic")}
+          >
             Demander une démo <ArrowRight size={14} />
           </Button>
           <button

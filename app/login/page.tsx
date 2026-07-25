@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { supabase, supabaseConfigured } from "@/lib/supabaseClient";
+import { supabaseConfigured } from "@/lib/supabaseConfig";
 import { Logo } from "@/components/marketing/Logo";
 import { AmbientBackground } from "@/components/marketing/AmbientBackground";
 import { Field, inputClass } from "@/components/ui/Field";
@@ -16,7 +16,12 @@ export default function LoginPage() {
   const [msg, setMsg] = useState("");
 
   async function signIn() {
-    if (!supabaseConfigured || !supabase) {
+    if (!supabaseConfigured) {
+      setMsg("Mode local : Supabase n'est pas encore configuré. Tu peux ouvrir le dashboard directement.");
+      return;
+    }
+    const { supabase } = await import("@/lib/supabaseClient");
+    if (!supabase) {
       setMsg("Mode local : Supabase n'est pas encore configuré. Tu peux ouvrir le dashboard directement.");
       return;
     }

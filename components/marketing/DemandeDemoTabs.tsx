@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Calendar, MessageSquareText } from "lucide-react";
 import { BookingWidget } from "./BookingWidget";
 import { DemandeDemoForm } from "./DemandeDemoForm";
+import { trackEvent } from "@/lib/analytics";
 
 export function DemandeDemoTabs({ hasError = false }: { hasError?: boolean }) {
   const [tab, setTab] = useState<"booking" | "form">(hasError ? "form" : "booking");
@@ -12,7 +13,10 @@ export function DemandeDemoTabs({ hasError = false }: { hasError?: boolean }) {
     <div>
       <div className="flex gap-2 mb-6 max-w-md mx-auto">
         <button
-          onClick={() => setTab("booking")}
+          onClick={() => {
+            setTab("booking");
+            trackEvent("Demande de démo — onglet réservation");
+          }}
           className={`flex-1 inline-flex items-center justify-center gap-2 h-11 rounded-xl text-sm font-semibold transition-colors ${
             tab === "booking" ? "bg-ink text-white" : "bg-white border border-line text-ink-soft hover:border-ink/30"
           }`}

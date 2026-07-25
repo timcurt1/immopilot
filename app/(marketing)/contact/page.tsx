@@ -1,14 +1,11 @@
-import type { Metadata } from "next";
+"use client";
+
 import { Mail, MessageSquare, ShieldAlert } from "lucide-react";
 import { PageHero } from "@/components/marketing/PageHero";
 import { Section } from "@/components/marketing/Section";
 import { Reveal } from "@/components/marketing/Reveal";
 import { submitContact } from "@/lib/marketingActions";
-
-export const metadata: Metadata = {
-  title: "Contact",
-  description: "Une question sur ImmoPilot, votre projet ou votre environnement logiciel ? Contactez notre équipe.",
-};
+import { trackEvent } from "@/lib/analytics";
 
 export default function ContactPage({ searchParams }: { searchParams: { error?: string } }) {
   return (
@@ -50,7 +47,11 @@ export default function ContactPage({ searchParams }: { searchParams: { error?: 
           </Reveal>
 
           <Reveal delay={0.1}>
-            <form action={submitContact} className="rounded-2xl border border-line bg-white p-7 grid gap-4">
+            <form
+              action={submitContact}
+              onSubmit={() => trackEvent("Contact — formulaire envoyé")}
+              className="rounded-2xl border border-line bg-white p-7 grid gap-4"
+            >
               {searchParams.error && (
                 <p className="text-sm text-red-600 bg-danger-soft rounded-lg px-3 py-2">
                   Merci de renseigner tous les champs obligatoires.

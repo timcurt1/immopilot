@@ -88,7 +88,10 @@ export function Button({
         style={style}
         onMouseMove={magnetic.onMouseMove}
         onMouseLeave={magnetic.onMouseLeave}
-        onClick={magnetic.onClick}
+        onClick={(e) => {
+          magnetic.onClick(e);
+          onClick?.();
+        }}
       >
         {children}
       </Link>

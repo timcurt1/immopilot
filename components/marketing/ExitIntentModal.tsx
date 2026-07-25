@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { X, CheckCircle2, FileText } from "lucide-react";
 import { Logo } from "./Logo";
+import { trackEvent } from "@/lib/analytics";
 
 const SEEN_KEY = "immopilot_exit_intent_seen";
 const EXCLUDED_PATHS = ["/demande-demo", "/contact"];
@@ -54,6 +55,7 @@ export function ExitIntentModal() {
         body: JSON.stringify({ email, source: "Sortie de page" }),
       });
       setStatus(res.ok ? "sent" : "error");
+      if (res.ok) trackEvent("Sortie de page — email capturé");
     } catch {
       setStatus("error");
     }

@@ -1,4 +1,7 @@
+"use client";
+
 import { submitDemoRequest } from "@/lib/marketingActions";
+import { trackEvent } from "@/lib/analytics";
 
 const ACTIVITIES = ["Location", "Transaction", "Gestion locative", "Syndic", "Immobilier d'entreprise", "Réseau multi-agences", "Autre"];
 const CHALLENGES = [
@@ -10,7 +13,11 @@ const TIMELINES = ["Dès que possible", "Dans le trimestre", "Dans les 6 mois", 
 
 export function DemandeDemoForm({ hasError = false }: { hasError?: boolean }) {
   return (
-    <form action={submitDemoRequest} className="rounded-2xl border border-line bg-white p-8 grid gap-5">
+    <form
+      action={submitDemoRequest}
+      onSubmit={() => trackEvent("Demande de démo — formulaire envoyé")}
+      className="rounded-2xl border border-line bg-white p-8 grid gap-5"
+    >
       {hasError && (
         <p className="text-sm text-red-600 bg-danger-soft rounded-lg px-3 py-2">
           Merci de renseigner tous les champs obligatoires et d'accepter d'être recontacté·e.
