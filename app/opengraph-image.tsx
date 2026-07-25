@@ -34,8 +34,10 @@ export default function OpengraphImage() {
               justifyContent: "center",
             }}
           >
-            <svg width="34" height="34" viewBox="0 0 32 32" fill="none">
-              <path d="M16 7L22.5 24.5L16 20.5L9.5 24.5L16 7Z" fill="white" />
+            <svg width="36" height="36" viewBox="0 0 32 32" fill="none">
+              <path d="M8 22C14 22 20 20 25 10" stroke="white" strokeWidth="2.8" strokeLinecap="round" fill="none" />
+              <path d="M20 8.5L25.5 9.5L24 15" stroke="white" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+              <circle cx="8" cy="22" r="2.8" fill="white" />
             </svg>
           </div>
           <div style={{ fontSize: 40, fontWeight: 800, color: "white", letterSpacing: -1 }}>ImmoPilot</div>

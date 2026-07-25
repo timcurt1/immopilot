@@ -47,7 +47,7 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-6 lg:px-8 py-16">
         <div className="grid grid-cols-2 md:grid-cols-6 gap-10">
           <div className="col-span-2">
-            <Logo />
+            <Logo tagline />
             <p className="mt-4 text-sm text-muted leading-relaxed max-w-xs">
               ImmoPilot — L'intelligence artificielle au service des professionnels de l'immobilier.
             </p>

@@ -38,6 +38,7 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/marketing/Reveal";
 import { AmbientBackground } from "@/components/marketing/AmbientBackground";
 import { Spotlight } from "@/components/marketing/Spotlight";
 import { LiveTicker } from "@/components/marketing/LiveTicker";
+import { ScrollDrawLine } from "@/components/marketing/ScrollDrawLine";
 import { IntegrationsConstellation } from "@/components/marketing/IntegrationsConstellation";
 import { RoiCalculator } from "@/components/marketing/RoiCalculator";
 import { GENERAL_FAQ } from "@/lib/marketingContent";
@@ -168,7 +169,7 @@ export default function HomePage() {
     <>
       {/* 1. HERO */}
       <Section className="!pt-16 md:!pt-20 !pb-8 relative overflow-hidden">
-        <AmbientBackground />
+        <AmbientBackground parallax />
         <div className="max-w-3xl mx-auto text-center relative">
           <Reveal>
             <Badge>
@@ -270,7 +271,7 @@ export default function HomePage() {
           </p>
         </div>
         <RevealGroup className="grid md:grid-cols-3 gap-6 relative" stagger={0.15}>
-          <div className="hidden md:block absolute top-9 left-[18%] right-[18%] h-px bg-gradient-to-r from-brand-200 via-brand-300 to-violet-200" />
+          <ScrollDrawLine />
           {[
             { n: "1", title: "ImmoPilot centralise", body: "Les demandes, prospects, dossiers, échanges et rendez-vous sont regroupés dans une vue claire.", icon: Inbox },
             { n: "2", title: "ImmoPilot analyse", body: "Le logiciel identifie les informations importantes, les dossiers incomplets, les urgences et les opportunités.", icon: FileSearch },
@@ -515,7 +516,7 @@ export default function HomePage() {
           </h2>
         </div>
         <RevealGroup className="grid md:grid-cols-4 gap-6 relative" stagger={0.12}>
-          <div className="hidden md:block absolute top-6 left-[12%] right-[12%] h-px bg-line" />
+          <ScrollDrawLine top="top-6" inset="left-[12%] right-[12%]" />
           {DEPLOYMENT_STEPS.map((s, i) => (
             <RevealItem key={s.title} className="relative">
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-ink text-white font-display font-bold relative z-10">

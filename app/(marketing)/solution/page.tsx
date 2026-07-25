@@ -7,6 +7,7 @@ import { Button } from "@/components/marketing/Button";
 import { Reveal, RevealGroup, RevealItem } from "@/components/marketing/Reveal";
 import { FlowIllustration } from "@/components/marketing/illustrations/FlowIllustration";
 import { Spotlight } from "@/components/marketing/Spotlight";
+import { ScrollDrawLine } from "@/components/marketing/ScrollDrawLine";
 
 export const metadata: Metadata = {
   title: "Solution",
@@ -82,7 +83,7 @@ export default function SolutionPage() {
           </div>
         </Reveal>
         <RevealGroup className="grid md:grid-cols-4 gap-5 relative" stagger={0.1}>
-          <div className="hidden md:block absolute top-7 left-[12%] right-[12%] h-px bg-line" />
+          <ScrollDrawLine top="top-7" inset="left-[12%] right-[12%]" />
           {FLOW_STEPS.map((s) => (
             <RevealItem key={s.title} className="relative rounded-2xl border border-line bg-white p-6">
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-ink text-white relative z-10">

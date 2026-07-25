@@ -48,8 +48,8 @@ export function IntegrationsConstellation() {
       </svg>
 
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center gap-2">
-        <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-[0_16px_40px_rgba(15,23,42,0.14)] border border-line">
-          <LogoMark size={34} />
+        <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-[0_16px_40px_rgba(15,23,42,0.14)] border border-line px-2">
+          <LogoMark size={26} />
         </span>
         <span className="text-xs font-semibold text-ink">ImmoPilot</span>
       </div>

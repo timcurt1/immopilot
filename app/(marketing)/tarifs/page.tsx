@@ -5,6 +5,7 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/marketing/Reveal";
 import { PricingCards } from "@/components/marketing/PricingCards";
 import { PricingComparisonTable } from "@/components/marketing/PricingComparisonTable";
 import { FaqAccordion } from "@/components/marketing/FaqAccordion";
+import { ScrollDrawLine } from "@/components/marketing/ScrollDrawLine";
 import { PRICING_FAQ } from "@/lib/marketingContent";
 
 export const metadata: Metadata = {
@@ -52,7 +53,7 @@ export default function TarifsPage() {
           </h2>
         </div>
         <RevealGroup className="grid md:grid-cols-4 gap-6 relative" stagger={0.1}>
-          <div className="hidden md:block absolute top-6 left-[12%] right-[12%] h-px bg-line" />
+          <ScrollDrawLine top="top-6" inset="left-[12%] right-[12%]" />
           {DEPLOYMENT_STEPS.map((s, i) => (
             <RevealItem key={s.title} className="relative">
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-ink text-white font-display font-bold relative z-10">

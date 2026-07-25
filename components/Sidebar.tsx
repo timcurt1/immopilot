@@ -12,7 +12,7 @@ export async function Sidebar() {
     <aside className="glass sidebar">
       <Link href="/dashboard" className="logoLine">
         <div className="logoBox">
-          <LogoMark size={30} />
+          <LogoMark size={24} />
         </div>
         <div>
           <b>ImmoPilot</b>

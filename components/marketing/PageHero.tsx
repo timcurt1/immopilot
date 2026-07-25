@@ -22,7 +22,7 @@ export function PageHero({
 }) {
   return (
     <div className="relative overflow-hidden">
-      <AmbientBackground />
+      <AmbientBackground parallax />
       <div className="mx-auto max-w-4xl px-6 lg:px-8 pt-20 pb-14 md:pt-28 md:pb-20 text-center relative">
         {eyebrow && (
           <nav aria-label="Fil d'Ariane" className="flex items-center justify-center gap-1.5 text-xs text-muted mb-6">
