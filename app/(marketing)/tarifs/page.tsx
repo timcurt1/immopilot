@@ -4,6 +4,7 @@ import { Section, Eyebrow } from "@/components/marketing/Section";
 import { Reveal, RevealGroup, RevealItem } from "@/components/marketing/Reveal";
 import { PricingCards } from "@/components/marketing/PricingCards";
 import { PricingComparisonTable } from "@/components/marketing/PricingComparisonTable";
+import { PricingQuiz } from "@/components/marketing/PricingQuiz";
 import { FaqAccordion } from "@/components/marketing/FaqAccordion";
 import { ScrollDrawLine } from "@/components/marketing/ScrollDrawLine";
 import { PRICING_FAQ } from "@/lib/marketingContent";
@@ -31,7 +32,21 @@ export default function TarifsPage() {
         description="Tarification établie selon le nombre d'utilisateurs, les fonctionnalités et le niveau d'intégration."
       />
 
-      <Section className="!pt-0">
+      <Section surface className="!pt-0">
+        <div className="max-w-xl mx-auto text-center mb-8">
+          <Eyebrow>Vous hésitez ?</Eyebrow>
+          <h2 className="font-display font-bold text-2xl md:text-3xl text-ink tracking-tight">
+            Trouvez votre formule en 30 secondes.
+          </h2>
+        </div>
+        <div className="max-w-lg mx-auto">
+          <Reveal>
+            <PricingQuiz />
+          </Reveal>
+        </div>
+      </Section>
+
+      <Section className="!pt-16">
         <PricingCards />
       </Section>
 
