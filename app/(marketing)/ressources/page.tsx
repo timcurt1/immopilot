@@ -5,6 +5,7 @@ import { PageHero } from "@/components/marketing/PageHero";
 import { Section } from "@/components/marketing/Section";
 import { RevealGroup, RevealItem } from "@/components/marketing/Reveal";
 import { ARTICLES } from "@/lib/articles";
+import { GRADIENT_TONE, toneAt } from "@/components/marketing/tones";
 
 export const metadata: Metadata = {
   title: "Ressources",
@@ -28,13 +29,13 @@ export default function RessourcesPage() {
 
       <Section className="!pt-0 !pb-24">
         <RevealGroup className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {ARTICLES.map((a) => (
+          {ARTICLES.map((a, i) => (
             <RevealItem key={a.slug}>
               <Link
                 href={`/ressources/${a.slug}`}
                 className="group flex flex-col h-full rounded-2xl border border-line bg-white overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(15,23,42,0.1)]"
               >
-                <div className="h-32 bg-gradient-to-br from-brand-600 to-violet-500 flex items-center px-6">
+                <div className={`h-32 bg-gradient-to-br ${GRADIENT_TONE[toneAt(i)]} flex items-center px-6 transition-transform duration-500 group-hover:scale-105`}>
                   <p className="text-white/90 text-xs font-semibold uppercase tracking-wide">{a.category}</p>
                 </div>
                 <div className="p-6 flex flex-col flex-1">

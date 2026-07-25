@@ -19,3 +19,10 @@ export const BOLD_TONE: Record<FeatureTone, string> = {
 export function toneAt(index: number): FeatureTone {
   return TONE_ORDER[index % TONE_ORDER.length];
 }
+
+export const GRADIENT_TONE: Record<FeatureTone, string> = {
+  brand: "from-brand-600 to-violet-500",
+  teal: "from-teal-500 to-brand-500",
+  rose: "from-rose-500 to-violet-500",
+  sun: "from-sun-500 to-rose-500",
+};

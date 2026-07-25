@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import { Building2, KeyRound, LineChart, Network, Users } from "lucide-react";
+import { BOLD_TONE, TONE_CLASSES, toneAt } from "./tones";
 
 const TABS = [
   {
@@ -71,24 +72,26 @@ const TABS = [
 ];
 
 export function UseCaseTabs() {
-  const [active, setActive] = useState(TABS[0].id);
-  const current = TABS.find((t) => t.id === active)!;
+  const [activeIndex, setActiveIndex] = useState(0);
+  const current = TABS[activeIndex];
+  const tone = toneAt(activeIndex);
+  const toneClass = TONE_CLASSES[tone];
 
   return (
     <div>
       <div className="flex flex-wrap gap-2 mb-8" role="tablist" aria-label="Cas d'usage par métier">
-        {TABS.map((tab) => {
+        {TABS.map((tab, i) => {
           const Icon = tab.icon;
-          const isActive = tab.id === active;
+          const isActive = i === activeIndex;
           return (
             <button
               key={tab.id}
               role="tab"
               aria-selected={isActive}
-              onClick={() => setActive(tab.id)}
-              className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors border ${
+              onClick={() => setActiveIndex(i)}
+              className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-300 border ${
                 isActive
-                  ? "bg-ink text-white border-ink"
+                  ? `${BOLD_TONE[toneAt(i)]} text-white border-transparent shadow-md`
                   : "bg-white text-ink-soft border-line hover:border-ink/30 hover:text-ink"
               }`}
             >
@@ -99,7 +102,10 @@ export function UseCaseTabs() {
         })}
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8 items-start rounded-2xl border border-line bg-white p-8">
+      <div
+        style={{ "--glow": toneClass.glow } as CSSProperties}
+        className="grid md:grid-cols-2 gap-8 items-start rounded-2xl border border-line bg-white p-8 transition-shadow duration-500 shadow-[0_30px_70px_var(--glow)]"
+      >
         <div>
           <p className="font-display font-bold text-2xl text-ink mb-2">{current.label}</p>
           <p className="text-muted text-sm leading-relaxed mb-6">
@@ -108,7 +114,7 @@ export function UseCaseTabs() {
           <ul className="grid gap-3">
             {current.items.map((item) => (
               <li key={item} className="flex items-start gap-2.5 text-sm text-ink-soft">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-brand-500 shrink-0" />
+                <span className={`mt-1.5 h-1.5 w-1.5 rounded-full shrink-0 ${BOLD_TONE[tone]}`} />
                 {item}
               </li>
             ))}
@@ -120,7 +126,7 @@ export function UseCaseTabs() {
             <div className="grid gap-2">
               {current.items.slice(0, 4).map((item, i) => (
                 <div key={item} className="flex items-center gap-2 rounded-lg border border-line px-3 py-2 text-xs text-ink">
-                  <span className="h-5 w-5 rounded-md bg-brand-50 text-brand-700 grid place-items-center font-bold text-[10px]">
+                  <span className={`h-5 w-5 rounded-md ${toneClass.bg} ${toneClass.text} grid place-items-center font-bold text-[10px]`}>
                     {i + 1}
                   </span>
                   <span className="truncate">{item}</span>

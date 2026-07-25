@@ -8,6 +8,7 @@ import { Reveal } from "@/components/marketing/Reveal";
 import { Button } from "@/components/marketing/Button";
 import { ReadingProgressBar } from "@/components/marketing/ReadingProgressBar";
 import { ARTICLES, getArticle } from "@/lib/articles";
+import { GRADIENT_TONE, toneAt } from "@/components/marketing/tones";
 
 const BASE_URL = "https://immopilot.fr";
 
@@ -32,6 +33,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
   const related = ARTICLES.filter((a) => a.slug !== article.slug && a.category === article.category)
     .concat(ARTICLES.filter((a) => a.slug !== article.slug && a.category !== article.category))
     .slice(0, 3);
+  const articleIndex = ARTICLES.findIndex((a) => a.slug === article.slug);
 
   return (
     <>
@@ -56,7 +58,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
               </span>
             </div>
 
-            <div className="mt-10 h-48 rounded-2xl bg-gradient-to-br from-brand-600 to-violet-500" aria-hidden="true" />
+            <div className={`mt-10 h-48 rounded-2xl bg-gradient-to-br ${GRADIENT_TONE[toneAt(articleIndex)]}`} aria-hidden="true" />
 
             <div className="mt-10 grid gap-5">
               {article.body.map((p, i) => (
