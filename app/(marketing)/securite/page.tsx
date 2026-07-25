@@ -7,6 +7,8 @@ import { PageHero } from "@/components/marketing/PageHero";
 import { Section, Eyebrow } from "@/components/marketing/Section";
 import { Reveal, RevealGroup, RevealItem } from "@/components/marketing/Reveal";
 import { Button } from "@/components/marketing/Button";
+import { Spotlight } from "@/components/marketing/Spotlight";
+import { TONE_CLASSES, toneAt } from "@/components/marketing/tones";
 
 export const metadata: Metadata = {
   title: "Sécurité",
@@ -43,15 +45,18 @@ export default function SecuritePage() {
 
       <Section className="!pt-0">
         <RevealGroup className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {TOPICS.map((t) => (
-            <RevealItem key={t.title} className="rounded-2xl border border-line bg-white p-6">
-              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
-                <t.icon size={19} />
-              </div>
-              <p className="font-semibold text-ink mb-2">{t.title}</p>
-              <p className="text-sm text-muted leading-relaxed">{t.body}</p>
-            </RevealItem>
-          ))}
+          {TOPICS.map((t, i) => {
+            const tone = TONE_CLASSES[toneAt(i)];
+            return (
+              <RevealItem key={t.title} className="rounded-2xl border border-line bg-white p-6">
+                <div className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl ${tone.bg} ${tone.text}`}>
+                  <t.icon size={19} />
+                </div>
+                <p className="font-semibold text-ink mb-2">{t.title}</p>
+                <p className="text-sm text-muted leading-relaxed">{t.body}</p>
+              </RevealItem>
+            );
+          })}
         </RevealGroup>
       </Section>
 
@@ -71,7 +76,7 @@ export default function SecuritePage() {
             </p>
           </Reveal>
           <Reveal delay={0.1}>
-            <div className="rounded-2xl bg-ink text-white p-8">
+            <Spotlight dark className="rounded-2xl bg-ink text-white p-8">
               <UserCheck size={26} className="mb-4 text-brand-300" />
               <p className="font-display font-bold text-xl mb-3">
                 ImmoPilot assiste vos collaborateurs. Il ne remplace pas leur jugement.
@@ -80,7 +85,7 @@ export default function SecuritePage() {
                 Toutes les réponses, relances ou décisions importantes peuvent être contrôlées par un utilisateur avant
                 envoi ou validation. Aucune action externe n'est irréversible sans intervention humaine.
               </p>
-            </div>
+            </Spotlight>
           </Reveal>
         </div>
       </Section>

@@ -6,6 +6,7 @@ import { PageHero } from "@/components/marketing/PageHero";
 import { Button } from "@/components/marketing/Button";
 import { Reveal, RevealGroup, RevealItem } from "@/components/marketing/Reveal";
 import { FlowIllustration } from "@/components/marketing/illustrations/FlowIllustration";
+import { Spotlight } from "@/components/marketing/Spotlight";
 
 export const metadata: Metadata = {
   title: "Solution",
@@ -110,14 +111,14 @@ export default function SolutionPage() {
             </ul>
           </Reveal>
           <Reveal delay={0.1}>
-            <div className="rounded-2xl bg-ink text-white p-8">
+            <Spotlight dark className="rounded-2xl bg-ink text-white p-8">
               <UserCheck size={26} className="mb-4 text-brand-300" />
               <p className="font-display font-bold text-xl mb-3">Le contrôle humain reste la règle.</p>
               <p className="text-white/75 text-sm leading-relaxed">
                 ImmoPilot prépare, résume et recommande. Les réponses, relances et décisions importantes restent
                 soumises à la validation d'un collaborateur avant tout envoi.
               </p>
-            </div>
+            </Spotlight>
           </Reveal>
         </div>
       </Section>
@@ -159,7 +160,7 @@ export default function SolutionPage() {
 
       <Section className="!py-0 !pb-20">
         <Reveal>
-          <div className="rounded-3xl bg-ink text-white px-8 py-16 text-center">
+          <Spotlight dark className="rounded-3xl bg-ink text-white px-8 py-16 text-center">
             <h2 className="font-display font-bold text-3xl md:text-4xl tracking-tight mb-5 max-w-xl mx-auto">
               Voyez comment ImmoPilot s'articule avec votre agence.
             </h2>
@@ -171,7 +172,7 @@ export default function SolutionPage() {
                 Voir toutes les fonctionnalités
               </Button>
             </div>
-          </div>
+          </Spotlight>
         </Reveal>
       </Section>
     </>

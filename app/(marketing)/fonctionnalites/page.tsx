@@ -7,6 +7,7 @@ import {
 import { PageHero } from "@/components/marketing/PageHero";
 import { Reveal } from "@/components/marketing/Reveal";
 import { Badge } from "@/components/marketing/Badge";
+import { TONE_CLASSES, toneAt } from "@/components/marketing/tones";
 
 export const metadata: Metadata = {
   title: "Fonctionnalités",
@@ -180,29 +181,34 @@ export default function FonctionnalitesPage() {
           </nav>
 
           <div className="grid gap-16">
-            {FEATURES.map((f) => (
-              <Reveal key={f.id}>
-                <section id={f.id} className="scroll-mt-24 grid md:grid-cols-[auto_1fr] gap-6">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-50 text-brand-700 shrink-0">
-                    <f.icon size={22} />
-                  </div>
-                  <div>
-                    <h2 className="font-display font-bold text-2xl text-ink tracking-tight mb-3">{f.title}</h2>
-                    <p className="text-ink-soft leading-relaxed mb-4">{f.body}</p>
-                    <div className="rounded-xl bg-surface border border-line p-4 mb-3">
-                      <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-1.5">Exemple</p>
-                      <p className="text-sm text-ink-soft leading-relaxed">{f.example}</p>
+            {FEATURES.map((f, i) => {
+              const tone = TONE_CLASSES[toneAt(i)];
+              return (
+                <Reveal key={f.id}>
+                  <section id={f.id} className="scroll-mt-24 grid md:grid-cols-[auto_1fr] gap-6 group">
+                    <div
+                      className={`flex h-12 w-12 items-center justify-center rounded-2xl ${tone.bg} ${tone.text} shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6`}
+                    >
+                      <f.icon size={22} />
                     </div>
-                    {f.control !== "—" && (
-                      <div className="flex items-start gap-2 text-xs text-muted">
-                        <Badge tone="neutral">Contrôle humain</Badge>
-                        <p className="pt-1.5">{f.control}</p>
+                    <div>
+                      <h2 className="font-display font-bold text-2xl text-ink tracking-tight mb-3">{f.title}</h2>
+                      <p className="text-ink-soft leading-relaxed mb-4">{f.body}</p>
+                      <div className="rounded-xl bg-surface border border-line p-4 mb-3">
+                        <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-1.5">Exemple</p>
+                        <p className="text-sm text-ink-soft leading-relaxed">{f.example}</p>
                       </div>
-                    )}
-                  </div>
-                </section>
-              </Reveal>
-            ))}
+                      {f.control !== "—" && (
+                        <div className="flex items-start gap-2 text-xs text-muted">
+                          <Badge tone="neutral">Contrôle humain</Badge>
+                          <p className="pt-1.5">{f.control}</p>
+                        </div>
+                      )}
+                    </div>
+                  </section>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </div>

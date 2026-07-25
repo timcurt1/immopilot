@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import type { CSSProperties } from "react";
 import { Badge } from "@/components/marketing/Badge";
 import { PageHero } from "@/components/marketing/PageHero";
 import { Section } from "@/components/marketing/Section";
 import { Reveal } from "@/components/marketing/Reveal";
 import { Button } from "@/components/marketing/Button";
+import { Spotlight } from "@/components/marketing/Spotlight";
+import { TONE_CLASSES, toneAt } from "@/components/marketing/tones";
 
 export const metadata: Metadata = {
   title: "Cas d'usage",
@@ -96,31 +99,40 @@ export default function CasDusagePage() {
 
       <Section className="!pt-0">
         <div className="grid md:grid-cols-2 gap-6">
-          {CASES.map((c, i) => (
-            <Reveal key={c.title} delay={(i % 2) * 0.08}>
-              <div className="rounded-2xl border border-line bg-white p-7 h-full">
-                <Badge tone="brand">{c.tag}</Badge>
-                <h2 className="mt-4 font-display font-bold text-xl text-ink tracking-tight">{c.title}</h2>
-                <p className="mt-2 text-sm text-muted leading-relaxed italic">{c.scenario}</p>
-                <ol className="mt-5 grid gap-2.5">
-                  {c.steps.map((s, idx) => (
-                    <li key={s} className="flex items-start gap-3 text-sm text-ink-soft">
-                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-surface text-[11px] font-bold text-ink">
-                        {idx + 1}
-                      </span>
-                      {s}
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </Reveal>
-          ))}
+          {CASES.map((c, i) => {
+            const tone = toneAt(i);
+            const toneClass = TONE_CLASSES[tone];
+            return (
+              <Reveal key={c.title} delay={(i % 2) * 0.08}>
+                <div
+                  style={{ "--glow": toneClass.glow } as CSSProperties}
+                  className="group rounded-2xl border border-line bg-white p-7 h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_var(--glow)]"
+                >
+                  <Badge tone={tone}>{c.tag}</Badge>
+                  <h2 className="mt-4 font-display font-bold text-xl text-ink tracking-tight">{c.title}</h2>
+                  <p className="mt-2 text-sm text-muted leading-relaxed italic">{c.scenario}</p>
+                  <ol className="mt-5 grid gap-2.5">
+                    {c.steps.map((s, idx) => (
+                      <li key={s} className="flex items-start gap-3 text-sm text-ink-soft">
+                        <span
+                          className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-[11px] font-bold ${toneClass.bg} ${toneClass.text}`}
+                        >
+                          {idx + 1}
+                        </span>
+                        {s}
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </Reveal>
+            );
+          })}
         </div>
       </Section>
 
       <Section surface className="!pb-24">
         <Reveal>
-          <div className="rounded-3xl bg-ink text-white px-8 py-14 text-center">
+          <Spotlight dark className="rounded-3xl bg-ink text-white px-8 py-14 text-center">
             <h2 className="font-display font-bold text-2xl md:text-3xl tracking-tight mb-5 max-w-xl mx-auto">
               Voyez ces scénarios fonctionner dans une interface réelle.
             </h2>
@@ -132,7 +144,7 @@ export default function CasDusagePage() {
                 Demander une démonstration
               </Button>
             </div>
-          </div>
+          </Spotlight>
         </Reveal>
       </Section>
     </>
