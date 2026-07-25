@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { supabase, supabaseConfigured } from "@/lib/supabaseClient";
 import { Logo } from "@/components/marketing/Logo";
+import { AmbientBackground } from "@/components/marketing/AmbientBackground";
+import { Field, inputClass } from "@/components/ui/Field";
 
 export default function LoginPage() {
   const [mode, setMode] = useState<"signin" | "signup">("signin");
@@ -15,7 +17,7 @@ export default function LoginPage() {
 
   async function signIn() {
     if (!supabaseConfigured || !supabase) {
-      setMsg("Mode local : Supabase n’est pas encore configuré. Tu peux ouvrir le dashboard directement.");
+      setMsg("Mode local : Supabase n'est pas encore configuré. Tu peux ouvrir le dashboard directement.");
       return;
     }
     if (mode === "signup") {
@@ -37,60 +39,79 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="appShell" style={{ display: "grid", placeItems: "center" }}>
-      <section className="glass" style={{ width: "min(980px,100%)", display: "grid", gridTemplateColumns: "1fr 420px", gap: 18, padding: 18 }}>
-        <div className="hero">
-          <Link href="/" style={{ display: "inline-block", marginBottom: 18 }}>
+    <main className="relative min-h-screen flex items-center justify-center overflow-hidden bg-paper px-4 py-12">
+      <AmbientBackground parallax />
+      <div className="relative w-full max-w-4xl rounded-3xl border border-line bg-white shadow-[0_40px_100px_rgba(15,23,42,0.12)] overflow-hidden grid md:grid-cols-[1fr_420px]">
+        <div className="p-10 flex flex-col justify-center">
+          <Link href="/" className="inline-flex mb-8">
             <Logo />
           </Link>
-          <span className="kicker">Connexion</span>
-          <h2>
+          <span className="inline-flex w-max items-center rounded-full border border-brand-100 bg-brand-50 px-3.5 py-1.5 text-xs font-semibold text-brand-700 mb-5">
+            Connexion
+          </span>
+          <h1 className="font-display font-extrabold text-3xl md:text-4xl text-ink tracking-tight leading-tight">
             Accès agence,
             <br />
-            <span className="grad">agent et candidat.</span>
-          </h2>
-          <p>Chaque utilisateur dispose d'un rôle adapté : admin, manager, agent ou candidat.</p>
+            <span className="bg-gradient-to-r from-brand-600 to-violet-500 bg-clip-text text-transparent">
+              agent et candidat.
+            </span>
+          </h1>
+          <p className="mt-4 text-muted leading-relaxed">
+            Chaque utilisateur dispose d&rsquo;un rôle adapté : admin, manager, agent ou candidat.
+          </p>
         </div>
-        <div className="card">
-          <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
-            <button className={mode === "signin" ? "btn primary" : "btn ghost"} style={{ flex: 1 }} onClick={() => setMode("signin")}>
+        <div className="bg-surface p-8 md:p-10 flex flex-col justify-center border-t md:border-t-0 md:border-l border-line">
+          <div className="flex gap-2 mb-5">
+            <button
+              onClick={() => setMode("signin")}
+              className={`flex-1 h-10 rounded-xl text-sm font-semibold transition-colors ${
+                mode === "signin" ? "bg-ink text-white" : "bg-white border border-line text-ink-soft hover:border-ink/30"
+              }`}
+            >
               Connexion
             </button>
-            <button className={mode === "signup" ? "btn primary" : "btn ghost"} style={{ flex: 1 }} onClick={() => setMode("signup")}>
+            <button
+              onClick={() => setMode("signup")}
+              className={`flex-1 h-10 rounded-xl text-sm font-semibold transition-colors ${
+                mode === "signup" ? "bg-ink text-white" : "bg-white border border-line text-ink-soft hover:border-ink/30"
+              }`}
+            >
               Créer une agence
             </button>
           </div>
           {mode === "signup" && (
             <>
-              <div className="field">
-                <label>Nom de l’agence</label>
-                <input value={agencyName} onChange={(e) => setAgencyName(e.target.value)} placeholder="Agence Dupont Immobilier" />
-              </div>
-              <div className="field">
-                <label>Prénom</label>
-                <input value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-              </div>
-              <div className="field">
-                <label>Nom</label>
-                <input value={lastName} onChange={(e) => setLastName(e.target.value)} />
-              </div>
+              <Field label="Nom de l'agence">
+                <input className={inputClass} value={agencyName} onChange={(e) => setAgencyName(e.target.value)} placeholder="Agence Dupont Immobilier" />
+              </Field>
+              <Field label="Prénom">
+                <input className={inputClass} value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+              </Field>
+              <Field label="Nom">
+                <input className={inputClass} value={lastName} onChange={(e) => setLastName(e.target.value)} />
+              </Field>
             </>
           )}
-          <div className="field">
-            <label>Email</label>
-            <input value={email} onChange={(e) => setEmail(e.target.value)} />
-          </div>
-          <button className="btn primary" style={{ width: "100%" }} onClick={signIn}>
+          <Field label="Email">
+            <input className={inputClass} value={email} onChange={(e) => setEmail(e.target.value)} />
+          </Field>
+          <button
+            onClick={signIn}
+            className="w-full h-11 rounded-xl bg-ink text-white text-sm font-semibold hover:bg-brand-700 transition-colors"
+          >
             {mode === "signup" ? "Créer mon agence" : "Envoyer lien magique"}
           </button>
-          {msg && <p style={{ color: "var(--muted)", fontSize: 13 }}>{msg}</p>}
+          {msg && <p className="mt-3 text-sm text-muted">{msg}</p>}
           {!supabaseConfigured && (
-            <Link className="btn ghost" style={{ width: "100%", marginTop: 10 }} href="/dashboard">
+            <Link
+              href="/dashboard"
+              className="mt-3 w-full inline-flex items-center justify-center h-11 rounded-xl border border-line bg-white text-sm font-semibold text-ink hover:border-ink/30 transition-colors"
+            >
               Continuer en mode démo
             </Link>
           )}
         </div>
-      </section>
+      </div>
     </main>
   );
 }

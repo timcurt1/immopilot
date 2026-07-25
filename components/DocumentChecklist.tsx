@@ -1,26 +1,28 @@
 import type { RentalDocument } from "@/lib/types";
+import { Badge } from "@/components/marketing/Badge";
+import type { ComponentProps } from "react";
 
-function tone(status: string) {
+function tone(status: string): ComponentProps<typeof Badge>["tone"] {
   if (status === "validé") return "green";
   if (status === "refusé") return "red";
   if (status === "à vérifier") return "amber";
-  return "blue";
+  return "brand";
 }
 
 export function DocumentChecklist({ documents }: { documents: RentalDocument[] }) {
   if (documents.length === 0) {
-    return <p className="emptyState">Aucun document requis pour ce dossier.</p>;
+    return <p className="text-sm text-muted py-2">Aucun document requis pour ce dossier.</p>;
   }
 
   return (
-    <div className="list">
+    <div className="grid gap-2.5">
       {documents.map((d) => (
-        <div key={d.id} className="rowCard" style={{ gridTemplateColumns: "1fr auto" }}>
-          <div>
-            <b>{d.label}</b>
-            <p style={{ margin: "4px 0 0", color: "var(--muted)", fontSize: 12 }}>{d.file_name || "Aucun fichier"}</p>
+        <div key={d.id} className="flex items-center justify-between gap-3 rounded-xl border border-line bg-white p-3.5">
+          <div className="min-w-0">
+            <p className="text-sm font-semibold text-ink truncate">{d.label}</p>
+            <p className="mt-0.5 text-xs text-muted truncate">{d.file_name || "Aucun fichier"}</p>
           </div>
-          <span className={`chip ${tone(d.status)}`}>{d.status}</span>
+          <Badge tone={tone(d.status)}>{d.status}</Badge>
         </div>
       ))}
     </div>

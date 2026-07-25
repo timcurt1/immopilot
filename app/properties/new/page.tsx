@@ -1,24 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Sidebar } from "@/components/Sidebar";
-import { Topbar } from "@/components/Topbar";
+import { ArrowLeft } from "lucide-react";
+import { AppShell } from "@/components/AppShell";
 import { NewPropertyForm } from "@/components/NewPropertyForm";
 
 export const metadata: Metadata = { title: "Ajouter un bien", robots: { index: false, follow: false } };
 
 export default function NewPropertyPage() {
   return (
-    <main className="appShell">
-      <Topbar title="Ajouter un bien" subtitle="Renseigne les informations principales du logement." />
-      <div className="layout">
-        <Sidebar />
-        <section className="main">
-          <Link className="btn ghost" href="/properties" style={{ marginBottom: 14, display: "inline-flex", width: "max-content" }}>
-            ← Retour aux biens
-          </Link>
-          <NewPropertyForm />
-        </section>
-      </div>
-    </main>
+    <AppShell title="Ajouter un bien" subtitle="Renseigne les informations principales du logement.">
+      <Link href="/properties" className="inline-flex items-center gap-1.5 text-sm font-medium text-muted hover:text-ink transition-colors mb-5">
+        <ArrowLeft size={15} /> Retour aux biens
+      </Link>
+      <NewPropertyForm />
+    </AppShell>
   );
 }

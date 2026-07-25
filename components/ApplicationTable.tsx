@@ -2,12 +2,14 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { Search } from "lucide-react";
 import type { Application } from "@/lib/types";
+import { Badge } from "@/components/marketing/Badge";
 
-function stageTone(stage: string) {
-  if (stage === "Prêt à valider") return "chip green";
-  if (stage === "À relancer") return "chip amber";
-  return "chip blue";
+function stageTone(stage: string): "green" | "amber" | "brand" {
+  if (stage === "Prêt à valider") return "green";
+  if (stage === "À relancer") return "amber";
+  return "brand";
 }
 
 export function ApplicationTable({ applications }: { applications: Application[] }) {
@@ -24,65 +26,79 @@ export function ApplicationTable({ applications }: { applications: Application[]
   });
 
   return (
-    <div className="glass" style={{ padding: 14 }}>
-      <div className="tableFilters">
-        <input
-          className="searchInput"
-          placeholder="Rechercher un candidat (nom, email)…"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <select className="searchInput" value={stage} onChange={(e) => setStage(e.target.value)}>
+    <div>
+      <div className="flex flex-wrap items-center gap-3 mb-5">
+        <div className="relative flex-1 min-w-[220px]">
+          <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Rechercher un candidat (nom, email)…"
+            className="w-full h-10 rounded-xl border border-line bg-white pl-9 pr-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
+          />
+        </div>
+        <div className="flex flex-wrap gap-2">
           {stages.map((s) => (
-            <option key={s} value={s}>
+            <button
+              key={s}
+              onClick={() => setStage(s)}
+              className={`h-10 px-3.5 rounded-xl text-xs font-semibold border transition-colors ${
+                stage === s ? "bg-ink text-white border-ink" : "bg-white text-ink-soft border-line hover:border-ink/30"
+              }`}
+            >
               {s}
-            </option>
+            </button>
           ))}
-        </select>
+        </div>
       </div>
+
       {applications.length === 0 ? (
-        <p style={{ color: "var(--muted)", padding: "20px 4px" }}>Aucune candidature pour le moment.</p>
+        <p className="text-sm text-muted py-6">Aucune candidature pour le moment.</p>
       ) : filtered.length === 0 ? (
-        <p style={{ color: "var(--muted)", padding: "20px 4px" }}>Aucune candidature ne correspond à cette recherche.</p>
+        <p className="text-sm text-muted py-6">Aucune candidature ne correspond à cette recherche.</p>
       ) : (
-        <table className="table applicationsTable">
-          <thead>
-            <tr>
-              <th>Candidat</th>
-              <th>Bien</th>
-              <th>Score</th>
-              <th>Statut</th>
-              <th>Visite</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((a) => (
-              <tr key={a.id}>
-                <td data-label="Candidat">
-                  <b>
-                    {a.first_name} {a.last_name}
-                  </b>
-                  <br />
-                  <span style={{ color: "var(--muted)", fontSize: 12 }}>{a.candidate_email}</span>
-                </td>
-                <td data-label="Bien">{a.property?.title || "Non relié"}</td>
-                <td data-label="Score">
-                  <span className="chip blue">{a.score}</span>
-                </td>
-                <td data-label="Statut">
-                  <span className={stageTone(a.stage)}>{a.stage}</span>
-                </td>
-                <td data-label="Visite">{a.visit_status}</td>
-                <td data-label="Action">
-                  <Link className="btn ghost" href={`/applications/${a.id}`}>
-                    Ouvrir
-                  </Link>
-                </td>
+        <div className="rounded-2xl border border-line bg-white overflow-hidden overflow-x-auto">
+          <table className="w-full text-sm min-w-[720px]">
+            <thead>
+              <tr className="border-b border-line text-left text-[11px] uppercase tracking-wide text-muted">
+                <th className="px-5 py-3 font-semibold">Candidat</th>
+                <th className="px-5 py-3 font-semibold">Bien</th>
+                <th className="px-5 py-3 font-semibold">Score</th>
+                <th className="px-5 py-3 font-semibold">Statut</th>
+                <th className="px-5 py-3 font-semibold">Visite</th>
+                <th className="px-5 py-3 font-semibold"></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filtered.map((a) => (
+                <tr key={a.id} className="border-b border-line last:border-0">
+                  <td className="px-5 py-3.5">
+                    <p className="font-semibold text-ink">
+                      {a.first_name} {a.last_name}
+                    </p>
+                    <p className="text-xs text-muted">{a.candidate_email}</p>
+                  </td>
+                  <td className="px-5 py-3.5 text-ink-soft">{a.property?.title || "Non relié"}</td>
+                  <td className="px-5 py-3.5">
+                    <Badge tone="brand">{a.score}</Badge>
+                  </td>
+                  <td className="px-5 py-3.5">
+                    <Badge tone={stageTone(a.stage)}>{a.stage}</Badge>
+                  </td>
+                  <td className="px-5 py-3.5 text-ink-soft">{a.visit_status}</td>
+                  <td className="px-5 py-3.5 text-right">
+                    <Link
+                      href={`/applications/${a.id}`}
+                      className="inline-flex items-center h-8 px-3 rounded-lg border border-line text-xs font-semibold text-ink-soft hover:text-ink hover:border-ink/30 transition-colors"
+                    >
+                      Ouvrir
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

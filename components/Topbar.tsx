@@ -1,24 +1,33 @@
 import Link from "next/link";
+import { LifeBuoy } from "lucide-react";
+import { Badge } from "@/components/marketing/Badge";
 import { getSupabaseUser, supabaseConfigured } from "@/lib/supabaseServer";
 
 export async function Topbar({ title, subtitle }: { title: string; subtitle: string }) {
   const user = supabaseConfigured ? await getSupabaseUser() : null;
 
   return (
-    <header className="topbar">
+    <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-line bg-white px-6 lg:px-8 py-6">
       <div>
-        <h1>{title}</h1>
-        <p>{subtitle}</p>
+        <h1 className="font-display font-bold text-2xl text-ink tracking-tight">{title}</h1>
+        <p className="mt-1 text-sm text-muted">{subtitle}</p>
       </div>
-      <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-        <span className="chip blue">SaaS MVP</span>
-        <a className="btn ghost" href="mailto:support@immopilot.example" title="Contacter le support">
-          Support
+      <div className="flex items-center gap-2.5 shrink-0">
+        <Badge tone="brand">SaaS MVP</Badge>
+        <a
+          href="mailto:support@immopilot.example"
+          title="Contacter le support"
+          className="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg border border-line text-sm font-medium text-ink-soft hover:text-ink hover:border-ink/30 transition-colors"
+        >
+          <LifeBuoy size={14} /> Support
         </a>
         {user ? (
-          <span className="chip green">{user.email}</span>
+          <Badge tone="green">{user.email}</Badge>
         ) : (
-          <Link className="btn ghost" href="/login">
+          <Link
+            href="/login"
+            className="inline-flex items-center h-9 px-3.5 rounded-lg border border-line text-sm font-medium text-ink-soft hover:text-ink hover:border-ink/30 transition-colors"
+          >
             Connexion
           </Link>
         )}

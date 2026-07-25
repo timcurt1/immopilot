@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { Sparkles, Save, CheckCircle2 } from "lucide-react";
 import { saveAIMessage, updateApplicationStage } from "@/lib/actions";
 import type { Application, RentalDocument } from "@/lib/types";
+import { Field, textareaClass } from "@/components/ui/Field";
 
 export function ApplicationActions({ application, documents }: { application: Application; documents: RentalDocument[] }) {
   const [message, setMessage] = useState(application.last_message || "");
@@ -29,24 +31,32 @@ export function ApplicationActions({ application, documents }: { application: Ap
   }
 
   return (
-    <div className="card">
-      <h3 style={{ marginTop: 0, color: "var(--navy)" }}>Actions agent</h3>
-      <div className="field">
-        <label>Message IA</label>
-        <textarea value={message} onChange={(e) => setMessage(e.target.value)} />
+    <div className="rounded-2xl border border-line bg-white p-6">
+      <h3 className="font-display font-bold text-lg text-ink mb-4">Actions agent</h3>
+      <Field label="Message IA">
+        <textarea className={textareaClass} value={message} onChange={(e) => setMessage(e.target.value)} />
+      </Field>
+      <div className="flex flex-wrap gap-2.5">
+        <button
+          onClick={generate}
+          className="inline-flex items-center gap-2 h-10 px-4 rounded-xl bg-ink text-white text-sm font-semibold hover:bg-brand-700 transition-colors"
+        >
+          <Sparkles size={15} /> Générer relance IA
+        </button>
+        <button
+          onClick={save}
+          className="inline-flex items-center gap-2 h-10 px-4 rounded-xl border border-line text-sm font-medium text-ink-soft hover:text-ink hover:border-ink/30 transition-colors"
+        >
+          <Save size={15} /> Sauvegarder message
+        </button>
+        <button
+          onClick={validate}
+          className="inline-flex items-center gap-2 h-10 px-4 rounded-xl bg-brand-50 text-brand-700 text-sm font-semibold hover:bg-brand-100 transition-colors"
+        >
+          <CheckCircle2 size={15} /> Valider le dossier
+        </button>
       </div>
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-        <button className="btn primary" onClick={generate}>
-          Générer relance IA
-        </button>
-        <button className="btn ghost" onClick={save}>
-          Sauvegarder message
-        </button>
-        <button className="btn soft" onClick={validate}>
-          Valider le dossier
-        </button>
-      </div>
-      {status && <p style={{ color: "var(--muted)", fontSize: 13, marginTop: 10 }}>{status}</p>}
+      {status && <p className="mt-3 text-sm text-muted">{status}</p>}
     </div>
   );
 }

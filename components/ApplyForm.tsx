@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { CheckCircle2 } from "lucide-react";
 import { submitApplication } from "@/lib/actions";
+import { Field, inputClass } from "@/components/ui/Field";
 
 export function ApplyForm({ propertyId }: { propertyId: string }) {
   const [firstName, setFirstName] = useState("");
@@ -44,55 +46,51 @@ export function ApplyForm({ propertyId }: { propertyId: string }) {
 
   if (submitted) {
     return (
-      <div className="notice">
-        <b>Candidature envoyée</b>
-        <p>Merci ! L’agence a bien reçu ton dossier et reviendra vers toi prochainement.</p>
+      <div className="rounded-2xl border border-line bg-white p-8 text-center">
+        <CheckCircle2 size={28} className="mx-auto text-green-600 mb-3" />
+        <p className="font-display font-bold text-lg text-ink">Candidature envoyée</p>
+        <p className="mt-2 text-sm text-muted">Merci ! L&rsquo;agence a bien reçu ton dossier et reviendra vers toi prochainement.</p>
       </div>
     );
   }
 
   return (
-    <div className="card">
-      <div className="field">
-        <label>Prénom</label>
-        <input value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-      </div>
-      <div className="field">
-        <label>Nom</label>
-        <input value={lastName} onChange={(e) => setLastName(e.target.value)} />
-      </div>
-      <div className="field">
-        <label>Email</label>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      </div>
-      <div className="field">
-        <label>Téléphone</label>
-        <input value={phone} onChange={(e) => setPhone(e.target.value)} />
-      </div>
-      <div className="field">
-        <label>Ville actuelle</label>
-        <input value={city} onChange={(e) => setCity(e.target.value)} />
-      </div>
-      <div className="field">
-        <label>Statut professionnel</label>
-        <input value={jobStatus} onChange={(e) => setJobStatus(e.target.value)} placeholder="CDI, CDD, étudiant…" />
-      </div>
-      <div className="field">
-        <label>Revenu mensuel (€)</label>
-        <input type="number" value={income} onChange={(e) => setIncome(e.target.value)} />
-      </div>
-      <div className="field">
-        <label>Garant</label>
-        <input value={guarantorStatus} onChange={(e) => setGuarantorStatus(e.target.value)} placeholder="Oui, non, pas nécessaire…" />
-      </div>
-      <div className="field">
-        <label>Revenu du garant (€)</label>
-        <input type="number" value={guarantorIncome} onChange={(e) => setGuarantorIncome(e.target.value)} />
-      </div>
-      <button className="btn primary" style={{ width: "100%" }} onClick={submit} disabled={pending}>
+    <div className="rounded-2xl border border-line bg-white p-6">
+      <Field label="Prénom">
+        <input className={inputClass} value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+      </Field>
+      <Field label="Nom">
+        <input className={inputClass} value={lastName} onChange={(e) => setLastName(e.target.value)} />
+      </Field>
+      <Field label="Email">
+        <input className={inputClass} type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+      </Field>
+      <Field label="Téléphone">
+        <input className={inputClass} value={phone} onChange={(e) => setPhone(e.target.value)} />
+      </Field>
+      <Field label="Ville actuelle">
+        <input className={inputClass} value={city} onChange={(e) => setCity(e.target.value)} />
+      </Field>
+      <Field label="Statut professionnel">
+        <input className={inputClass} value={jobStatus} onChange={(e) => setJobStatus(e.target.value)} placeholder="CDI, CDD, étudiant…" />
+      </Field>
+      <Field label="Revenu mensuel (€)">
+        <input className={inputClass} type="number" value={income} onChange={(e) => setIncome(e.target.value)} />
+      </Field>
+      <Field label="Garant">
+        <input className={inputClass} value={guarantorStatus} onChange={(e) => setGuarantorStatus(e.target.value)} placeholder="Oui, non, pas nécessaire…" />
+      </Field>
+      <Field label="Revenu du garant (€)">
+        <input className={inputClass} type="number" value={guarantorIncome} onChange={(e) => setGuarantorIncome(e.target.value)} />
+      </Field>
+      <button
+        onClick={submit}
+        disabled={pending}
+        className="w-full h-11 rounded-xl bg-ink text-white text-sm font-semibold hover:bg-brand-700 transition-colors disabled:opacity-60"
+      >
         {pending ? "Envoi…" : "Envoyer ma candidature"}
       </button>
-      {status && <p style={{ color: "var(--muted)", fontSize: 13, marginTop: 10 }}>{status}</p>}
+      {status && <p className="mt-3 text-sm text-muted">{status}</p>}
     </div>
   );
 }

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Sidebar } from "@/components/Sidebar";
-import { Topbar } from "@/components/Topbar";
+import { AppShell } from "@/components/AppShell";
 import { DocumentChecklist } from "@/components/DocumentChecklist";
 import { CandidateUpload } from "@/components/CandidateUpload";
 import { getCurrentCandidateApplication, getDocuments, completionRate } from "@/lib/data";
@@ -12,23 +11,21 @@ export default async function CandidatePage() {
 
   if (!application) {
     return (
-      <main className="appShell">
-        <Topbar title="Portail candidat" subtitle="Espace simple pour compléter son dossier." />
-        <div className="layout">
-          <Sidebar />
-          <section className="main">
-            <section className="glass hero">
-              <span className="kicker">Candidat</span>
-              <h2>
-                Aucun dossier trouvé
-                <br />
-                <span className="grad">pour ce compte.</span>
-              </h2>
-              <p>Connecte-toi avec l’email utilisé pour ta candidature, ou contacte ton agence.</p>
-            </section>
-          </section>
-        </div>
-      </main>
+      <AppShell title="Portail candidat" subtitle="Espace simple pour compléter son dossier.">
+        <section className="rounded-2xl bg-ink text-white p-8">
+          <span className="text-xs font-semibold uppercase tracking-wide text-white/60">Candidat</span>
+          <h2 className="mt-3 font-display font-bold text-2xl tracking-tight leading-tight">
+            Aucun dossier trouvé
+            <br />
+            <span className="bg-gradient-to-r from-brand-300 to-violet-300 bg-clip-text text-transparent">
+              pour ce compte.
+            </span>
+          </h2>
+          <p className="mt-3 text-sm text-white/70">
+            Connecte-toi avec l&rsquo;email utilisé pour ta candidature, ou contacte ton agence.
+          </p>
+        </section>
+      </AppShell>
     );
   }
 
@@ -36,43 +33,41 @@ export default async function CandidatePage() {
   const completion = completionRate(docs);
 
   return (
-    <main className="appShell">
-      <Topbar title="Portail candidat" subtitle="Espace simple pour compléter son dossier." />
-      <div className="layout">
-        <Sidebar />
-        <section className="main">
-          <div className="grid2">
-            <section className="glass hero">
-              <span className="kicker">Candidat</span>
-              <h2>
-                Bonjour {application.first_name}.
-                <br />
-                <span className="grad">Votre dossier avance.</span>
-              </h2>
-              <p>
-                Demande pour {application.property?.title}. Ajoutez vos documents, suivez votre progression et confirmez votre
-                visite.
-              </p>
-              <div className="card">
-                <b>Progression</b>
-                <div className="progress" style={{ marginTop: 10 }}>
-                  <div style={{ width: `${completion}%` }} />
-                </div>
-                <p style={{ color: "var(--muted)", fontSize: 13 }}>{completion}% complet</p>
+    <AppShell title="Portail candidat" subtitle="Espace simple pour compléter son dossier.">
+      <div className="grid gap-6">
+        <div className="grid lg:grid-cols-2 gap-6 items-start">
+          <section className="rounded-2xl bg-ink text-white p-8">
+            <span className="text-xs font-semibold uppercase tracking-wide text-white/60">Candidat</span>
+            <h2 className="mt-3 font-display font-bold text-2xl tracking-tight leading-tight">
+              Bonjour {application.first_name}.
+              <br />
+              <span className="bg-gradient-to-r from-brand-300 to-violet-300 bg-clip-text text-transparent">
+                Votre dossier avance.
+              </span>
+            </h2>
+            <p className="mt-3 text-sm text-white/70 leading-relaxed">
+              Demande pour {application.property?.title}. Ajoutez vos documents, suivez votre progression et confirmez
+              votre visite.
+            </p>
+            <div className="mt-5 rounded-xl bg-white/10 p-4">
+              <p className="text-sm font-semibold">Progression</p>
+              <div className="mt-2.5 h-2 rounded-full bg-white/15 overflow-hidden">
+                <div className="h-full rounded-full bg-gradient-to-r from-brand-400 to-violet-400" style={{ width: `${completion}%` }} />
               </div>
-              <div className="notice">
-                <b>Message de l’agence</b>
-                <p>{application.last_message || "Aucun message pour le moment."}</p>
-              </div>
-            </section>
-            <section className="glass" style={{ padding: 14 }}>
-              <h3 style={{ marginTop: 0, color: "var(--navy)" }}>Documents demandés</h3>
-              {docs.length ? <DocumentChecklist documents={docs} /> : <p style={{ color: "var(--muted)" }}>Aucun document demandé pour le moment.</p>}
-            </section>
-          </div>
-          <CandidateUpload applicationId={application.id} documents={docs} />
-        </section>
+              <p className="mt-1.5 text-xs text-white/70">{completion}% complet</p>
+            </div>
+            <div className="mt-3 rounded-xl bg-white/10 p-4">
+              <p className="text-sm font-semibold">Message de l&rsquo;agence</p>
+              <p className="mt-1 text-sm text-white/80">{application.last_message || "Aucun message pour le moment."}</p>
+            </div>
+          </section>
+          <section className="rounded-2xl border border-line bg-white p-5">
+            <h3 className="font-display font-bold text-lg text-ink mb-4">Documents demandés</h3>
+            {docs.length ? <DocumentChecklist documents={docs} /> : <p className="text-sm text-muted">Aucun document demandé pour le moment.</p>}
+          </section>
+        </div>
+        <CandidateUpload applicationId={application.id} documents={docs} />
       </div>
-    </main>
+    </AppShell>
   );
 }

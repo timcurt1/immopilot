@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { Upload } from "lucide-react";
 import { uploadDocument } from "@/lib/actions";
 import type { RentalDocument } from "@/lib/types";
+import { Field, inputClass } from "@/components/ui/Field";
 
 export function CandidateUpload({ applicationId, documents }: { applicationId: string; documents: RentalDocument[] }) {
   const [type, setType] = useState(documents[0]?.type || "");
@@ -24,32 +26,40 @@ export function CandidateUpload({ applicationId, documents }: { applicationId: s
         ? result.local
           ? `Document prêt à envoyer : ${file.name} (mode démo, non stocké).`
           : `Document envoyé : ${file.name}.`
-        : `Erreur d’envoi : ${result.error}`
+        : `Erreur d'envoi : ${result.error}`
     );
   }
 
   return (
-    <div className="card">
-      <h3 style={{ marginTop: 0, color: "var(--navy)" }}>Ajouter un document</h3>
-      <p style={{ color: "var(--muted)", fontSize: 13 }}>Le fichier est stocké dans le coffre sécurisé de l’agence.</p>
-      <div className="field">
-        <label>Type</label>
-        <select value={type} onChange={(e) => setType(e.target.value)}>
-          {documents.map((d) => (
-            <option key={d.type} value={d.type}>
-              {d.label}
-            </option>
-          ))}
-        </select>
+    <div className="rounded-2xl border border-line bg-white p-6">
+      <h3 className="font-display font-bold text-lg text-ink">Ajouter un document</h3>
+      <p className="mt-1 text-sm text-muted">Le fichier est stocké dans le coffre sécurisé de l&rsquo;agence.</p>
+      <div className="mt-4">
+        <Field label="Type">
+          <select className={inputClass} value={type} onChange={(e) => setType(e.target.value)}>
+            {documents.map((d) => (
+              <option key={d.type} value={d.type}>
+                {d.label}
+              </option>
+            ))}
+          </select>
+        </Field>
+        <Field label="Fichier">
+          <input
+            type="file"
+            onChange={(e) => setFile(e.target.files?.[0] || null)}
+            className="w-full text-sm text-ink-soft file:mr-3 file:h-9 file:px-3.5 file:rounded-lg file:border-0 file:bg-ink file:text-white file:text-sm file:font-semibold file:cursor-pointer"
+          />
+        </Field>
       </div>
-      <div className="field">
-        <label>Fichier</label>
-        <input type="file" onChange={(e) => setFile(e.target.files?.[0] || null)} />
-      </div>
-      <button className="btn primary" onClick={send} disabled={pending}>
-        {pending ? "Envoi…" : "Envoyer"}
+      <button
+        onClick={send}
+        disabled={pending}
+        className="inline-flex items-center gap-2 h-10 px-4 rounded-xl bg-ink text-white text-sm font-semibold hover:bg-brand-700 transition-colors disabled:opacity-60"
+      >
+        <Upload size={15} /> {pending ? "Envoi…" : "Envoyer"}
       </button>
-      {status && <p style={{ color: "var(--muted)", fontSize: 13 }}>{status}</p>}
+      {status && <p className="mt-3 text-sm text-muted">{status}</p>}
     </div>
   );
 }

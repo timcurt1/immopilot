@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { LogIn, LogOut } from "lucide-react";
+import { LogOut, LogIn } from "lucide-react";
+import { Logo } from "@/components/marketing/Logo";
 import { SidebarNav } from "./SidebarNav";
-import { LogoMark } from "@/components/marketing/Logo";
 import { getSupabaseUser, supabaseConfigured } from "@/lib/supabaseServer";
 import { signOut } from "@/lib/actions";
 
@@ -9,28 +9,30 @@ export async function Sidebar() {
   const user = supabaseConfigured ? await getSupabaseUser() : null;
 
   return (
-    <aside className="glass sidebar">
-      <Link href="/dashboard" className="logoLine">
-        <div className="logoBox">
-          <LogoMark size={24} />
-        </div>
-        <div>
-          <b>ImmoPilot</b>
-          <span>Espace agence</span>
-        </div>
+    <aside className="hidden lg:flex flex-col w-64 shrink-0 border-r border-line bg-white h-screen sticky top-0">
+      <Link href="/dashboard" className="flex items-center px-5 py-5 border-b border-line">
+        <Logo />
       </Link>
       <SidebarNav />
-      {user ? (
-        <form action={signOut}>
-          <button className="btn ghost" style={{ width: "100%" }} type="submit">
-            <LogOut size={16} /> Se déconnecter
-          </button>
-        </form>
-      ) : (
-        <Link href="/login" className="btn primary">
-          <LogIn size={16} /> Se connecter
-        </Link>
-      )}
+      <div className="border-t border-line p-3">
+        {user ? (
+          <form action={signOut}>
+            <button
+              type="submit"
+              className="w-full flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-soft hover:bg-surface hover:text-ink transition-colors"
+            >
+              <LogOut size={16} /> Se déconnecter
+            </button>
+          </form>
+        ) : (
+          <Link
+            href="/login"
+            className="w-full flex items-center justify-center gap-2 rounded-lg bg-ink text-white px-3 py-2.5 text-sm font-semibold hover:bg-brand-700 transition-colors"
+          >
+            <LogIn size={16} /> Se connecter
+          </Link>
+        )}
+      </div>
     </aside>
   );
 }

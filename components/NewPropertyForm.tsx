@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createProperty } from "@/lib/actions";
+import { Field, inputClass } from "@/components/ui/Field";
 
 export function NewPropertyForm() {
   const router = useRouter();
@@ -29,27 +30,27 @@ export function NewPropertyForm() {
   }
 
   return (
-    <section className="glass" style={{ padding: 24, maxWidth: 560 }}>
-      <div className="field">
-        <label>Titre</label>
-        <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="T2 — Paris 11e" />
-      </div>
-      <div className="field">
-        <label>Adresse</label>
-        <input value={address} onChange={(e) => setAddress(e.target.value)} placeholder="12 rue de la République" />
-      </div>
-      <div className="field">
-        <label>Ville</label>
-        <input value={city} onChange={(e) => setCity(e.target.value)} placeholder="Paris" />
-      </div>
-      <div className="field">
-        <label>Loyer (€ CC)</label>
-        <input type="number" value={rent} onChange={(e) => setRent(e.target.value)} placeholder="1250" />
-      </div>
-      <button className="btn primary" style={{ width: "100%" }} onClick={submit} disabled={pending}>
+    <section className="rounded-2xl border border-line bg-white p-6 max-w-xl">
+      <Field label="Titre">
+        <input className={inputClass} value={title} onChange={(e) => setTitle(e.target.value)} placeholder="T2 — Paris 11e" />
+      </Field>
+      <Field label="Adresse">
+        <input className={inputClass} value={address} onChange={(e) => setAddress(e.target.value)} placeholder="12 rue de la République" />
+      </Field>
+      <Field label="Ville">
+        <input className={inputClass} value={city} onChange={(e) => setCity(e.target.value)} placeholder="Paris" />
+      </Field>
+      <Field label="Loyer (€ CC)">
+        <input className={inputClass} type="number" value={rent} onChange={(e) => setRent(e.target.value)} placeholder="1250" />
+      </Field>
+      <button
+        onClick={submit}
+        disabled={pending}
+        className="w-full h-11 rounded-xl bg-ink text-white text-sm font-semibold hover:bg-brand-700 transition-colors disabled:opacity-60"
+      >
         {pending ? "Création…" : "Créer le bien"}
       </button>
-      {status && <p style={{ color: "var(--muted)", fontSize: 13, marginTop: 10 }}>{status}</p>}
+      {status && <p className="mt-3 text-sm text-muted">{status}</p>}
     </section>
   );
 }

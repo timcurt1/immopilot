@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Sidebar } from "@/components/Sidebar";
-import { Topbar } from "@/components/Topbar";
+import { AppShell } from "@/components/AppShell";
 import { MessagesClient } from "@/components/MessagesClient";
 import { getApplications } from "@/lib/data";
 
@@ -9,14 +8,8 @@ export const metadata: Metadata = { title: "Messages", robots: { index: false, f
 export default async function MessagesPage() {
   const applications = await getApplications();
   return (
-    <main className="appShell">
-      <Topbar title="Messages IA" subtitle="Modèles prêts à adapter par l’agent." />
-      <div className="layout">
-        <Sidebar />
-        <section className="main">
-          <MessagesClient applications={applications} />
-        </section>
-      </div>
-    </main>
+    <AppShell title="Messages IA" subtitle="Modèles prêts à adapter par l'agent.">
+      <MessagesClient applications={applications} />
+    </AppShell>
   );
 }

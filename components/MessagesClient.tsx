@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { Copy, Save } from "lucide-react";
 import { saveAIMessage } from "@/lib/actions";
 import type { Application } from "@/lib/types";
+import { Field, inputClass, textareaClass } from "@/components/ui/Field";
 
 const templates = [
   {
@@ -27,10 +29,10 @@ export function MessagesClient({ applications }: { applications: Application[] }
 
   if (!app) {
     return (
-      <section className="glass hero">
-        <span className="kicker">Assistant IA</span>
-        <h2>Aucune candidature</h2>
-        <p>Il n’y a pas encore de dossier candidat pour générer un message.</p>
+      <section className="rounded-2xl bg-ink text-white p-8">
+        <span className="text-xs font-semibold uppercase tracking-wide text-white/60">Assistant IA</span>
+        <h2 className="mt-3 font-display font-bold text-2xl">Aucune candidature</h2>
+        <p className="mt-3 text-sm text-white/70">Il n&rsquo;y a pas encore de dossier candidat pour générer un message.</p>
       </section>
     );
   }
@@ -46,48 +48,60 @@ export function MessagesClient({ applications }: { applications: Application[] }
   }
 
   return (
-    <div className="grid2">
-      <section className="glass hero">
-        <span className="kicker">Assistant IA</span>
-        <h2>
+    <div className="grid lg:grid-cols-2 gap-6 items-start">
+      <section className="rounded-2xl bg-ink text-white p-8">
+        <span className="text-xs font-semibold uppercase tracking-wide text-white/60">Assistant IA</span>
+        <h2 className="mt-3 font-display font-bold text-2xl tracking-tight leading-tight">
           Générer vite,
           <br />
-          <span className="grad">valider humainement.</span>
+          <span className="bg-gradient-to-r from-brand-300 to-violet-300 bg-clip-text text-transparent">
+            valider humainement.
+          </span>
         </h2>
-        <p>Les messages sont préparés par l’IA, mais l’agent garde toujours le contrôle avant envoi.</p>
-        <div className="grid2">
+        <p className="mt-3 text-sm text-white/70 leading-relaxed">
+          Les messages sont préparés par l&rsquo;IA, mais l&rsquo;agent garde toujours le contrôle avant envoi.
+        </p>
+        <div className="mt-6 grid sm:grid-cols-2 gap-3">
           {templates.map((t) => (
-            <button key={t.title} className="card" style={{ textAlign: "left" }} onClick={() => useTemplate(t.body)}>
-              <b>{t.title}</b>
-              <p>{t.body.slice(0, 90)}...</p>
+            <button
+              key={t.title}
+              onClick={() => useTemplate(t.body)}
+              className="text-left rounded-xl bg-white/10 hover:bg-white/15 transition-colors p-4"
+            >
+              <p className="text-sm font-semibold">{t.title}</p>
+              <p className="mt-1 text-xs text-white/60 leading-relaxed">{t.body.slice(0, 90)}...</p>
             </button>
           ))}
         </div>
       </section>
-      <section className="glass" style={{ padding: 24 }}>
-        <div className="field">
-          <label>Candidat</label>
-          <select value={candidateId} onChange={(e) => setCandidateId(e.target.value)}>
+      <section className="rounded-2xl border border-line bg-white p-6">
+        <Field label="Candidat">
+          <select className={inputClass} value={candidateId} onChange={(e) => setCandidateId(e.target.value)}>
             {applications.map((a) => (
               <option key={a.id} value={a.id}>
                 {a.first_name} {a.last_name}
               </option>
             ))}
           </select>
-        </div>
-        <div className="field">
-          <label>Message</label>
-          <textarea value={message} onChange={(e) => setMessage(e.target.value)} />
-        </div>
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-          <button className="btn primary" onClick={() => navigator.clipboard?.writeText(message)}>
-            Copier
+        </Field>
+        <Field label="Message">
+          <textarea className={`${textareaClass} min-h-[180px]`} value={message} onChange={(e) => setMessage(e.target.value)} />
+        </Field>
+        <div className="flex flex-wrap gap-2.5">
+          <button
+            onClick={() => navigator.clipboard?.writeText(message)}
+            className="inline-flex items-center gap-2 h-10 px-4 rounded-xl bg-ink text-white text-sm font-semibold hover:bg-brand-700 transition-colors"
+          >
+            <Copy size={15} /> Copier
           </button>
-          <button className="btn ghost" onClick={save}>
-            Enregistrer sur le dossier
+          <button
+            onClick={save}
+            className="inline-flex items-center gap-2 h-10 px-4 rounded-xl border border-line text-sm font-medium text-ink-soft hover:text-ink hover:border-ink/30 transition-colors"
+          >
+            <Save size={15} /> Enregistrer sur le dossier
           </button>
         </div>
-        {status && <p style={{ color: "var(--muted)", fontSize: 13, marginTop: 10 }}>{status}</p>}
+        {status && <p className="mt-3 text-sm text-muted">{status}</p>}
       </section>
     </div>
   );

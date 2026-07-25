@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Sidebar } from "@/components/Sidebar";
-import { Topbar } from "@/components/Topbar";
+import { AppShell } from "@/components/AppShell";
 import { MetricCard } from "@/components/MetricCard";
 import { ActionList } from "@/components/ActionList";
 import { getApplications, getDocuments, getTasks, completionRate } from "@/lib/data";
@@ -16,41 +15,39 @@ export default async function DashboardPage() {
   const signatures = applications.filter((a) => a.signature_probability >= 75).length;
 
   return (
-    <main className="appShell">
-      <Topbar title="Dashboard agence" subtitle="Actions du jour, dossiers prêts et priorités." />
-      <div className="layout">
-        <Sidebar />
-        <section className="main">
-          <div className="grid4">
-            <MetricCard label="Actions ouvertes" value={tasks.length} chip="à traiter" tone="amber" />
-            <MetricCard label="Dossiers prêts" value={ready} chip="validation" tone="green" />
-            <MetricCard label="Documents à traiter" value={missing} chip="relances" tone="amber" />
-            <MetricCard label="Signatures probables" value={signatures} chip="business" tone="green" />
-          </div>
-          <div className="grid2">
-            <section className="glass hero">
-              <span className="kicker">Daily Operations</span>
-              <h2>
-                Ouvrir l’app
-                <br />
-                <span className="grad">et savoir quoi faire.</span>
-              </h2>
-              <p>
-                La version SaaS transforme chaque candidature en action concrète : relancer, demander un document, confirmer
-                une visite ou valider le dossier.
-              </p>
-              <div className="notice">
-                <b>Prochaine étape recommandée</b>
-                <p>{tasks[0]?.title || "Aucune action urgente."}</p>
-              </div>
-            </section>
-            <section className="glass" style={{ padding: 14 }}>
-              <h3 style={{ marginTop: 0, color: "var(--navy)" }}>Tâches du jour</h3>
-              <ActionList tasks={tasks} applications={applications} documents={documents} />
-            </section>
-          </div>
-        </section>
+    <AppShell title="Tableau de bord" subtitle="Actions du jour, dossiers prêts et priorités.">
+      <div className="grid gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <MetricCard label="Actions ouvertes" value={tasks.length} chip="à traiter" tone="amber" />
+          <MetricCard label="Dossiers prêts" value={ready} chip="validation" tone="green" />
+          <MetricCard label="Documents à traiter" value={missing} chip="relances" tone="amber" />
+          <MetricCard label="Signatures probables" value={signatures} chip="business" tone="green" />
+        </div>
+        <div className="grid lg:grid-cols-2 gap-6">
+          <section className="rounded-2xl bg-ink text-white p-8">
+            <span className="text-xs font-semibold uppercase tracking-wide text-white/60">Daily Operations</span>
+            <h2 className="mt-3 font-display font-bold text-3xl tracking-tight leading-tight">
+              Ouvrir l&rsquo;app
+              <br />
+              <span className="bg-gradient-to-r from-brand-300 to-violet-300 bg-clip-text text-transparent">
+                et savoir quoi faire.
+              </span>
+            </h2>
+            <p className="mt-4 text-sm text-white/70 leading-relaxed">
+              La version SaaS transforme chaque candidature en action concrète : relancer, demander un document, confirmer
+              une visite ou valider le dossier.
+            </p>
+            <div className="mt-6 rounded-xl bg-white/10 p-4">
+              <p className="text-sm font-semibold">Prochaine étape recommandée</p>
+              <p className="mt-1 text-sm text-white/80">{tasks[0]?.title || "Aucune action urgente."}</p>
+            </div>
+          </section>
+          <section className="rounded-2xl border border-line bg-white p-5">
+            <h3 className="font-display font-bold text-lg text-ink mb-4">Tâches du jour</h3>
+            <ActionList tasks={tasks} applications={applications} documents={documents} />
+          </section>
+        </div>
       </div>
-    </main>
+    </AppShell>
   );
 }
