@@ -35,9 +35,9 @@ export default function OpengraphImage() {
             }}
           >
             <svg width="36" height="36" viewBox="0 0 32 32" fill="none">
-              <path d="M26.34 14.18A10.5 10.5 0 1 1 21.25 6.9" stroke="#0b1220" strokeWidth="2.8" strokeLinecap="round" />
-              <path d="M20.5 10.64A7 7 0 0 1 22.58 13.61" stroke="#0b1220" strokeWidth="2.2" strokeLinecap="round" />
-              <circle cx="24.6" cy="9.98" r="2.6" fill="#3557ff" />
+              <path d="M22.75 24.04A10.5 10.5 0 1 1 15.08 5.54" stroke="#0b1220" strokeWidth="2.8" strokeLinecap="round" />
+              <path d="M25.52 11.56A10.5 10.5 0 0 1 26.5 16" stroke="#0b1220" strokeWidth="2.8" strokeLinecap="round" />
+              <circle cx="22.02" cy="7.4" r="2.7" fill="#3557ff" />
             </svg>
           </div>
           <div style={{ fontSize: 40, fontWeight: 800, color: "white", letterSpacing: -1 }}>immoPILOT</div>

@@ -45,9 +45,9 @@ export function LogoMark({
   const ringColor = tone === "dark" ? "#0b1220" : "#ffffff";
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true" className={`shrink-0 ${className}`}>
-      <path d="M26.34 14.18A10.5 10.5 0 1 1 21.25 6.9" stroke={ringColor} strokeWidth="2.8" strokeLinecap="round" />
-      <path d="M20.5 10.64A7 7 0 0 1 22.58 13.61" stroke={ringColor} strokeWidth="2.2" strokeLinecap="round" />
-      <circle cx="24.6" cy="9.98" r="2.6" fill="#3557ff" />
+      <path d="M22.75 24.04A10.5 10.5 0 1 1 15.08 5.54" stroke={ringColor} strokeWidth="2.8" strokeLinecap="round" />
+      <path d="M25.52 11.56A10.5 10.5 0 0 1 26.5 16" stroke={ringColor} strokeWidth="2.8" strokeLinecap="round" />
+      <circle cx="22.02" cy="7.4" r="2.7" fill="#3557ff" />
     </svg>
   );
 }
@@ -57,9 +57,9 @@ export function LogoBadge({ size = 32 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true">
       <rect width="32" height="32" rx="9" fill="#fafaf9" />
-      <path d="M26.34 14.18A10.5 10.5 0 1 1 21.25 6.9" stroke="#0b1220" strokeWidth="2.8" strokeLinecap="round" />
-      <path d="M20.5 10.64A7 7 0 0 1 22.58 13.61" stroke="#0b1220" strokeWidth="2.2" strokeLinecap="round" />
-      <circle cx="24.6" cy="9.98" r="2.6" fill="#3557ff" />
+      <path d="M22.75 24.04A10.5 10.5 0 1 1 15.08 5.54" stroke="#0b1220" strokeWidth="2.8" strokeLinecap="round" />
+      <path d="M25.52 11.56A10.5 10.5 0 0 1 26.5 16" stroke="#0b1220" strokeWidth="2.8" strokeLinecap="round" />
+      <circle cx="22.02" cy="7.4" r="2.7" fill="#3557ff" />
     </svg>
   );
 }
