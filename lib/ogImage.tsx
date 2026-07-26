@@ -25,19 +25,19 @@ export function renderOgImage(eyebrow: string, title: string) {
               width: 56,
               height: 56,
               borderRadius: 16,
-              background: "linear-gradient(135deg, #3557FF, #5B3CCF)",
+              background: "#fafaf9",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <path d="M8 22C14 22 20 20 25 10" stroke="white" strokeWidth="2.8" strokeLinecap="round" fill="none" />
-              <path d="M20 8.5L25.5 9.5L24 15" stroke="white" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-              <circle cx="8" cy="22" r="2.8" fill="white" />
+              <path d="M26.34 14.18A10.5 10.5 0 1 1 21.25 6.9" stroke="#0b1220" strokeWidth="2.8" strokeLinecap="round" />
+              <path d="M20.5 10.64A7 7 0 0 1 22.58 13.61" stroke="#0b1220" strokeWidth="2.2" strokeLinecap="round" />
+              <circle cx="24.6" cy="9.98" r="2.6" fill="#3557ff" />
             </svg>
           </div>
-          <div style={{ fontSize: 32, fontWeight: 800, color: "white", letterSpacing: -1 }}>ImmoPilot</div>
+          <div style={{ fontSize: 32, fontWeight: 800, color: "white", letterSpacing: -1 }}>immoPILOT</div>
         </div>
         <div style={{ display: "flex", fontSize: 22, fontWeight: 700, color: "#93a5ff", marginBottom: 16, textTransform: "uppercase", letterSpacing: 2 }}>
           {eyebrow}
