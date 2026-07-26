@@ -126,6 +126,38 @@ export function RevealMask({
   );
 }
 
+const POP_EASE = [0.34, 1.56, 0.64, 1] as const;
+
+/**
+ * Springy scale+rotate entrance for icon badges. Self-triggering (its own
+ * whileInView), so it works whether it's nested inside a Reveal, a
+ * RevealGroup/RevealItem, or standalone — used to give feature/topic grid
+ * icons a bit more character than the surrounding fade-up without
+ * overshadowing it (icon settles slightly ahead of the card text).
+ */
+export function IconPop({
+  children,
+  className = "",
+  delay = 0,
+}: {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+}) {
+  const reduced = useReducedMotion();
+  return (
+    <motion.div
+      className={className}
+      initial={reduced ? undefined : { opacity: 0, scale: 0.5, rotate: -10 }}
+      whileInView={reduced ? undefined : { opacity: 1, scale: 1, rotate: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.5, delay, ease: POP_EASE }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 /**
  * Subtle scroll-linked depth for hero/product-demo imagery: a slow vertical
  * drift plus a very light scale-down as the element passes through the

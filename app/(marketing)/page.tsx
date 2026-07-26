@@ -34,7 +34,7 @@ import { UseCaseTabs } from "@/components/marketing/UseCaseTabs";
 import { FaqAccordion } from "@/components/marketing/FaqAccordion";
 import { PricingCards } from "@/components/marketing/PricingCards";
 import { BeforeAfterSlider } from "@/components/marketing/BeforeAfterSlider";
-import { Reveal, RevealGroup, RevealItem, RevealMask, ScrollDepth } from "@/components/marketing/Reveal";
+import { Reveal, RevealGroup, RevealItem, RevealMask, ScrollDepth, IconPop } from "@/components/marketing/Reveal";
 import { AmbientBackground } from "@/components/marketing/AmbientBackground";
 import { Spotlight } from "@/components/marketing/Spotlight";
 import { LiveTicker } from "@/components/marketing/LiveTicker";
@@ -311,9 +311,9 @@ export default function HomePage() {
                 style={{ "--glow": tone.glow } as CSSProperties}
                 className={`group rounded-2xl border border-line bg-white p-6 flex flex-col transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_55px_var(--glow)] ${tone.ring}`}
               >
-                <div className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl ${tone.bg} ${tone.text} transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6`}>
+                <IconPop className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl ${tone.bg} ${tone.text} transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6`}>
                   <f.icon size={20} />
-                </div>
+                </IconPop>
                 <p className="font-semibold text-ink mb-2 leading-snug">{f.title}</p>
                 <p className="text-sm text-muted leading-relaxed mb-4 flex-1">{f.body}</p>
                 <Link href={f.href} className={`text-sm font-semibold ${tone.text} inline-flex items-center gap-1 group-hover:gap-2 transition-all`}>
@@ -405,9 +405,9 @@ export default function HomePage() {
                 style={{ "--glow": tone.glow } as CSSProperties}
                 className="rounded-2xl border border-line bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_var(--glow)]"
               >
-                <div className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl ${BOLD_TONE[b.tone]} text-white transition-transform duration-300 hover:scale-110 hover:rotate-6`}>
+                <IconPop className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl ${BOLD_TONE[b.tone]} text-white transition-transform duration-300 hover:scale-110 hover:rotate-6`}>
                   <b.icon size={19} />
-                </div>
+                </IconPop>
                 <p className="font-semibold text-ink mb-2">{b.title}</p>
                 <p className="text-sm text-muted leading-relaxed">{b.body}</p>
               </RevealItem>
@@ -484,9 +484,11 @@ export default function HomePage() {
             </Button>
           </Reveal>
           <Reveal delay={0.15} y={24} className="relative overflow-hidden rounded-2xl bg-ink text-white p-8">
-            <AmbientBackground tone="dark" grid={false} />
+            <AmbientBackground tone="dark" grid={false} parallax />
             <div className="relative">
-              <ShieldCheck size={28} className="mb-4 text-brand-300" />
+              <IconPop className="mb-4 inline-flex text-brand-300">
+                <ShieldCheck size={28} />
+              </IconPop>
               <p className="font-display font-bold text-xl mb-3">
                 ImmoPilot assiste vos collaborateurs. Il ne remplace pas leur jugement.
               </p>
@@ -607,11 +609,13 @@ export default function HomePage() {
       <Section className="!py-0">
         <Reveal y={28}>
           <Spotlight dark className="relative overflow-hidden rounded-3xl bg-ink text-white px-8 py-16 md:py-20 text-center">
-            <AmbientBackground tone="dark" />
+            <AmbientBackground tone="dark" parallax />
             <div className="relative">
-              <h2 className="font-display font-bold text-3xl md:text-5xl tracking-tight mb-5 max-w-2xl mx-auto">
-                Et si votre agence retrouvait du temps pour ce qui compte vraiment ?
-              </h2>
+              <RevealMask className="mb-5">
+                <h2 className="font-display font-bold text-3xl md:text-5xl tracking-tight max-w-2xl mx-auto">
+                  Et si votre agence retrouvait du temps pour ce qui compte vraiment ?
+                </h2>
+              </RevealMask>
               <p className="text-white/70 max-w-xl mx-auto mb-8">
                 Découvrez comment ImmoPilot peut s'adapter à vos équipes, à vos outils et à vos processus actuels.
               </p>

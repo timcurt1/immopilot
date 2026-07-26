@@ -3,6 +3,7 @@
 import { useState, type CSSProperties } from "react";
 import { Building2, KeyRound, LineChart, Network, Users } from "lucide-react";
 import { BOLD_TONE, TONE_CLASSES, toneAt } from "./tones";
+import { ScrollDepth } from "./Reveal";
 
 const TABS = [
   {
@@ -120,7 +121,7 @@ export function UseCaseTabs() {
             ))}
           </ul>
         </div>
-        <div className="rounded-xl bg-surface border border-line p-5">
+        <ScrollDepth strength={14} className="rounded-xl bg-surface border border-line p-5">
           <div className="rounded-lg bg-white border border-line p-4 mb-3">
             <p className="text-[11px] text-muted mb-2 uppercase tracking-wide font-semibold">Vue {current.label.toLowerCase()}</p>
             <div className="grid gap-2">
@@ -135,7 +136,7 @@ export function UseCaseTabs() {
             </div>
           </div>
           <p className="text-[11px] text-muted text-center">Aperçu illustratif de l'interface ImmoPilot</p>
-        </div>
+        </ScrollDepth>
       </div>
     </div>
   );

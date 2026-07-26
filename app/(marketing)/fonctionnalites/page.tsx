@@ -5,7 +5,7 @@ import {
   CheckCircle2, Calendar, ListChecks, Search, BarChart3, Settings, ShieldCheck, UserCog,
 } from "lucide-react";
 import { PageHero } from "@/components/marketing/PageHero";
-import { Reveal } from "@/components/marketing/Reveal";
+import { Reveal, IconPop } from "@/components/marketing/Reveal";
 import { Badge } from "@/components/marketing/Badge";
 import { TONE_CLASSES, toneAt } from "@/components/marketing/tones";
 
@@ -186,11 +186,11 @@ export default function FonctionnalitesPage() {
               return (
                 <Reveal key={f.id}>
                   <section id={f.id} className="scroll-mt-24 grid md:grid-cols-[auto_1fr] gap-6 group">
-                    <div
+                    <IconPop
                       className={`flex h-12 w-12 items-center justify-center rounded-2xl ${tone.bg} ${tone.text} shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6`}
                     >
                       <f.icon size={22} />
-                    </div>
+                    </IconPop>
                     <div>
                       <h2 className="font-display font-bold text-2xl text-ink tracking-tight mb-3">{f.title}</h2>
                       <p className="text-ink-soft leading-relaxed mb-4">{f.body}</p>

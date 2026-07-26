@@ -5,7 +5,7 @@ import {
 } from "lucide-react";
 import { PageHero } from "@/components/marketing/PageHero";
 import { Section, Eyebrow } from "@/components/marketing/Section";
-import { Reveal, RevealGroup, RevealItem } from "@/components/marketing/Reveal";
+import { Reveal, RevealGroup, RevealItem, IconPop } from "@/components/marketing/Reveal";
 import { Button } from "@/components/marketing/Button";
 import { Spotlight } from "@/components/marketing/Spotlight";
 import { TONE_CLASSES, toneAt } from "@/components/marketing/tones";
@@ -50,9 +50,9 @@ export default function SecuritePage() {
             const tone = TONE_CLASSES[toneAt(i)];
             return (
               <RevealItem key={t.title} className="rounded-2xl border border-line bg-white p-6">
-                <div className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl ${tone.bg} ${tone.text}`}>
+                <IconPop className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl ${tone.bg} ${tone.text}`}>
                   <t.icon size={19} />
-                </div>
+                </IconPop>
                 <p className="font-semibold text-ink mb-2">{t.title}</p>
                 <p className="text-sm text-muted leading-relaxed">{t.body}</p>
               </RevealItem>
