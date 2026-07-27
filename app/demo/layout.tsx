@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FlaskConical, ArrowRight } from "lucide-react";
 import { DemoSidebar } from "@/components/demo/DemoSidebar";
 import { DemoMobileNav } from "@/components/demo/DemoMobileNav";
+import { DemoPageTransition } from "@/components/demo/DemoPageTransition";
 
 export const metadata: Metadata = {
   title: { default: "Démo interactive", template: "%s — Démo ImmoPilot" },
@@ -25,7 +26,9 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
       <DemoMobileNav />
       <div className="flex">
         <DemoSidebar />
-        <main className="flex-1 min-w-0">{children}</main>
+        <main className="flex-1 min-w-0">
+          <DemoPageTransition>{children}</DemoPageTransition>
+        </main>
       </div>
     </div>
   );

@@ -2,16 +2,23 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 import { Search } from "lucide-react";
 import { DemoPageHeader } from "@/components/demo/DemoPageHeader";
 import { StatusBadge } from "@/components/demo/StatusBadge";
 import { DEMO_PROSPECTS } from "@/lib/demoContent";
+
+const ROW_VARIANTS = {
+  hidden: { opacity: 0, y: 8 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] as const } },
+};
 
 const STATUSES = ["Tous", "Nouveau", "Qualifié", "À relancer", "Dossier en cours", "Prêt à valider"];
 
 export default function DemoProspectsPage() {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("Tous");
+  const reduced = useReducedMotion();
 
   const filtered = useMemo(() => {
     return DEMO_PROSPECTS.filter((p) => {
@@ -66,9 +73,17 @@ export default function DemoProspectsPage() {
                 <th className="px-5 py-3 font-semibold">Collaborateur</th>
               </tr>
             </thead>
-            <tbody>
+            <motion.tbody
+              initial="hidden"
+              animate="show"
+              variants={{ hidden: {}, show: { transition: { staggerChildren: reduced ? 0 : 0.035 } } }}
+            >
               {filtered.map((p) => (
-                <tr key={p.id} className="border-b border-line last:border-0 hover:bg-surface/60 transition-colors">
+                <motion.tr
+                  key={p.id}
+                  variants={ROW_VARIANTS}
+                  className="border-b border-line last:border-0 hover:bg-surface/60 transition-colors"
+                >
                   <td className="px-5 py-3.5">
                     <Link href={`/demo/prospects/${p.id}`} className="font-medium text-ink hover:text-brand-600">
                       {p.firstName} {p.lastName}
@@ -88,7 +103,7 @@ export default function DemoProspectsPage() {
                   </td>
                   <td className="px-5 py-3.5 text-ink-soft">{p.lastInteraction}</td>
                   <td className="px-5 py-3.5 text-ink-soft">{p.assignedTo}</td>
-                </tr>
+                </motion.tr>
               ))}
               {filtered.length === 0 && (
                 <tr>
@@ -97,7 +112,7 @@ export default function DemoProspectsPage() {
                   </td>
                 </tr>
               )}
-            </tbody>
+            </motion.tbody>
           </table>
         </div>
       </div>

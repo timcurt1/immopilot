@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 import {
   LayoutDashboard, Users, Building2, FolderOpen, Calendar, ListChecks,
   MessageSquare, Workflow, BarChart3, Sparkles, Settings, HelpCircle, LogOut, ArrowRight,
@@ -41,12 +42,19 @@ export function DemoSidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                active ? "bg-ink text-white" : "text-ink-soft hover:bg-surface hover:text-ink"
+              className={`relative flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                active ? "text-white" : "text-ink-soft hover:bg-surface hover:text-ink"
               }`}
             >
-              <item.icon size={16} />
-              {item.label}
+              {active && (
+                <motion.span
+                  layoutId="demo-nav-active-pill"
+                  className="absolute inset-0 rounded-lg bg-ink"
+                  transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                />
+              )}
+              <item.icon size={16} className="relative z-10" />
+              <span className="relative z-10">{item.label}</span>
             </Link>
           );
         })}

@@ -1,15 +1,16 @@
 import { Building2, MapPin } from "lucide-react";
 import { DemoPageHeader } from "@/components/demo/DemoPageHeader";
 import { StatusBadge } from "@/components/demo/StatusBadge";
+import { MountStagger, MountItem } from "@/components/demo/MountStagger";
 import { DEMO_PROPERTIES } from "@/lib/demoContent";
 
 export default function DemoBiensPage() {
   return (
     <>
       <DemoPageHeader title="Biens" description={`${DEMO_PROPERTIES.length} biens suivis par l'agence`} />
-      <div className="px-6 md:px-8 pb-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <MountStagger className="px-6 md:px-8 pb-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {DEMO_PROPERTIES.map((p) => (
-          <div key={p.id} className="rounded-2xl border border-line bg-white overflow-hidden">
+          <MountItem key={p.id} className="rounded-2xl border border-line bg-white overflow-hidden">
             <div className="h-24 bg-gradient-to-br from-brand-600 to-violet-500 flex items-center justify-center">
               <Building2 size={28} className="text-white/80" />
             </div>
@@ -26,9 +27,9 @@ export default function DemoBiensPage() {
                 <span className="font-semibold text-ink">{p.price}</span>
               </div>
             </div>
-          </div>
+          </MountItem>
         ))}
-      </div>
+      </MountStagger>
     </>
   );
 }

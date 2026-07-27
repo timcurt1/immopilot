@@ -2,6 +2,7 @@ import Link from "next/link";
 import { FileWarning } from "lucide-react";
 import { DemoPageHeader } from "@/components/demo/DemoPageHeader";
 import { StatusBadge } from "@/components/demo/StatusBadge";
+import { MountStagger, MountItem } from "@/components/demo/MountStagger";
 import { DEMO_PROSPECTS } from "@/lib/demoContent";
 
 export default function DemoDossiersPage() {
@@ -10,11 +11,11 @@ export default function DemoDossiersPage() {
   return (
     <>
       <DemoPageHeader title="Dossiers" description="Suivi documentaire des prospects et candidats" />
-      <div className="px-6 md:px-8 pb-12 grid gap-4">
+      <MountStagger className="px-6 md:px-8 pb-12 grid gap-4">
         {dossiers.map((p) => {
           const missing = p.documents.filter((d) => d.status !== "validé");
           return (
-            <div key={p.id} className="rounded-2xl border border-line bg-white p-5">
+            <MountItem key={p.id} className="rounded-2xl border border-line bg-white p-5">
               <div className="flex items-center justify-between mb-4">
                 <Link href={`/demo/prospects/${p.id}`} className="font-semibold text-ink hover:text-brand-600">
                   {p.firstName} {p.lastName}
@@ -34,10 +35,10 @@ export default function DemoDossiersPage() {
               ) : (
                 <p className="text-xs text-green-700">Dossier complet.</p>
               )}
-            </div>
+            </MountItem>
           );
         })}
-      </div>
+      </MountStagger>
     </>
   );
 }
