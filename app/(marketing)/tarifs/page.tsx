@@ -52,11 +52,15 @@ export default function TarifsPage() {
       </Section>
 
       <Section surface className="!pt-0">
-        <div className="max-w-2xl mb-10">
-          <Eyebrow>Comparatif détaillé</Eyebrow>
-          <h2 className="font-display font-bold text-3xl text-ink tracking-tight">Toutes les fonctionnalités, formule par formule.</h2>
-        </div>
-        <Reveal>
+        <RevealGroup className="max-w-2xl mb-10">
+          <RevealItem y={12} scale={false}>
+            <Eyebrow>Comparatif détaillé</Eyebrow>
+          </RevealItem>
+          <RevealItem className="font-display font-bold text-3xl text-ink tracking-tight" scale>
+            <h2>Toutes les fonctionnalités, formule par formule.</h2>
+          </RevealItem>
+        </RevealGroup>
+        <Reveal delay={0.1}>
           <PricingComparisonTable />
         </Reveal>
       </Section>

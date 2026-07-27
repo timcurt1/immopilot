@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Target, Sparkles, ShieldCheck, Users, Handshake, TrendingUp } from "lucide-react";
 import { PageHero } from "@/components/marketing/PageHero";
 import { Section } from "@/components/marketing/Section";
-import { Reveal, RevealGroup, RevealItem } from "@/components/marketing/Reveal";
+import { Reveal, RevealGroup, RevealItem, IconPop } from "@/components/marketing/Reveal";
 import { Button } from "@/components/marketing/Button";
 import { OrbitIllustration } from "@/components/marketing/illustrations/OrbitIllustration";
 import { BOLD_TONE, toneAt } from "@/components/marketing/tones";
@@ -49,18 +49,22 @@ export default function AProposPage() {
       </Section>
 
       <Section surface>
-        <div className="max-w-2xl mb-14">
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-3">Nos valeurs</p>
-          <h2 className="font-display font-bold text-3xl text-ink tracking-tight">Ce qui guide chaque décision produit.</h2>
-        </div>
+        <RevealGroup className="max-w-2xl mb-14">
+          <RevealItem y={12} scale={false}>
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-3">Nos valeurs</p>
+          </RevealItem>
+          <RevealItem className="font-display font-bold text-3xl text-ink tracking-tight" scale>
+            <h2>Ce qui guide chaque décision produit.</h2>
+          </RevealItem>
+        </RevealGroup>
         <RevealGroup className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {VALUES.map((v, i) => (
             <RevealItem key={v.title} className="group rounded-2xl border border-line bg-white p-6 transition-all duration-300 hover:-translate-y-1">
-              <div
+              <IconPop
                 className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl ${BOLD_TONE[toneAt(i)]} text-white transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6`}
               >
                 <v.icon size={19} />
-              </div>
+              </IconPop>
               <p className="font-semibold text-ink mb-2">{v.title}</p>
               <p className="text-sm text-muted leading-relaxed">{v.body}</p>
             </RevealItem>

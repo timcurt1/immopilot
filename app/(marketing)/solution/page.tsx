@@ -4,7 +4,7 @@ import { ArrowRight, CheckCircle2, Inbox, FileSearch, Sparkles, UserCheck, Plug,
 import { Section, Eyebrow } from "@/components/marketing/Section";
 import { PageHero } from "@/components/marketing/PageHero";
 import { Button } from "@/components/marketing/Button";
-import { Reveal, RevealGroup, RevealItem } from "@/components/marketing/Reveal";
+import { Reveal, RevealGroup, RevealItem, IconPop } from "@/components/marketing/Reveal";
 import { FlowIllustration } from "@/components/marketing/illustrations/FlowIllustration";
 import { Spotlight } from "@/components/marketing/Spotlight";
 import { ScrollDrawLine } from "@/components/marketing/ScrollDrawLine";
@@ -71,12 +71,14 @@ export default function SolutionPage() {
       </Section>
 
       <Section>
-        <div className="max-w-2xl mb-10">
-          <Eyebrow>Fonctionnement</Eyebrow>
-          <h2 className="font-display font-bold text-3xl text-ink tracking-tight">
-            Un flux d'information simple, de la demande à l'action.
-          </h2>
-        </div>
+        <RevealGroup className="max-w-2xl mb-10">
+          <RevealItem y={12} scale={false}>
+            <Eyebrow>Fonctionnement</Eyebrow>
+          </RevealItem>
+          <RevealItem className="font-display font-bold text-3xl text-ink tracking-tight" scale>
+            <h2>Un flux d'information simple, de la demande à l'action.</h2>
+          </RevealItem>
+        </RevealGroup>
         <Reveal>
           <div className="max-w-xl mx-auto mb-14">
             <FlowIllustration />
@@ -86,9 +88,9 @@ export default function SolutionPage() {
           <ScrollDrawLine top="top-7" inset="left-[12%] right-[12%]" />
           {FLOW_STEPS.map((s) => (
             <RevealItem key={s.title} className="relative rounded-2xl border border-line bg-white p-6">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-ink text-white relative z-10">
+              <IconPop className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-ink text-white relative z-10">
                 <s.icon size={20} />
-              </div>
+              </IconPop>
               <p className="font-semibold text-ink mb-1.5">{s.title}</p>
               <p className="text-sm text-muted leading-relaxed">{s.body}</p>
             </RevealItem>

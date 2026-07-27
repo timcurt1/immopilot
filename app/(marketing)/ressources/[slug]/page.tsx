@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Clock } from "lucide-react";
 import { Section } from "@/components/marketing/Section";
 import { Badge } from "@/components/marketing/Badge";
-import { Reveal } from "@/components/marketing/Reveal";
+import { Reveal, RevealGroup, RevealItem } from "@/components/marketing/Reveal";
 import { Button } from "@/components/marketing/Button";
 import { ReadingProgressBar } from "@/components/marketing/ReadingProgressBar";
 import { ARTICLES, getArticle } from "@/lib/articles";
@@ -73,29 +73,32 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
               <p className="text-sm text-muted mb-5">Découvrez comment ces principes s'appliquent concrètement dans votre agence.</p>
               <Button href="/demande-demo">Demander une démonstration</Button>
             </div>
-
-            {related.length > 0 && (
-              <div className="mt-16">
-                <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-4">À lire aussi</p>
-                <div className="grid gap-3">
-                  {related.map((a) => (
-                    <Link
-                      key={a.slug}
-                      href={`/ressources/${a.slug}`}
-                      className="group flex items-center justify-between gap-4 rounded-xl border border-line bg-white px-5 py-4 hover:border-brand-200 transition-colors"
-                    >
-                      <div className="min-w-0">
-                        <p className="text-sm font-semibold text-ink truncate">{a.title}</p>
-                        <p className="text-xs text-muted mt-0.5">{a.category}</p>
-                      </div>
-                      <ArrowRight size={15} className="text-muted shrink-0 group-hover:text-brand-600 group-hover:translate-x-0.5 transition-all" />
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
         </Reveal>
+
+        {related.length > 0 && (
+          <div className="max-w-2xl mx-auto mt-16">
+            <Reveal y={12} scale={false}>
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-4">À lire aussi</p>
+            </Reveal>
+            <RevealGroup className="grid gap-3">
+              {related.map((a) => (
+                <RevealItem key={a.slug} y={12}>
+                  <Link
+                    href={`/ressources/${a.slug}`}
+                    className="group flex items-center justify-between gap-4 rounded-xl border border-line bg-white px-5 py-4 hover:border-brand-200 transition-colors"
+                  >
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-ink truncate">{a.title}</p>
+                      <p className="text-xs text-muted mt-0.5">{a.category}</p>
+                    </div>
+                    <ArrowRight size={15} className="text-muted shrink-0 group-hover:text-brand-600 group-hover:translate-x-0.5 transition-all" />
+                  </Link>
+                </RevealItem>
+              ))}
+            </RevealGroup>
+          </div>
+        )}
       </Section>
 
       <script

@@ -2,6 +2,7 @@ import { Check } from "lucide-react";
 import { PLAN_ORDER, PRICING_PLANS } from "@/lib/marketingContent";
 import { Button } from "./Button";
 import { Spotlight } from "./Spotlight";
+import { RevealGroup, RevealItem } from "./Reveal";
 
 const ACCENT: Record<string, string> = {
   essentiel: "text-teal-600",
@@ -11,7 +12,7 @@ const ACCENT: Record<string, string> = {
 
 export function PricingCards() {
   return (
-    <div className="grid md:grid-cols-3 gap-6 items-stretch">
+    <RevealGroup className="grid md:grid-cols-3 gap-6 items-stretch" stagger={0.12}>
       {PLAN_ORDER.map((id) => {
         const plan = PRICING_PLANS[id];
         const card = (
@@ -53,7 +54,7 @@ export function PricingCards() {
         );
 
         return (
-          <div key={id} className="h-full">
+          <RevealItem key={id} className="h-full" y={20}>
             {plan.highlighted ? (
               <Spotlight dark className="h-full rounded-2xl">
                 {card}
@@ -61,9 +62,9 @@ export function PricingCards() {
             ) : (
               card
             )}
-          </div>
+          </RevealItem>
         );
       })}
-    </div>
+    </RevealGroup>
   );
 }

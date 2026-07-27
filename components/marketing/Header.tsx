@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
 import { Button } from "./Button";
@@ -109,36 +109,57 @@ export function Header() {
         </button>
       </div>
 
-      {open && (
-        <div className="lg:hidden border-t border-line bg-white px-6 py-6">
-          <nav className="grid gap-1 mb-6" aria-label="Navigation mobile">
-            {NAV.map((item) => {
-              const active = pathname.startsWith(item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  aria-current={active ? "page" : undefined}
-                  className={`py-3 px-2 text-base font-medium border-b border-line last:border-0 ${
-                    active ? "text-brand-600" : "text-ink"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
-          <div className="grid gap-3">
-            <Button href="/demande-demo" size="lg" className="w-full" onClick={() => setOpen(false)}>
-              Demander une démo
-            </Button>
-            <Button href="/login" variant="secondary" size="lg" className="w-full" onClick={() => setOpen(false)}>
-              Se connecter
-            </Button>
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:hidden border-t border-line bg-white overflow-hidden"
+          >
+            <div className="px-6 py-6">
+              <nav className="grid gap-1 mb-6" aria-label="Navigation mobile">
+                {NAV.map((item, i) => {
+                  const active = pathname.startsWith(item.href);
+                  return (
+                    <motion.div
+                      key={item.href}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.25, delay: 0.03 * i }}
+                    >
+                      <Link
+                        href={item.href}
+                        onClick={() => setOpen(false)}
+                        aria-current={active ? "page" : undefined}
+                        className={`block py-3 px-2 text-base font-medium border-b border-line last:border-0 ${
+                          active ? "text-brand-600" : "text-ink"
+                        }`}
+                      >
+                        {item.label}
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </nav>
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25, delay: 0.03 * NAV.length }}
+                className="grid gap-3"
+              >
+                <Button href="/demande-demo" size="lg" className="w-full" onClick={() => setOpen(false)}>
+                  Demander une démo
+                </Button>
+                <Button href="/login" variant="secondary" size="lg" className="w-full" onClick={() => setOpen(false)}>
+                  Se connecter
+                </Button>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

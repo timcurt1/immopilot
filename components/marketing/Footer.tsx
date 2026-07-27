@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Linkedin } from "lucide-react";
 import { Logo } from "./Logo";
+import { Reveal, RevealGroup, RevealItem } from "./Reveal";
 
 const COLUMNS = [
   {
@@ -45,8 +46,8 @@ export function Footer() {
   return (
     <footer className="border-t border-line bg-white">
       <div className="mx-auto max-w-6xl px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-10">
-          <div className="col-span-2">
+        <RevealGroup className="grid grid-cols-2 md:grid-cols-6 gap-10" stagger={0.06}>
+          <RevealItem className="col-span-2" y={12}>
             <Logo tagline />
             <p className="mt-4 text-sm text-muted leading-relaxed max-w-xs">
               ImmoPilot — L'intelligence artificielle au service des professionnels de l'immobilier.
@@ -60,9 +61,9 @@ export function Footer() {
             >
               <Linkedin size={16} />
             </a>
-          </div>
+          </RevealItem>
           {COLUMNS.map((col) => (
-            <div key={col.title}>
+            <RevealItem key={col.title} y={12}>
               <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-4">{col.title}</p>
               <ul className="grid gap-2.5">
                 {col.links.map((link) => (
@@ -73,13 +74,13 @@ export function Footer() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </RevealItem>
           ))}
-        </div>
-        <div className="mt-14 pt-8 border-t border-line flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between text-xs text-muted">
+        </RevealGroup>
+        <Reveal delay={0.1} className="mt-14 pt-8 border-t border-line flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between text-xs text-muted">
           <p>© {new Date().getFullYear()} ImmoPilot. Tous droits réservés.</p>
           <p>Hébergement européen · Conçu pour les professionnels de l'immobilier</p>
-        </div>
+        </Reveal>
       </div>
     </footer>
   );
