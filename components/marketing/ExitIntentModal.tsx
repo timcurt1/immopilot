@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 import { X, CheckCircle2, FileText } from "lucide-react";
 import { Logo } from "./Logo";
 import { trackEvent } from "@/lib/analytics";
@@ -61,17 +62,29 @@ export function ExitIntentModal() {
     }
   }
 
-  if (!open) return null;
-
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-ink/50 backdrop-blur-sm" onClick={() => setOpen(false)} aria-hidden="true" />
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-label="Recevoir la présentation d'ImmoPilot"
-        className="relative w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl"
-      >
+    <AnimatePresence>
+      {open && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="absolute inset-0 bg-ink/50 backdrop-blur-sm"
+            onClick={() => setOpen(false)}
+            aria-hidden="true"
+          />
+          <motion.div
+            initial={{ opacity: 0, y: 16, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 8, scale: 0.97 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Recevoir la présentation d'ImmoPilot"
+            className="relative w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl"
+          >
         <button
           type="button"
           onClick={() => setOpen(false)}
@@ -120,7 +133,9 @@ export function ExitIntentModal() {
             </form>
           </>
         )}
-      </div>
-    </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
   );
 }

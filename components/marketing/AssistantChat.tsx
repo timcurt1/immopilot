@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { MessageCircle, X, Send, Sparkles, ArrowRight } from "lucide-react";
 import { ASSISTANT_FAQ, findBestAnswer } from "@/lib/assistantFaq";
 import { trackEvent } from "@/lib/analytics";
@@ -49,8 +50,16 @@ export function AssistantChat({ context }: { context: "tarifs" | "securite" }) {
 
   return (
     <div className="fixed bottom-24 sm:bottom-5 right-5 z-40">
-      {open && (
-        <div className="mb-3 w-[340px] max-w-[calc(100vw-2.5rem)] rounded-2xl border border-line bg-white shadow-[0_30px_80px_rgba(15,23,42,0.2)] overflow-hidden flex flex-col" style={{ maxHeight: 480 }}>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: 16, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 12, scale: 0.98 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-3 w-[340px] max-w-[calc(100vw-2.5rem)] rounded-2xl border border-line bg-white shadow-[0_30px_80px_rgba(15,23,42,0.2)] overflow-hidden flex flex-col"
+            style={{ maxHeight: 480 }}
+          >
           <div className="flex items-center justify-between px-4 py-3 bg-ink text-white shrink-0">
             <span className="flex items-center gap-2 text-sm font-semibold">
               <Sparkles size={15} /> Assistant ImmoPilot
@@ -116,8 +125,9 @@ export function AssistantChat({ context }: { context: "tarifs" | "securite" }) {
               <Send size={15} />
             </button>
           </form>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <button
         onClick={toggle}
