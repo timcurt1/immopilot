@@ -10,7 +10,7 @@ export function Logo({ tone = "dark", mark = true, tagline = false, className = 
   return (
     <span className={`inline-flex flex-col ${className}`}>
       <span className="inline-flex items-center gap-2 font-display tracking-tight">
-        {mark && <LogoMark size={28} tone={tone} />}
+        {mark && <LogoMark size={28} />}
         <span className="text-[19px] leading-none">
           <span className="font-medium" style={{ color: textColor }}>
             immo
@@ -33,33 +33,17 @@ export function Logo({ tone = "dark", mark = true, tagline = false, className = 
 }
 
 /** Open-ring "orbit" mark with an AI accent dot. `size` sets both width and height (square). */
-export function LogoMark({
-  size = 28,
-  tone = "dark",
-  className = "",
-}: {
-  size?: number;
-  tone?: "dark" | "light";
-  className?: string;
-}) {
-  const ringColor = tone === "dark" ? "#0b1220" : "#ffffff";
+export function LogoMark({ size = 28, className = "" }: { size?: number; className?: string }) {
+  // eslint-disable-next-line @next/next/no-img-element
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true" className={`shrink-0 ${className}`}>
-      <path d="M22.75 24.04A10.5 10.5 0 1 1 15.08 5.54" stroke={ringColor} strokeWidth="2.8" strokeLinecap="round" />
-      <path d="M25.52 11.56A10.5 10.5 0 0 1 26.5 16" stroke={ringColor} strokeWidth="2.8" strokeLinecap="round" />
-      <circle cx="22.02" cy="7.4" r="2.7" fill="#3557ff" />
-    </svg>
-  );
-}
-
-/** Compact badge variant of the mark, for favicons / app icons / OG images. */
-export function LogoBadge({ size = 32 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      <rect width="32" height="32" rx="9" fill="#fafaf9" />
-      <path d="M22.75 24.04A10.5 10.5 0 1 1 15.08 5.54" stroke="#0b1220" strokeWidth="2.8" strokeLinecap="round" />
-      <path d="M25.52 11.56A10.5 10.5 0 0 1 26.5 16" stroke="#0b1220" strokeWidth="2.8" strokeLinecap="round" />
-      <circle cx="22.02" cy="7.4" r="2.7" fill="#3557ff" />
-    </svg>
+    <img
+      src="/logo-mark.png"
+      alt=""
+      aria-hidden="true"
+      width={size}
+      height={size}
+      className={`shrink-0 ${className}`}
+      style={{ width: size, height: size }}
+    />
   );
 }

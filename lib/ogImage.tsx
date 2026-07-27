@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { LOGO_MARK_DATA_URI } from "./logoMarkDataUri";
 
 export const OG_SIZE = { width: 1200, height: 630 };
 
@@ -20,22 +21,9 @@ export function renderOgImage(eyebrow: string, title: string) {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 18, marginBottom: 40 }}>
-          <div
-            style={{
-              width: 56,
-              height: 56,
-              borderRadius: 16,
-              background: "#fafaf9",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <path d="M22.75 24.04A10.5 10.5 0 1 1 15.08 5.54" stroke="#0b1220" strokeWidth="2.8" strokeLinecap="round" />
-              <path d="M25.52 11.56A10.5 10.5 0 0 1 26.5 16" stroke="#0b1220" strokeWidth="2.8" strokeLinecap="round" />
-              <circle cx="22.02" cy="7.4" r="2.7" fill="#3557ff" />
-            </svg>
+          <div style={{ width: 56, height: 56, borderRadius: 16, display: "flex", overflow: "hidden" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={LOGO_MARK_DATA_URI} width={56} height={56} alt="" />
           </div>
           <div style={{ fontSize: 32, fontWeight: 800, color: "white", letterSpacing: -1 }}>immoPILOT</div>
         </div>
