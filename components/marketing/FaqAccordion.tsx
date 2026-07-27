@@ -3,16 +3,17 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus } from "lucide-react";
+import { RevealGroup, RevealItem } from "./Reveal";
 
 export function FaqAccordion({ items }: { items: { question: string; answer: string }[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <div className="grid gap-3">
+    <RevealGroup className="grid gap-3" stagger={0.06}>
       {items.map((item, i) => {
         const isOpen = openIndex === i;
         return (
-          <div key={item.question} className="rounded-2xl border border-line bg-white overflow-hidden">
+          <RevealItem key={item.question} className="rounded-2xl border border-line bg-white overflow-hidden">
             <button
               type="button"
               className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left"
@@ -38,9 +39,9 @@ export function FaqAccordion({ items }: { items: { question: string; answer: str
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
+          </RevealItem>
         );
       })}
-    </div>
+    </RevealGroup>
   );
 }
