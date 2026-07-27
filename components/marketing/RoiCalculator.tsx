@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Sparkles, Info, TrendingUp, Target } from "lucide-react";
+import { Sparkles, Info, TrendingUp, Target, Euro } from "lucide-react";
 import { Button } from "./Button";
 import { CountUp } from "./CountUp";
 
@@ -13,24 +13,27 @@ export function RoiCalculator() {
   const [heuresRepetitives, setHeuresRepetitives] = useState(9);
   const [part, setPart] = useState(50);
   const [heuresPilotage, setHeuresPilotage] = useState(5);
+  const [coutHoraire, setCoutHoraire] = useState(28);
   const [prospectsParMois, setProspectsParMois] = useState(80);
   const [partPerdue, setPartPerdue] = useState(20);
 
-  const { weekly, monthly, annual, days, fte, prospectsSauves, pilotageWeekly } = useMemo(() => {
+  const { weekly, monthly, annual, annualCost, days, fte, prospectsSauves, pilotageWeekly } = useMemo(() => {
     const equipeWeekly = collaborateurs * heuresRepetitives * (part / 100);
     const pilotageHours = heuresPilotage * (part / 100);
     const weeklyHours = equipeWeekly + pilotageHours;
+    const annualHours = weeklyHours * 52;
     const prospectsPerdusActuellement = prospectsParMois * (partPerdue / 100);
     return {
       weekly: weeklyHours,
       monthly: weeklyHours * 4.33,
-      annual: weeklyHours * 52,
+      annual: annualHours,
+      annualCost: annualHours * coutHoraire,
       days: (weeklyHours * 4.33) / WORKDAY_HOURS,
       fte: weeklyHours / FULL_TIME_WEEK_HOURS,
       prospectsSauves: prospectsPerdusActuellement * (part / 100),
       pilotageWeekly: pilotageHours,
     };
-  }, [collaborateurs, heuresRepetitives, part, heuresPilotage, prospectsParMois, partPerdue]);
+  }, [collaborateurs, heuresRepetitives, part, heuresPilotage, coutHoraire, prospectsParMois, partPerdue]);
 
   const punchline = useMemo(() => {
     if (fte >= 1.4) return `Plus de ${fte.toFixed(1)} postes à temps plein libérés pour votre équipe.`;
@@ -99,6 +102,19 @@ export function RoiCalculator() {
             />
           </div>
 
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-3 mt-8">Valeur de votre temps</p>
+          <div className="grid gap-7">
+            <SliderField
+              label="Coût horaire moyen chargé (salaire + charges) d'un collaborateur"
+              value={coutHoraire}
+              min={15}
+              max={60}
+              step={1}
+              suffix=" €"
+              onChange={setCoutHoraire}
+            />
+          </div>
+
           <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-3 mt-8">
             Vos prospects et clients
           </p>
@@ -161,7 +177,22 @@ export function RoiCalculator() {
               </p>
             )}
 
-            <div className="mt-6 grid sm:grid-cols-2 gap-3">
+            <div className="mt-5 flex items-center gap-3 rounded-2xl bg-brand-500/15 border border-brand-300/30 px-5 py-4">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-500/25 text-brand-200">
+                <Euro size={18} />
+              </span>
+              <div>
+                <p className="font-display font-extrabold text-2xl leading-tight tabular-nums">
+                  <CountUp value={Math.round(annualCost)} /> €
+                  <span className="text-sm font-semibold text-white/60 ml-2">de valeur estimée par an</span>
+                </p>
+                <p className="mt-0.5 text-xs text-white/50">
+                  Basé sur le coût horaire chargé que vous renseignez ci-contre.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-3 grid sm:grid-cols-2 gap-3">
               <div className="flex items-start gap-3 rounded-2xl bg-white/10 border border-white/10 px-4 py-3.5">
                 <TrendingUp size={18} className="mt-0.5 shrink-0 text-brand-300" />
                 <div>
