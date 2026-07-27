@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Sparkles, Info, TrendingUp } from "lucide-react";
+import { Sparkles, Info, TrendingUp, Target } from "lucide-react";
 import { Button } from "./Button";
 import { CountUp } from "./CountUp";
 
@@ -12,17 +12,21 @@ export function RoiCalculator() {
   const [collaborateurs, setCollaborateurs] = useState(6);
   const [heuresRepetitives, setHeuresRepetitives] = useState(9);
   const [part, setPart] = useState(50);
+  const [prospectsParMois, setProspectsParMois] = useState(80);
+  const [partPerdue, setPartPerdue] = useState(20);
 
-  const { weekly, monthly, annual, days, fte } = useMemo(() => {
+  const { weekly, monthly, annual, days, fte, prospectsSauves } = useMemo(() => {
     const weeklyHours = collaborateurs * heuresRepetitives * (part / 100);
+    const prospectsPerdusActuellement = prospectsParMois * (partPerdue / 100);
     return {
       weekly: weeklyHours,
       monthly: weeklyHours * 4.33,
       annual: weeklyHours * 52,
       days: (weeklyHours * 4.33) / WORKDAY_HOURS,
       fte: weeklyHours / FULL_TIME_WEEK_HOURS,
+      prospectsSauves: prospectsPerdusActuellement * (part / 100),
     };
-  }, [collaborateurs, heuresRepetitives, part]);
+  }, [collaborateurs, heuresRepetitives, part, prospectsParMois, partPerdue]);
 
   const punchline = useMemo(() => {
     if (fte >= 1.4) return `Plus de ${fte.toFixed(1)} postes à temps plein libérés pour votre équipe.`;
@@ -31,15 +35,23 @@ export function RoiCalculator() {
     return "Quelques heures reconquises, semaine après semaine.";
   }, [fte]);
 
+  const conversionPunchline = useMemo(() => {
+    const yearly = Math.round(prospectsSauves * 12);
+    if (prospectsSauves >= 8) return `Soit environ ${yearly} opportunités commerciales de moins perdues chaque année.`;
+    if (prospectsSauves >= 2) return "Des candidats et clients qui reçoivent une réponse avant de se tourner ailleurs.";
+    return "Un suivi plus régulier, pour une meilleure expérience client.";
+  }, [prospectsSauves]);
+
   return (
     <div className="rounded-3xl border border-line bg-white overflow-hidden">
       <div className="grid lg:grid-cols-[1.1fr_1fr]">
         <div className="p-8 md:p-10">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-600 mb-2">Estimation personnalisée</p>
           <h3 className="font-display font-bold text-2xl text-ink tracking-tight mb-6">
-            Combien de temps votre équipe pourrait-elle regagner ?
+            Ce qu'ImmoPilot changerait pour votre équipe et vos clients.
           </h3>
 
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-3">Votre équipe</p>
           <div className="grid gap-7">
             <SliderField
               label="Nombre de collaborateurs"
@@ -70,10 +82,34 @@ export function RoiCalculator() {
             />
           </div>
 
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-3 mt-8">
+            Vos prospects et clients
+          </p>
+          <div className="grid gap-7">
+            <SliderField
+              label="Nouveaux prospects reçus par mois (toute l'agence)"
+              value={prospectsParMois}
+              min={20}
+              max={400}
+              step={10}
+              suffix=""
+              onChange={setProspectsParMois}
+            />
+            <SliderField
+              label="Part de prospects aujourd'hui perdus faute de relance rapide"
+              value={partPerdue}
+              min={5}
+              max={40}
+              step={5}
+              suffix=" %"
+              onChange={setPartPerdue}
+            />
+          </div>
+
           <p className="mt-7 flex items-start gap-2 text-xs text-muted leading-relaxed">
             <Info size={14} className="mt-0.5 shrink-0" />
-            Estimation calculée à partir des valeurs que vous renseignez ci-dessus, fournie à titre indicatif. Elle
-            sera affinée avec votre équipe lors d'une démonstration personnalisée.
+            Estimations calculées à partir des valeurs que vous renseignez ci-dessus, fournies à titre indicatif.
+            Elles seront affinées avec votre équipe lors d'une démonstration personnalisée.
           </p>
         </div>
 
@@ -102,14 +138,26 @@ export function RoiCalculator() {
               — <span className="text-white font-semibold">{Math.round(annual)} heures par an</span>
             </p>
 
-            <div className="mt-6 flex items-start gap-3 rounded-2xl bg-white/10 border border-white/10 px-4 py-3.5">
-              <TrendingUp size={18} className="mt-0.5 shrink-0 text-brand-300" />
-              <div>
-                <p className="font-display font-bold text-lg leading-tight">
-                  <CountUp value={Math.round(days)} className="tabular-nums" /> journées de travail retrouvées
-                  chaque mois
-                </p>
-                <p className="mt-1 text-xs text-white/60 leading-relaxed">{punchline}</p>
+            <div className="mt-6 grid sm:grid-cols-2 gap-3">
+              <div className="flex items-start gap-3 rounded-2xl bg-white/10 border border-white/10 px-4 py-3.5">
+                <TrendingUp size={18} className="mt-0.5 shrink-0 text-brand-300" />
+                <div>
+                  <p className="font-display font-bold text-lg leading-tight">
+                    <CountUp value={Math.round(days)} className="tabular-nums" /> journées de travail
+                    retrouvées / mois
+                  </p>
+                  <p className="mt-1 text-xs text-white/60 leading-relaxed">{punchline}</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 rounded-2xl bg-white/10 border border-white/10 px-4 py-3.5">
+                <Target size={18} className="mt-0.5 shrink-0 text-brand-300" />
+                <div>
+                  <p className="font-display font-bold text-lg leading-tight">
+                    <CountUp value={Math.round(prospectsSauves)} className="tabular-nums" /> prospects sauvés
+                    de l&rsquo;oubli / mois
+                  </p>
+                  <p className="mt-1 text-xs text-white/60 leading-relaxed">{conversionPunchline}</p>
+                </div>
               </div>
             </div>
 
