@@ -21,7 +21,7 @@ export function renderOgImage(eyebrow: string, title: string) {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 18, marginBottom: 40 }}>
-          <div style={{ width: 56, height: 56, borderRadius: 16, display: "flex", overflow: "hidden" }}>
+          <div style={{ width: 56, height: 56, borderRadius: 16, display: "flex", overflow: "hidden", background: "#fafaf9" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={LOGO_MARK_DATA_URI} width={56} height={56} alt="" />
           </div>

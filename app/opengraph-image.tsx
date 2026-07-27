@@ -24,7 +24,7 @@ export default function OpengraphImage() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 18, marginBottom: 48 }}>
-          <div style={{ width: 64, height: 64, borderRadius: 18, display: "flex", overflow: "hidden" }}>
+          <div style={{ width: 64, height: 64, borderRadius: 18, display: "flex", overflow: "hidden", background: "#fafaf9" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={LOGO_MARK_DATA_URI} width={64} height={64} alt="" />
           </div>
