@@ -12,11 +12,14 @@ export function RoiCalculator() {
   const [collaborateurs, setCollaborateurs] = useState(6);
   const [heuresRepetitives, setHeuresRepetitives] = useState(9);
   const [part, setPart] = useState(50);
+  const [heuresPilotage, setHeuresPilotage] = useState(5);
   const [prospectsParMois, setProspectsParMois] = useState(80);
   const [partPerdue, setPartPerdue] = useState(20);
 
-  const { weekly, monthly, annual, days, fte, prospectsSauves } = useMemo(() => {
-    const weeklyHours = collaborateurs * heuresRepetitives * (part / 100);
+  const { weekly, monthly, annual, days, fte, prospectsSauves, pilotageWeekly } = useMemo(() => {
+    const equipeWeekly = collaborateurs * heuresRepetitives * (part / 100);
+    const pilotageHours = heuresPilotage * (part / 100);
+    const weeklyHours = equipeWeekly + pilotageHours;
     const prospectsPerdusActuellement = prospectsParMois * (partPerdue / 100);
     return {
       weekly: weeklyHours,
@@ -25,8 +28,9 @@ export function RoiCalculator() {
       days: (weeklyHours * 4.33) / WORKDAY_HOURS,
       fte: weeklyHours / FULL_TIME_WEEK_HOURS,
       prospectsSauves: prospectsPerdusActuellement * (part / 100),
+      pilotageWeekly: pilotageHours,
     };
-  }, [collaborateurs, heuresRepetitives, part, prospectsParMois, partPerdue]);
+  }, [collaborateurs, heuresRepetitives, part, heuresPilotage, prospectsParMois, partPerdue]);
 
   const punchline = useMemo(() => {
     if (fte >= 1.4) return `Plus de ${fte.toFixed(1)} postes à temps plein libérés pour votre équipe.`;
@@ -79,6 +83,19 @@ export function RoiCalculator() {
               step={5}
               suffix=" %"
               onChange={setPart}
+            />
+          </div>
+
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-3 mt-8">Votre pilotage</p>
+          <div className="grid gap-7">
+            <SliderField
+              label="Heures hebdomadaires que la direction consacre à consolider des rapports et suivre l'activité"
+              value={heuresPilotage}
+              min={1}
+              max={15}
+              step={1}
+              suffix=" h"
+              onChange={setHeuresPilotage}
             />
           </div>
 
@@ -137,6 +154,12 @@ export function RoiCalculator() {
               soit environ <span className="text-white font-semibold">{Math.round(monthly)} heures par mois</span>{" "}
               — <span className="text-white font-semibold">{Math.round(annual)} heures par an</span>
             </p>
+            {pilotageWeekly >= 0.5 && (
+              <p className="mt-1 text-xs text-white/50">
+                dont <span className="text-white/80 font-medium">{pilotageWeekly.toFixed(1)} h / semaine</span>{" "}
+                de reporting consolidé automatiquement pour la direction
+              </p>
+            )}
 
             <div className="mt-6 grid sm:grid-cols-2 gap-3">
               <div className="flex items-start gap-3 rounded-2xl bg-white/10 border border-white/10 px-4 py-3.5">
