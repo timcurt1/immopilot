@@ -10,7 +10,7 @@ import { ReadingProgressBar } from "@/components/marketing/ReadingProgressBar";
 import { ARTICLES, getArticle } from "@/lib/articles";
 import { GRADIENT_TONE, toneAt } from "@/components/marketing/tones";
 
-const BASE_URL = "https://immopilot.fr";
+const BASE_URL = "https://immopilot.world";
 
 export function generateStaticParams() {
   return ARTICLES.map((a) => ({ slug: a.slug }));

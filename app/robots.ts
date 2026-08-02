@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/demo", "/dashboard", "/applications", "/properties", "/candidate", "/messages", "/settings", "/api"],
       },
     ],
-    sitemap: "https://immopilot.fr/sitemap.xml",
+    sitemap: "https://immopilot.world/sitemap.xml",
   };
 }

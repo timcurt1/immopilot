@@ -5,7 +5,7 @@ import { Reveal, RevealMask } from "./Reveal";
 import { Badge } from "./Badge";
 import { AmbientBackground } from "./AmbientBackground";
 
-const BASE_URL = "https://immopilot.fr";
+const BASE_URL = "https://immopilot.world";
 
 export function PageHero({
   eyebrow,

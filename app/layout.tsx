@@ -8,7 +8,7 @@ const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakart
 const jbmono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jbmono", display: "swap" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://immopilot.fr"),
+  metadataBase: new URL("https://immopilot.world"),
   title: {
     default: "ImmoPilot — L'IA pensée pour les professionnels de l'immobilier",
     template: "%s — ImmoPilot",
@@ -34,8 +34,8 @@ const ORGANIZATION_JSON_LD = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "ImmoPilot",
-  url: "https://immopilot.fr",
-  logo: "https://immopilot.fr/logo.png",
+  url: "https://immopilot.world",
+  logo: "https://immopilot.world/logo.png",
   description:
     "ImmoPilot est un copilote intelligent qui centralise les prospects, qualifie les demandes et accompagne le suivi quotidien des agences immobilières.",
   sameAs: ["https://www.linkedin.com"],
@@ -45,7 +45,7 @@ const WEBSITE_JSON_LD = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "ImmoPilot",
-  url: "https://immopilot.fr",
+  url: "https://immopilot.world",
   inLanguage: "fr-FR",
 };
 

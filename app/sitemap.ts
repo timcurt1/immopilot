@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { ARTICLES } from "@/lib/articles";
 
-const BASE_URL = "https://immopilot.fr";
+const BASE_URL = "https://immopilot.world";
 
 const STATIC_ROUTES = [
   "",
