@@ -166,7 +166,7 @@ export default function FonctionnalitesPage() {
       />
 
       <div className="mx-auto max-w-6xl px-6 lg:px-8 pb-24">
-        <div className="grid lg:grid-cols-[220px_1fr] gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-12">
           <nav className="hidden lg:block sticky top-24 self-start" aria-label="Sommaire des fonctionnalités">
             <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-3">Sommaire</p>
             <ul className="grid gap-1 text-sm">
@@ -185,7 +185,7 @@ export default function FonctionnalitesPage() {
               const tone = TONE_CLASSES[toneAt(i)];
               return (
                 <Reveal key={f.id}>
-                  <section id={f.id} className="scroll-mt-24 grid md:grid-cols-[auto_1fr] gap-6 group">
+                  <section id={f.id} className="scroll-mt-24 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 group">
                     <IconPop
                       className={`flex h-12 w-12 items-center justify-center rounded-2xl ${tone.bg} ${tone.text} shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6`}
                     >

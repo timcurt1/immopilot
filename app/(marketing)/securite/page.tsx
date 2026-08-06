@@ -45,7 +45,7 @@ export default function SecuritePage() {
       />
 
       <Section className="!pt-0">
-        <RevealGroup className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <RevealGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {TOPICS.map((t, i) => {
             const tone = TONE_CLASSES[toneAt(i)];
             return (
@@ -62,7 +62,7 @@ export default function SecuritePage() {
       </Section>
 
       <Section surface>
-        <div className="grid lg:grid-cols-2 gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
           <Reveal>
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-ink text-white mb-5">
               <BrainCircuit size={20} />
@@ -92,7 +92,7 @@ export default function SecuritePage() {
       </Section>
 
       <Section className="!pb-24">
-        <div className="grid sm:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <Reveal>
             <div className="rounded-2xl border border-line bg-white p-6 h-full">
               <FileText size={20} className="text-brand-600 mb-3" />

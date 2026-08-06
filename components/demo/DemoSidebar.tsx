@@ -63,7 +63,7 @@ export function DemoSidebar() {
         <Button href="/demande-demo" size="md" className="w-full !justify-between mb-2">
           Demander une démo <ArrowRight size={14} />
         </Button>
-        <div className="grid gap-1">
+        <div className="grid grid-cols-1 gap-1">
           <div className="flex items-center gap-2.5 rounded-lg px-3 py-2">
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-50 text-brand-700 text-xs font-bold shrink-0">
               LB

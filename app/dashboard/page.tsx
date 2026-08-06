@@ -23,7 +23,7 @@ export default async function DashboardPage() {
           <MetricCard label="Documents à traiter" value={missing} chip="relances" tone="amber" />
           <MetricCard label="Signatures probables" value={signatures} chip="business" tone="green" />
         </div>
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <section className="rounded-2xl bg-ink text-white p-8">
             <span className="text-xs font-semibold uppercase tracking-wide text-white/60">Daily Operations</span>
             <h2 className="mt-3 font-display font-bold text-3xl tracking-tight leading-tight">

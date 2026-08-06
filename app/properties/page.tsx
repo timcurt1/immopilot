@@ -43,7 +43,7 @@ export default async function PropertiesPage() {
             </Link>
           </div>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {properties.map((p) => {
               const apps = applications.filter((a) => a.property_id === p.id);
               const best = apps.slice().sort((a, b) => b.score - a.score)[0];

@@ -15,7 +15,7 @@ export function DocumentChecklist({ documents }: { documents: RentalDocument[] }
   }
 
   return (
-    <div className="grid gap-2.5">
+    <div className="grid grid-cols-1 gap-2.5">
       {documents.map((d) => (
         <div key={d.id} className="flex items-center justify-between gap-3 rounded-xl border border-line bg-white p-3.5">
           <div className="min-w-0">

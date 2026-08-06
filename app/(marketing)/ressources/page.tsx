@@ -28,7 +28,7 @@ export default function RessourcesPage() {
       />
 
       <Section className="!pt-0 !pb-24">
-        <RevealGroup className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <RevealGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {ARTICLES.map((a, i) => (
             <RevealItem key={a.slug}>
               <Link

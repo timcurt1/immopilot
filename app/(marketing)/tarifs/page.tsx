@@ -72,7 +72,7 @@ export default function TarifsPage() {
             Chaque formule s'accompagne d'un déploiement progressif.
           </h2>
         </div>
-        <RevealGroup className="grid md:grid-cols-4 gap-6 relative" stagger={0.1}>
+        <RevealGroup className="grid grid-cols-1 md:grid-cols-4 gap-6 relative" stagger={0.1}>
           <ScrollDrawLine top="top-6" inset="left-[12%] right-[12%]" />
           {DEPLOYMENT_STEPS.map((s, i) => (
             <RevealItem key={s.title} className="relative">

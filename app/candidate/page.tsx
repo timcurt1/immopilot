@@ -35,7 +35,7 @@ export default async function CandidatePage() {
   return (
     <AppShell title="Portail candidat" subtitle="Espace simple pour compléter son dossier.">
       <div className="grid gap-6">
-        <div className="grid lg:grid-cols-2 gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
           <section className="rounded-2xl bg-ink text-white p-8">
             <span className="text-xs font-semibold uppercase tracking-wide text-white/60">Candidat</span>
             <h2 className="mt-3 font-display font-bold text-2xl tracking-tight leading-tight">

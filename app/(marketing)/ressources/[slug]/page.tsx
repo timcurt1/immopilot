@@ -81,7 +81,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
             <Reveal y={12} scale={false}>
               <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-4">À lire aussi</p>
             </Reveal>
-            <RevealGroup className="grid gap-3">
+            <RevealGroup className="grid grid-cols-1 gap-3">
               {related.map((a) => (
                 <RevealItem key={a.slug} y={12}>
                   <Link

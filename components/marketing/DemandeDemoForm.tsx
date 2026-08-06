@@ -24,19 +24,19 @@ export function DemandeDemoForm({ hasError = false }: { hasError?: boolean }) {
         </p>
       )}
 
-      <div className="grid sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field label="Prénom" name="firstName" required />
         <Field label="Nom" name="lastName" required />
       </div>
-      <div className="grid sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field label="E-mail professionnel" name="email" type="email" required />
         <Field label="Téléphone" name="phone" type="tel" />
       </div>
-      <div className="grid sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field label="Fonction" name="role" />
         <Field label="Nom de l'entreprise" name="company" required />
       </div>
-      <div className="grid sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field label="Nombre d'agences" name="agencyCount" type="number" />
         <Field label="Nombre de collaborateurs" name="teamSize" type="number" />
       </div>

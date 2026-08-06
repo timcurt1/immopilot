@@ -8,7 +8,7 @@ export default function DemoBiensPage() {
   return (
     <>
       <DemoPageHeader title="Biens" description={`${DEMO_PROPERTIES.length} biens suivis par l'agence`} />
-      <MountStagger className="px-6 md:px-8 pb-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <MountStagger className="px-6 md:px-8 pb-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {DEMO_PROPERTIES.map((p) => (
           <MountItem key={p.id} className="rounded-2xl border border-line bg-white overflow-hidden">
             <div className="h-24 bg-gradient-to-br from-brand-600 to-violet-500 flex items-center justify-center">

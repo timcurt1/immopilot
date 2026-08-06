@@ -41,7 +41,7 @@ export default function DemoOverviewPage() {
           ))}
         </div>
 
-        <div className="grid lg:grid-cols-[1.4fr_1fr] gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-6">
           <div className="rounded-2xl border border-line bg-white overflow-hidden">
             <div className="flex items-center justify-between px-5 py-4 border-b border-line">
               <p className="font-semibold text-ink text-sm">Relances recommandées par ImmoPilot</p>
@@ -82,7 +82,7 @@ export default function DemoOverviewPage() {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="rounded-2xl border border-line bg-white overflow-hidden">
             <div className="flex items-center justify-between px-5 py-4 border-b border-line">
               <p className="font-semibold text-ink text-sm">Visites du jour</p>
@@ -94,7 +94,7 @@ export default function DemoOverviewPage() {
               {DEMO_VISITS.map((v) => (
                 <li key={v.id} className="flex items-center gap-3 px-5 py-3.5 border-b border-line last:border-0 text-sm">
                   <span className="font-semibold text-ink w-12 shrink-0">{v.time}</span>
-                  <span className="flex-1 text-ink-soft truncate">
+                  <span className="flex-1 min-w-0 text-ink-soft truncate">
                     {v.prospect} — {v.property}
                   </span>
                   <StatusBadge value={v.status} />

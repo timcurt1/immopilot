@@ -24,7 +24,7 @@ export default async function SettingsPage() {
           </div>
         </section>
 
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <section className="rounded-2xl bg-ink text-white p-8">
             <span className="text-xs font-semibold uppercase tracking-wide text-white/60">Sécurité &amp; RGPD</span>
             <h2 className="mt-3 font-display font-bold text-2xl tracking-tight leading-tight">

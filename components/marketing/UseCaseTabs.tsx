@@ -106,7 +106,7 @@ export function UseCaseTabs() {
 
       <div
         style={{ "--glow": toneClass.glow } as CSSProperties}
-        className="grid md:grid-cols-2 gap-8 items-start rounded-2xl border border-line bg-white p-8 transition-shadow duration-500 shadow-[0_30px_70px_var(--glow)]"
+        className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start rounded-2xl border border-line bg-white p-8 transition-shadow duration-500 shadow-[0_30px_70px_var(--glow)]"
       >
         <AnimatePresence mode="wait">
           <motion.div
@@ -143,11 +143,11 @@ export function UseCaseTabs() {
                 <p className="text-[11px] text-muted mb-2 uppercase tracking-wide font-semibold">Vue {current.label.toLowerCase()}</p>
                 <div className="grid gap-2">
                   {current.items.slice(0, 4).map((item, i) => (
-                    <div key={item} className="flex items-center gap-2 rounded-lg border border-line px-3 py-2 text-xs text-ink">
-                      <span className={`h-5 w-5 rounded-md ${toneClass.bg} ${toneClass.text} grid place-items-center font-bold text-[10px]`}>
+                    <div key={item} className="flex items-center gap-2 rounded-lg border border-line px-3 py-2 text-xs text-ink min-w-0">
+                      <span className={`h-5 w-5 rounded-md ${toneClass.bg} ${toneClass.text} grid place-items-center font-bold text-[10px] shrink-0`}>
                         {i + 1}
                       </span>
-                      <span className="truncate">{item}</span>
+                      <span className="min-w-0 truncate">{item}</span>
                     </div>
                   ))}
                 </div>

@@ -46,7 +46,7 @@ export default function LoginPage() {
   return (
     <main className="relative min-h-screen flex items-center justify-center overflow-hidden bg-paper px-4 py-12">
       <AmbientBackground parallax />
-      <div className="relative w-full max-w-4xl rounded-3xl border border-line bg-white shadow-[0_40px_100px_rgba(15,23,42,0.12)] overflow-hidden grid md:grid-cols-[1fr_420px]">
+      <div className="relative w-full max-w-4xl rounded-3xl border border-line bg-white shadow-[0_40px_100px_rgba(15,23,42,0.12)] overflow-hidden grid grid-cols-1 md:grid-cols-[1fr_420px]">
         <div className="p-10 flex flex-col justify-center">
           <Link href="/" className="inline-flex mb-8">
             <Logo />

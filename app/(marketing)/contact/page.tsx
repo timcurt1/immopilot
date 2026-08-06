@@ -13,7 +13,7 @@ export default function ContactPage({ searchParams }: { searchParams: { error?: 
       <PageHero eyebrow="Contact" path="/contact" title="Parlons de votre agence." description="Une question, un projet de déploiement ou votre environnement logiciel : notre équipe vous répond sous un jour ouvré." />
 
       <Section className="!pt-0 !pb-24">
-        <div className="grid lg:grid-cols-[1fr_1.3fr] gap-12 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-12 max-w-4xl mx-auto">
           <Reveal>
             <div className="grid gap-6">
               <div className="flex items-start gap-3">
@@ -57,7 +57,7 @@ export default function ContactPage({ searchParams }: { searchParams: { error?: 
                   Merci de renseigner tous les champs obligatoires.
                 </p>
               )}
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field label="Prénom" name="firstName" required />
                 <Field label="Nom" name="lastName" required />
               </div>

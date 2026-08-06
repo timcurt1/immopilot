@@ -228,7 +228,7 @@ export default function HomePage() {
 
       {/* 2. PREUVE DE COMPRÉHENSION MÉTIER */}
       <Section surface>
-        <div className="grid lg:grid-cols-2 gap-14 items-start mb-14">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start mb-14">
           <Reveal>
             <h2 className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight mb-5">
               Une agence immobilière ne manque pas d'outils. Elle manque de temps et de continuité.
@@ -274,7 +274,7 @@ export default function HomePage() {
             </p>
           </RevealItem>
         </RevealGroup>
-        <RevealGroup className="grid md:grid-cols-3 gap-6 relative" stagger={0.15}>
+        <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-6 relative" stagger={0.15}>
           <ScrollDrawLine />
           {[
             { n: "1", title: "ImmoPilot centralise", body: "Les demandes, prospects, dossiers, échanges et rendez-vous sont regroupés dans une vue claire.", icon: Inbox },
@@ -302,7 +302,7 @@ export default function HomePage() {
             <h2>Un seul copilote pour les opérations essentielles de l'agence.</h2>
           </RevealItem>
         </RevealGroup>
-        <RevealGroup className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <RevealGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {FEATURES.map((f) => {
             const tone = TONE_CLASSES[f.tone];
             return (
@@ -335,7 +335,7 @@ export default function HomePage() {
             <h2>Du premier contact à la prochaine action, ImmoPilot accompagne chaque étape.</h2>
           </RevealItem>
         </RevealGroup>
-        <RevealGroup className="grid md:grid-cols-4 gap-3 mb-14" stagger={0.07}>
+        <RevealGroup className="grid grid-cols-1 md:grid-cols-4 gap-3 mb-14" stagger={0.07}>
           {WORKFLOW_STEPS.map((s, i) => (
             <RevealItem key={s} className="rounded-xl border border-line bg-white p-4">
               <span className="text-xs font-bold text-brand-600">Étape {i + 1}</span>
@@ -345,7 +345,7 @@ export default function HomePage() {
         </RevealGroup>
 
         <Reveal y={24}>
-          <div className="rounded-2xl border border-line bg-white p-8 grid lg:grid-cols-[1fr_1.2fr] gap-8">
+          <div className="rounded-2xl border border-line bg-white p-8 grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8">
             <div>
               <Badge tone="brand">Exemple concret</Badge>
               <p className="mt-4 text-ink-soft leading-relaxed">
@@ -396,7 +396,7 @@ export default function HomePage() {
             <h2>Des équipes mieux organisées, sans bouleverser leurs habitudes.</h2>
           </RevealItem>
         </RevealGroup>
-        <RevealGroup className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <RevealGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {BENEFITS.map((b) => {
             const tone = TONE_CLASSES[b.tone];
             return (
@@ -421,7 +421,7 @@ export default function HomePage() {
 
       {/* CE QUE VOUS Y GAGNEZ CONCRÈTEMENT */}
       <Section className="!py-14">
-        <RevealGroup className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <RevealGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {HIGHLIGHTS.map((h) => (
             <RevealItem key={h.title} className="flex items-start gap-3 rounded-xl border border-line bg-white p-4">
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
@@ -465,13 +465,13 @@ export default function HomePage() {
 
       {/* 9. SÉCURITÉ */}
       <Section>
-        <div className="grid lg:grid-cols-2 gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
           <Reveal y={24}>
             <Eyebrow>Sécurité</Eyebrow>
             <h2 className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight mb-6">
               Vos données immobilières méritent une protection à la hauteur de leur importance.
             </h2>
-            <RevealGroup className="grid sm:grid-cols-2 gap-4 mb-8" stagger={0.06}>
+            <RevealGroup className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8" stagger={0.06}>
               {SECURITY_POINTS.map((p) => (
                 <RevealItem key={p.text} className="flex items-start gap-2.5 text-sm text-ink-soft" y={10}>
                   <p.icon size={16} className="mt-0.5 text-brand-600 shrink-0" />
@@ -517,7 +517,7 @@ export default function HomePage() {
             </p>
           </RevealItem>
         </RevealGroup>
-        <RevealGroup className="grid md:grid-cols-3 gap-5">
+        <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {["Objectif du pilote", "Résultat observé", "Retour de l'équipe"].map((label) => (
             <RevealItem key={label} className="rounded-2xl border border-dashed border-line bg-white p-6">
               <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-3">{label}</p>
@@ -539,7 +539,7 @@ export default function HomePage() {
             <h2>Un déploiement progressif, adapté à votre organisation.</h2>
           </RevealItem>
         </RevealGroup>
-        <RevealGroup className="grid md:grid-cols-4 gap-6 relative" stagger={0.12}>
+        <RevealGroup className="grid grid-cols-1 md:grid-cols-4 gap-6 relative" stagger={0.12}>
           <ScrollDrawLine top="top-6" inset="left-[12%] right-[12%]" />
           {DEPLOYMENT_STEPS.map((s, i) => (
             <RevealItem key={s.title} className="relative">

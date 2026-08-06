@@ -40,7 +40,7 @@ export function BillingSection({ currentPlan, subscriptionStatus }: { currentPla
         Palier actuel : <span className="text-brand-600">{PLANS[currentPlan as PlanId]?.label || currentPlan}</span>
       </h2>
       <p className="mt-1 text-sm text-muted">Statut : {subscriptionStatus || "aucun abonnement actif (mode local ou essai)."}</p>
-      <div className="mt-5 grid sm:grid-cols-3 gap-4">
+      <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-4">
         {PLAN_ORDER.map((id) => (
           <div key={id} className="rounded-xl border border-line p-4">
             <p className="font-semibold text-ink">{PLANS[id].label}</p>

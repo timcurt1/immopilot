@@ -48,7 +48,7 @@ export function MessagesClient({ applications }: { applications: Application[] }
   }
 
   return (
-    <div className="grid lg:grid-cols-2 gap-6 items-start">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
       <section className="rounded-2xl bg-ink text-white p-8">
         <span className="text-xs font-semibold uppercase tracking-wide text-white/60">Assistant IA</span>
         <h2 className="mt-3 font-display font-bold text-2xl tracking-tight leading-tight">
@@ -61,7 +61,7 @@ export function MessagesClient({ applications }: { applications: Application[] }
         <p className="mt-3 text-sm text-white/70 leading-relaxed">
           Les messages sont préparés par l&rsquo;IA, mais l&rsquo;agent garde toujours le contrôle avant envoi.
         </p>
-        <div className="mt-6 grid sm:grid-cols-2 gap-3">
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
           {templates.map((t) => (
             <button
               key={t.title}

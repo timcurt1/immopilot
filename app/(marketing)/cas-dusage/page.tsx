@@ -98,7 +98,7 @@ export default function CasDusagePage() {
       />
 
       <Section className="!pt-0">
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {CASES.map((c, i) => {
             const tone = toneAt(i);
             const toneClass = TONE_CLASSES[tone];

@@ -61,14 +61,14 @@ export default function ProspectDetailPage() {
           </div>
         )}
 
-        <div className="grid lg:grid-cols-[1fr_360px] gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6">
           <div className="grid gap-6">
             <div className="rounded-2xl border border-line bg-white p-6">
               <div className="flex items-center justify-between mb-5">
                 <p className="font-semibold text-ink">Identité et critères</p>
                 <StatusBadge value={prospect.status} />
               </div>
-              <dl className="grid sm:grid-cols-2 gap-4 text-sm">
+              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                 <Info label="E-mail" value={prospect.email} />
                 <Info label="Téléphone" value={prospect.phone} />
                 <Info label="Budget" value={prospect.budget} />

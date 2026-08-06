@@ -20,7 +20,7 @@ export default function DemoMessagesPage() {
     <>
       <DemoPageHeader title="Messages" description="Échanges avec vos prospects et clients" />
       <div className="px-6 md:px-8 pb-12">
-        <div className="rounded-2xl border border-line bg-white overflow-hidden grid md:grid-cols-[280px_1fr] min-h-[420px]">
+        <div className="rounded-2xl border border-line bg-white overflow-hidden grid grid-cols-1 md:grid-cols-[280px_1fr] min-h-[420px]">
           <div className="border-r border-line">
             {DEMO_MESSAGES.map((m) => (
               <button

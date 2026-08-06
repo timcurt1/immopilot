@@ -12,7 +12,7 @@ const ACCENT: Record<string, string> = {
 
 export function PricingCards() {
   return (
-    <RevealGroup className="grid md:grid-cols-3 gap-6 items-stretch" stagger={0.12}>
+    <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch" stagger={0.12}>
       {PLAN_ORDER.map((id) => {
         const plan = PRICING_PLANS[id];
         const card = (

@@ -25,7 +25,7 @@ export default async function ApplicationDetailPage({ params }: { params: { id: 
   return (
     <AppShell title={`${application.first_name} ${application.last_name}`} subtitle="Fiche candidat, documents et actions IA.">
       <div className="grid gap-6">
-        <div className="grid lg:grid-cols-[1fr_380px] gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6 items-start">
           <section className="rounded-2xl bg-ink text-white p-8">
             <Link href="/applications" className="inline-flex items-center gap-1.5 text-sm font-medium text-white/70 hover:text-white transition-colors mb-5">
               <ArrowLeft size={15} /> Retour

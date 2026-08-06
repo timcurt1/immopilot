@@ -51,7 +51,7 @@ export function RoiCalculator() {
 
   return (
     <div className="rounded-3xl border border-line bg-white overflow-hidden">
-      <div className="grid lg:grid-cols-[1.1fr_1fr]">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr]">
         <div className="p-8 md:p-10">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-600 mb-2">Estimation personnalisée</p>
           <h3 className="font-display font-bold text-2xl text-ink tracking-tight mb-6">
@@ -192,7 +192,7 @@ export function RoiCalculator() {
               </div>
             </div>
 
-            <div className="mt-3 grid sm:grid-cols-2 gap-3">
+            <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="flex items-start gap-3 rounded-2xl bg-white/10 border border-white/10 px-4 py-3.5">
                 <TrendingUp size={18} className="mt-0.5 shrink-0 text-brand-300" />
                 <div>

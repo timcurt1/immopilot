@@ -47,7 +47,7 @@ export default function SolutionPage() {
       />
 
       <Section surface>
-        <div className="grid lg:grid-cols-2 gap-14 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
           <Reveal>
             <Eyebrow>Le constat</Eyebrow>
             <h2 className="font-display font-bold text-3xl text-ink tracking-tight mb-5">
@@ -84,7 +84,7 @@ export default function SolutionPage() {
             <FlowIllustration />
           </div>
         </Reveal>
-        <RevealGroup className="grid md:grid-cols-4 gap-5 relative" stagger={0.1}>
+        <RevealGroup className="grid grid-cols-1 md:grid-cols-4 gap-5 relative" stagger={0.1}>
           <ScrollDrawLine top="top-7" inset="left-[12%] right-[12%]" />
           {FLOW_STEPS.map((s) => (
             <RevealItem key={s.title} className="relative rounded-2xl border border-line bg-white p-6">
@@ -99,7 +99,7 @@ export default function SolutionPage() {
       </Section>
 
       <Section surface>
-        <div className="grid lg:grid-cols-2 gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
           <Reveal>
             <Eyebrow>Exemples d'automatisations</Eyebrow>
             <h2 className="font-display font-bold text-3xl text-ink tracking-tight mb-6">
@@ -127,7 +127,7 @@ export default function SolutionPage() {
       </Section>
 
       <Section>
-        <div className="grid lg:grid-cols-2 gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
           <Reveal>
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-50 text-brand-700 mb-5">
               <Plug size={20} />

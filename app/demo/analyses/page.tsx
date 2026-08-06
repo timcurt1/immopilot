@@ -44,7 +44,7 @@ export default function DemoAnalysesPage() {
           ))}
         </div>
 
-        <div className="grid lg:grid-cols-[1.4fr_1fr] gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-6">
           <div className="rounded-2xl border border-line bg-white p-6">
             <p className="font-semibold text-ink text-sm mb-6">Volume de demandes sur 7 jours</p>
             <div className="flex items-end gap-4 h-40">

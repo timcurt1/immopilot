@@ -32,7 +32,7 @@ export default function AProposPage() {
       />
 
       <Section className="!pt-0">
-        <div className="grid lg:grid-cols-2 gap-10 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <Reveal>
             <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-3">Notre mission</p>
             <p className="font-display font-bold text-2xl md:text-3xl text-ink tracking-tight leading-snug">
@@ -57,7 +57,7 @@ export default function AProposPage() {
             <h2>Ce qui guide chaque décision produit.</h2>
           </RevealItem>
         </RevealGroup>
-        <RevealGroup className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <RevealGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {VALUES.map((v, i) => (
             <RevealItem key={v.title} className="group rounded-2xl border border-line bg-white p-6 transition-all duration-300 hover:-translate-y-1">
               <IconPop

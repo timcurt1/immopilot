@@ -13,7 +13,7 @@ export default function DemoParametresPage() {
   return (
     <>
       <DemoPageHeader title="Paramètres" description="Configuration de l'agence pour cette démonstration" />
-      <div className="px-6 md:px-8 pb-12 grid lg:grid-cols-2 gap-6">
+      <div className="px-6 md:px-8 pb-12 grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="rounded-2xl border border-line bg-white p-6">
           <div className="flex items-center gap-2 mb-4">
             <Building2 size={16} className="text-brand-600" />

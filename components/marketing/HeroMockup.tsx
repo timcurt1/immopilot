@@ -84,8 +84,8 @@ export function HeroMockup() {
           <div className="w-14" />
         </div>
 
-        <div className="grid md:grid-cols-[1fr_260px]">
-          <div className="p-6 md:p-8">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_260px]">
+          <div className="p-6 md:p-8 min-w-0">
             <div className="flex items-center justify-between mb-6">
               <div>
                 <p className="text-sm text-muted">Bonjour Léa, voici votre journée</p>
@@ -123,7 +123,7 @@ export function HeroMockup() {
                     ) : (
                       <CheckCircle2 size={15} className="text-brand-500 shrink-0" />
                     )}
-                    <span className="flex-1 text-ink-soft truncate">{t.label}</span>
+                    <span className="flex-1 min-w-0 text-ink-soft truncate">{t.label}</span>
                     <span className="hidden sm:inline text-[11px] font-semibold text-muted bg-surface rounded-full px-2 py-1 shrink-0">
                       {t.tag}
                     </span>
