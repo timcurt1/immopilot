@@ -255,7 +255,7 @@ export default function HomePage() {
 
         <Reveal>
           <p className="text-center text-xs font-semibold uppercase tracking-wide text-muted mb-4">
-            Faites glisser pour comparer
+            Ce qui change avec ImmoPilot
           </p>
           <BeforeAfterSlider />
         </Reveal>
