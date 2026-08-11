@@ -414,9 +414,6 @@ export default function HomePage() {
             );
           })}
         </RevealGroup>
-        <p className="mt-8 text-xs text-muted text-center max-w-xl mx-auto">
-          Des statistiques réelles issues de pilotes clients viendront prochainement illustrer ces bénéfices.
-        </p>
       </Section>
 
       {/* CE QUE VOUS Y GAGNEZ CONCRÈTEMENT */}
@@ -501,35 +498,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* 10. TÉMOIGNAGES (emplacement à venir) */}
-      <Section surface>
-        <RevealGroup className="max-w-2xl mb-14">
-          <RevealItem y={12} scale={false}>
-            <Eyebrow>Retours terrain</Eyebrow>
-          </RevealItem>
-          <RevealItem className="font-display font-bold text-3xl md:text-4xl text-ink tracking-tight" scale>
-            <h2>Les retours de nos premières agences pilotes.</h2>
-          </RevealItem>
-          <RevealItem className="mt-3 text-muted text-sm leading-relaxed">
-            <p>
-              Nos premiers déploiements pilotes sont en cours. Les témoignages ci-dessous seront remplacés par des retours
-              réels dès qu'ils seront disponibles.
-            </p>
-          </RevealItem>
-        </RevealGroup>
-        <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {["Objectif du pilote", "Résultat observé", "Retour de l'équipe"].map((label) => (
-            <RevealItem key={label} className="rounded-2xl border border-dashed border-line bg-white p-6">
-              <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-3">{label}</p>
-              <p className="text-sm text-ink-soft leading-relaxed italic">
-                Contenu à venir — sera complété à l'issue de la phase pilote en cours.
-              </p>
-            </RevealItem>
-          ))}
-        </RevealGroup>
-      </Section>
-
-      {/* 11. DÉPLOIEMENT */}
+      {/* 10. DÉPLOIEMENT */}
       <Section>
         <RevealGroup className="max-w-2xl mb-14">
           <RevealItem y={12} scale={false}>

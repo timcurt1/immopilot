@@ -29,13 +29,13 @@ export default function CookiesPage() {
         <b>Gestion de vos préférences</b>
         <br />
         Vous pouvez à tout moment modifier vos préférences de cookies non essentiels depuis les paramètres de votre
-        navigateur. [Un bandeau de gestion des cookies dédié pourra être ajouté ici selon l'outil retenu.]
+        navigateur. Un bandeau d'information s'affiche lors de votre première visite pour vous en informer.
       </p>
       <p>
         <b>Durée de conservation</b>
         <br />
-        Les cookies déposés ont une durée de vie limitée [durée à définir] et sont automatiquement supprimés à l'expiration
-        de cette période.
+        Les cookies déposés ont une durée de vie limitée à 13 mois maximum et sont automatiquement supprimés à
+        l'expiration de cette période.
       </p>
     </LegalPage>
   );

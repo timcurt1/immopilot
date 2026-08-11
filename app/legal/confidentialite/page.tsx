@@ -10,7 +10,7 @@ export default function ConfidentialitePage() {
   return (
     <LegalPage title="Politique de confidentialité" path="/legal/confidentialite">
       <p>
-        [Raison sociale] (« nous ») édite ImmoPilot, un logiciel de gestion locative destiné aux agences immobilières. Cette
+        Tim Curt (« nous ») édite ImmoPilot, un logiciel de gestion locative destiné aux agences immobilières. Cette
         politique décrit comment les données des utilisateurs (agences, agents) et des candidats locataires sont traitées.
       </p>
       <p>
@@ -29,7 +29,7 @@ export default function ConfidentialitePage() {
       <p>
         <b>Conservation</b>
         <br />
-        Les dossiers non retenus sont conservés [durée à définir, ex : 3 mois] puis supprimés. Les dossiers des locataires en
+        Les dossiers non retenus sont conservés 3 mois puis supprimés. Les dossiers des locataires en
         place sont conservés pour la durée du bail plus les délais légaux de prescription.
       </p>
       <p>
@@ -42,14 +42,14 @@ export default function ConfidentialitePage() {
         <b>Droits des personnes</b>
         <br />
         Conformément au RGPD, toute personne dispose d’un droit d’accès, de rectification, d’effacement et de portabilité de
-        ses données. Ces demandes peuvent être adressées à [contact@exemple.fr] ou via le formulaire disponible dans les
+        ses données. Ces demandes peuvent être adressées à support.immopilot.world@gmail.com ou via le formulaire disponible dans les
         réglages de l’application.
       </p>
       <p>
         <b>Sous-traitants</b>
         <br />
         Supabase Inc. (base de données, authentification, stockage de fichiers), Vercel Inc. (hébergement applicatif), Stripe
-        Inc. (paiement), [prestataire d’emailing] (envoi d’emails transactionnels).
+        Inc. (paiement), Resend (envoi d’emails transactionnels).
       </p>
     </LegalPage>
   );

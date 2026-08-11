@@ -11,7 +11,7 @@ export default function CguCgvPage() {
     <LegalPage title="Conditions générales d’utilisation et de vente" path="/legal/cgu-cgv">
       <p>
         Les présentes conditions régissent l’accès et l’utilisation d’ImmoPilot, service SaaS de gestion locative édité par
-        [Raison sociale], par toute agence immobilière cliente (« le Client »).
+        Tim Curt, par toute agence immobilière cliente (« le Client »).
       </p>
       <p>
         <b>1. Objet</b>
@@ -40,14 +40,14 @@ export default function CguCgvPage() {
       <p>
         <b>5. Disponibilité et support</b>
         <br />
-        [Raison sociale] met en œuvre les moyens raisonnables pour assurer la disponibilité du service, sans garantie de
-        continuité absolue. Le support est accessible à [contact@exemple.fr].
+        Tim Curt met en œuvre les moyens raisonnables pour assurer la disponibilité du service, sans garantie de
+        continuité absolue. Le support est accessible à support.immopilot.world@gmail.com.
       </p>
       <p>
         <b>6. Droit applicable</b>
         <br />
-        Les présentes conditions sont soumises au droit français. Tout litige relève des tribunaux compétents du ressort du
-        siège social de [Raison sociale].
+        Les présentes conditions sont soumises au droit français. Tout litige relève des tribunaux français compétents
+        selon les règles de droit commun.
       </p>
     </LegalPage>
   );

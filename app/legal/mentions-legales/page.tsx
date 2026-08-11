@@ -12,14 +12,11 @@ export default function MentionsLegalesPage() {
       <p>
         <b>Éditeur du site</b>
         <br />
-        [Raison sociale], [forme juridique], au capital de [montant] €<br />
-        Siège social : [Adresse complète]
+        Tim Curt
         <br />
-        SIRET : [Numéro SIRET] — RCS [Ville] [Numéro]
+        Directeur de la publication : Tim Curt
         <br />
-        Directeur de la publication : [Nom, prénom]
-        <br />
-        Email : [contact@exemple.fr]
+        Email : support.immopilot.world@gmail.com
       </p>
       <p>
         <b>Hébergement</b>
@@ -30,13 +27,13 @@ export default function MentionsLegalesPage() {
       <p>
         <b>Propriété intellectuelle</b>
         <br />
-        L’ensemble des contenus présents sur ce site (textes, logo, interface) est la propriété de [Raison sociale], sauf
+        L’ensemble des contenus présents sur ce site (textes, logo, interface) est la propriété de Tim Curt, sauf
         mention contraire.
       </p>
       <p>
         <b>Contact</b>
         <br />
-        Pour toute question relative à ces mentions légales : [contact@exemple.fr].
+        Pour toute question relative à ces mentions légales : support.immopilot.world@gmail.com.
       </p>
     </LegalPage>
   );

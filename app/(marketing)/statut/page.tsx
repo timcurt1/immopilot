@@ -31,9 +31,6 @@ export default function StatutPage() {
             </Reveal>
           ))}
         </div>
-        <p className="text-center text-xs text-muted mt-6">
-          Cette page sera prochainement connectée à un système de supervision en temps réel.
-        </p>
       </Section>
     </>
   );

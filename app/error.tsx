@@ -30,7 +30,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
             Réessayer
           </button>
           <a
-            href="mailto:support@immopilot.example"
+            href="mailto:support.immopilot.world@gmail.com"
             className="inline-flex items-center justify-center h-11 px-5 rounded-xl bg-white border border-line text-ink font-semibold text-sm hover:border-ink/30 transition-colors"
           >
             Contacter le support

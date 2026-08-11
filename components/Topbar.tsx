@@ -13,9 +13,8 @@ export async function Topbar({ title, subtitle }: { title: string; subtitle: str
         <p className="mt-1 text-sm text-muted">{subtitle}</p>
       </div>
       <div className="flex items-center gap-2.5 shrink-0">
-        <Badge tone="brand">SaaS MVP</Badge>
         <a
-          href="mailto:support@immopilot.example"
+          href="mailto:support.immopilot.world@gmail.com"
           title="Contacter le support"
           className="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg border border-line text-sm font-medium text-ink-soft hover:text-ink hover:border-ink/30 transition-colors"
         >

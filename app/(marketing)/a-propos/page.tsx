@@ -74,17 +74,17 @@ export default function AProposPage() {
 
       <Section className="!pb-24">
         <Reveal>
-          <div className="rounded-2xl border border-dashed border-line bg-white p-10 text-center max-w-2xl mx-auto">
-            <p className="font-semibold text-ink mb-2">L'histoire de l'équipe, à venir</p>
-            <p className="text-sm text-muted leading-relaxed">
-              Cette section présentera prochainement l'histoire des fondateurs, les membres de l'équipe, nos partenaires
-              et nos offres d'emploi.
+          <div className="text-center max-w-xl mx-auto">
+            <p className="font-display font-bold text-2xl md:text-3xl text-ink tracking-tight mb-3">
+              Envie d'en savoir plus sur ImmoPilot ?
             </p>
+            <p className="text-sm text-muted leading-relaxed mb-8">
+              Parlons de votre agence, de vos outils actuels et de la façon dont ImmoPilot peut s'intégrer à votre
+              organisation.
+            </p>
+            <Button href="/contact">Nous contacter</Button>
           </div>
         </Reveal>
-        <div className="text-center mt-10">
-          <Button href="/contact">Nous contacter</Button>
-        </div>
       </Section>
     </>
   );
