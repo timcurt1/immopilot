@@ -2,7 +2,7 @@ import "server-only";
 import { Resend } from "resend";
 
 const apiKey = process.env.RESEND_API_KEY || "";
-const fromAddress = process.env.RESEND_FROM || "ImmoPilot <notifications@immopilot.example>";
+const fromAddress = process.env.RESEND_FROM || "ImmoPilot <notifications@immopilot.world>";
 
 export const resendConfigured = Boolean(apiKey);
 
