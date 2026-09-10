@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import { AppShell } from "@/components/AppShell";
 import { MetricCard } from "@/components/MetricCard";
 import { ActionList } from "@/components/ActionList";
-import { getApplications, getDocuments, getTasks, completionRate } from "@/lib/data";
+import { QuickInsights } from "@/components/QuickInsights";
+import { getApplications, getDocuments, getTasks, getVisits, completionRate } from "@/lib/data";
 
 export const metadata: Metadata = { title: "Tableau de bord", robots: { index: false, follow: false } };
 
 export default async function DashboardPage() {
-  const [applications, documents, tasks] = await Promise.all([getApplications(), getDocuments(), getTasks()]);
+  const [applications, documents, tasks, visits] = await Promise.all([getApplications(), getDocuments(), getTasks(), getVisits()]);
   const ready = applications.filter(
     (a) => a.stage === "Prêt à valider" || completionRate(documents.filter((d) => d.application_id === a.id)) >= 95
   ).length;
@@ -47,6 +48,7 @@ export default async function DashboardPage() {
             <ActionList tasks={tasks} applications={applications} documents={documents} />
           </section>
         </div>
+        <QuickInsights applications={applications} documents={documents} visits={visits} />
       </div>
     </AppShell>
   );

@@ -1,6 +1,8 @@
 import { createSupabaseServerClient, getCurrentProfile, getSupabaseUser, supabaseConfigured } from "./supabaseServer";
-import { demoApplications, demoDocuments, demoProperties, demoTasks } from "./demoData";
-import type { Application, Profile, Property, RentalDocument, Task } from "./types";
+import { demoApplications, demoDocuments, demoProperties, demoTasks, demoVisits } from "./demoData";
+import type { Application, Profile, Property, RentalDocument, Task, Visit } from "./types";
+
+export { missingDocuments, completionRate, nextBestAction, computeQualification, buildRelanceMessage, assembleVisitReport } from "./logic";
 
 export async function getApplications(): Promise<Application[]> {
   if (!supabaseConfigured) return demoApplications;
@@ -108,20 +110,32 @@ export async function getCurrentCandidateApplication(): Promise<Application | un
   return applications.find((a) => a.candidate_email === user.email);
 }
 
-export function missingDocuments(docs: RentalDocument[]) {
-  return docs.filter((d) => d.status === "manquant" || d.status === "à vérifier");
+export async function getVisits(): Promise<Visit[]> {
+  if (!supabaseConfigured) return demoVisits;
+  const supabase = createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("visits")
+    .select("*, application:applications(*, property:properties(*))")
+    .order("scheduled_at", { ascending: true });
+  if (error) {
+    console.error("getVisits:", error.message);
+    return demoVisits;
+  }
+  return (data as Visit[]) ?? demoVisits;
 }
 
-export function completionRate(docs: RentalDocument[]) {
-  const c = docs.filter((d) => d.status !== "non requis");
-  return c.length ? Math.round((c.filter((d) => d.status === "validé").length / c.length) * 100) : 100;
-}
-
-export function nextBestAction(app: Application, docs: RentalDocument[]) {
-  const m = missingDocuments(docs);
-  if (app.stage === "Prêt à valider" || completionRate(docs) >= 95) return "Valider le dossier";
-  if (app.activity === "Pas d’activité 48h" || app.stage === "À relancer") return "Relancer le candidat";
-  if (app.visit_status !== "Confirmée" && app.score >= 65) return "Confirmer la visite";
-  if (m.length) return `Demander ${m.length} document(s)`;
-  return "Ouvrir le dossier";
+export async function getVisit(id: string): Promise<Visit | undefined> {
+  const fallback = demoVisits.find((v) => v.id === id);
+  if (!supabaseConfigured) return fallback;
+  const supabase = createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("visits")
+    .select("*, application:applications(*, property:properties(*))")
+    .eq("id", id)
+    .single();
+  if (error) {
+    console.error("getVisit:", error.message);
+    return fallback;
+  }
+  return (data as Visit) ?? fallback;
 }

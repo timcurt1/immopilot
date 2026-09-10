@@ -25,6 +25,18 @@ do $$ begin
     alter table documents add constraint documents_application_id_type_key unique (application_id, type);
   end if;
 end $$;
+alter table documents add column if not exists rejection_reason text;
+alter table visits add column if not exists report_impression text;
+alter table visits add column if not exists report_positives text;
+alter table visits add column if not exists report_concerns text;
+alter table visits add column if not exists report_signature_likelihood text;
+alter table visits add column if not exists report_next_step text;
+alter table visits add column if not exists report_generated_at timestamptz;
+do $$ begin
+  if not exists (select 1 from pg_constraint where conname = 'visits_status_check') then
+    alter table visits add constraint visits_status_check check (status in ('À confirmer','Confirmée','Effectuée','Annulée'));
+  end if;
+end $$;
 
 alter table agencies enable row level security;alter table profiles enable row level security;alter table properties enable row level security;alter table applications enable row level security;alter table documents enable row level security;alter table visits enable row level security;alter table messages enable row level security;alter table tasks enable row level security;alter table timeline_events enable row level security;
 drop policy if exists "profile read own" on profiles;

@@ -1,10 +1,12 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { createSupabaseServerClient, getCurrentProfile, supabaseConfigured } from "./supabaseServer";
 import { supabaseAdmin, supabaseAdminConfigured } from "./supabaseAdmin";
 import { PLANS, isPlanId } from "./plans";
 import { sendEmail } from "./email";
+import { computeQualification } from "./data";
 
 async function getAgencyPlan(supabase: ReturnType<typeof createSupabaseServerClient>, agencyId: string) {
   const { data } = await supabase.from("agencies").select("plan").eq("id", agencyId).single();
@@ -29,6 +31,11 @@ export async function updateApplicationStage(id: string, stage: string) {
   if (!supabaseConfigured) return { ok: true, local: true };
   const supabase = createSupabaseServerClient();
   const { error } = await supabase.from("applications").update({ stage, updated_at: new Date().toISOString() }).eq("id", id);
+  if (!error) {
+    revalidatePath(`/applications/${id}`);
+    revalidatePath("/applications");
+    revalidatePath("/dashboard");
+  }
   return { ok: !error, error: error?.message };
 }
 
@@ -48,6 +55,10 @@ export async function saveAIMessage(applicationId: string, message: string) {
       subject: "Message de votre agence",
       html: `<p>Bonjour ${application.first_name},</p><p>${message.replace(/\n/g, "<br/>")}</p>`,
     });
+  }
+  if (!e1) {
+    revalidatePath(`/applications/${applicationId}`);
+    revalidatePath("/candidate");
   }
   return { ok: !e1 && !e2, error: e1?.message || e2?.message };
 }
@@ -88,11 +99,14 @@ export async function submitApplication(
   const supabase = createSupabaseServerClient();
   const { data: property, error: propertyError } = await supabase
     .from("properties")
-    .select("id, agency_id")
+    .select("id, agency_id, rent")
     .eq("id", propertyId)
     .single();
   if (propertyError || !property) return { ok: false, error: "Bien introuvable." };
-  const { error } = await supabase.from("applications").insert({ agency_id: property.agency_id, property_id: property.id, ...input });
+  const { score, signature_probability } = computeQualification(input, property.rent as number);
+  const { error } = await supabase
+    .from("applications")
+    .insert({ agency_id: property.agency_id, property_id: property.id, ...input, score, signature_probability });
   if (!error) {
     await notifyAgencyAdmins(
       supabase,
@@ -148,5 +162,119 @@ export async function uploadDocument(applicationId: string, documentType: string
       );
     }
   }
+  if (!dbError) {
+    revalidatePath(`/applications/${applicationId}`);
+    revalidatePath("/candidate");
+  }
   return { ok: !dbError, error: dbError?.message };
+}
+
+export async function updateDocumentStatus(documentId: string, status: "validé" | "refusé", rejectionReason?: string) {
+  if (!supabaseConfigured) return { ok: true, local: true };
+  const profile = await getCurrentProfile();
+  if (!profile || profile.role === "candidate") {
+    return { ok: false, error: "Seul un agent peut valider ou refuser un document." };
+  }
+  const supabase = createSupabaseServerClient();
+  const { data: document, error } = await supabase
+    .from("documents")
+    .update({ status, rejection_reason: status === "refusé" ? rejectionReason || null : null, updated_at: new Date().toISOString() })
+    .eq("id", documentId)
+    .select("application_id, label")
+    .single();
+  if (error) return { ok: false, error: error.message };
+  if (status === "refusé" && document) {
+    const { data: application } = await supabase
+      .from("applications")
+      .select("candidate_email, first_name")
+      .eq("id", document.application_id)
+      .single();
+    if (application?.candidate_email) {
+      await sendEmail({
+        to: application.candidate_email as string,
+        subject: "Document à corriger",
+        html: `<p>Bonjour ${application.first_name},</p><p>Le document « ${document.label} » n'a pas pu être validé${
+          rejectionReason ? ` : ${rejectionReason}` : ""
+        }. Merci de le renvoyer depuis votre portail candidat.</p>`,
+      });
+    }
+  }
+  if (document?.application_id) {
+    revalidatePath(`/applications/${document.application_id}`);
+    revalidatePath("/candidate");
+    revalidatePath("/dashboard");
+  }
+  return { ok: true };
+}
+
+export async function scheduleVisit(applicationId: string, scheduledAt: string) {
+  if (!supabaseConfigured) return { ok: true, local: true };
+  const profile = await getCurrentProfile();
+  if (!profile || profile.role === "candidate") {
+    return { ok: false, error: "Seul un agent peut programmer une visite." };
+  }
+  const supabase = createSupabaseServerClient();
+  const { data: application } = await supabase
+    .from("applications")
+    .select("property:properties(address)")
+    .eq("id", applicationId)
+    .single();
+  const address = (application?.property as { address?: string } | null)?.address || null;
+  const { error: insertError } = await supabase
+    .from("visits")
+    .insert({ application_id: applicationId, scheduled_at: scheduledAt, status: "À confirmer", address });
+  if (insertError) return { ok: false, error: insertError.message };
+  await supabase.from("applications").update({ visit_status: "À confirmer" }).eq("id", applicationId);
+  revalidatePath(`/applications/${applicationId}`);
+  revalidatePath("/applications");
+  revalidatePath("/visits");
+  revalidatePath("/dashboard");
+  return { ok: true };
+}
+
+export async function updateVisitStatus(visitId: string, status: "Confirmée" | "Effectuée" | "Annulée") {
+  if (!supabaseConfigured) return { ok: true, local: true };
+  const profile = await getCurrentProfile();
+  if (!profile || profile.role === "candidate") {
+    return { ok: false, error: "Seul un agent peut modifier le statut d'une visite." };
+  }
+  const supabase = createSupabaseServerClient();
+  const { data: visit, error } = await supabase.from("visits").update({ status }).eq("id", visitId).select("application_id").single();
+  if (error) return { ok: false, error: error.message };
+  if (visit?.application_id) {
+    await supabase.from("applications").update({ visit_status: status }).eq("id", visit.application_id);
+    revalidatePath(`/applications/${visit.application_id}`);
+    revalidatePath("/applications");
+  }
+  revalidatePath("/visits");
+  revalidatePath("/dashboard");
+  return { ok: true };
+}
+
+export async function saveVisitReport(
+  visitId: string,
+  input: { impression: string; positives: string; concerns: string; signatureLikelihood: string; nextStep: string }
+) {
+  if (!supabaseConfigured) return { ok: true, local: true };
+  const profile = await getCurrentProfile();
+  if (!profile || profile.role === "candidate") {
+    return { ok: false, error: "Seul un agent peut enregistrer un compte-rendu de visite." };
+  }
+  const supabase = createSupabaseServerClient();
+  const { data: visit, error } = await supabase
+    .from("visits")
+    .update({
+      report_impression: input.impression,
+      report_positives: input.positives,
+      report_concerns: input.concerns,
+      report_signature_likelihood: input.signatureLikelihood,
+      report_next_step: input.nextStep,
+      report_generated_at: new Date().toISOString(),
+    })
+    .eq("id", visitId)
+    .select("application_id")
+    .single();
+  if (visit?.application_id) revalidatePath(`/applications/${visit.application_id}`);
+  revalidatePath("/visits");
+  return { ok: !error, error: error?.message };
 }

@@ -37,6 +37,22 @@ export type RentalDocument = {
   status: "manquant" | "à vérifier" | "validé" | "refusé" | "non requis";
   file_name?: string | null;
   storage_path?: string | null;
+  rejection_reason?: string | null;
+};
+
+export type Visit = {
+  id: string;
+  application_id: string;
+  scheduled_at?: string | null;
+  status: "À confirmer" | "Confirmée" | "Effectuée" | "Annulée";
+  address?: string | null;
+  report_impression?: string | null;
+  report_positives?: string | null;
+  report_concerns?: string | null;
+  report_signature_likelihood?: string | null;
+  report_next_step?: string | null;
+  report_generated_at?: string | null;
+  application?: Application | null;
 };
 
 export type Task = {

@@ -5,7 +5,7 @@ const url = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 const supabaseConfigured = Boolean(url && key);
 
-const PROTECTED_PREFIXES = ["/dashboard", "/applications", "/properties", "/candidate", "/messages", "/settings"];
+const PROTECTED_PREFIXES = ["/dashboard", "/applications", "/properties", "/candidate", "/messages", "/settings", "/visits"];
 
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next({ request });
@@ -52,5 +52,13 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/applications/:path*", "/properties/:path*", "/candidate/:path*", "/messages/:path*", "/settings/:path*"],
+  matcher: [
+    "/dashboard/:path*",
+    "/applications/:path*",
+    "/properties/:path*",
+    "/candidate/:path*",
+    "/messages/:path*",
+    "/settings/:path*",
+    "/visits/:path*",
+  ],
 };

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Copy, Save } from "lucide-react";
 import { saveAIMessage } from "@/lib/actions";
-import type { Application } from "@/lib/types";
+import { buildRelanceMessage } from "@/lib/logic";
+import type { Application, RentalDocument } from "@/lib/types";
 import { Field, inputClass, textareaClass } from "@/components/ui/Field";
 
 const templates = [
@@ -21,11 +22,18 @@ const templates = [
   },
 ];
 
-export function MessagesClient({ applications }: { applications: Application[] }) {
+export function MessagesClient({ applications, documents }: { applications: Application[]; documents: RentalDocument[] }) {
   const [candidateId, setCandidateId] = useState(applications[0]?.id || "");
-  const [message, setMessage] = useState("Choisis un modèle.");
-  const [status, setStatus] = useState("");
   const app = applications.find((a) => a.id === candidateId) || applications[0];
+  const [message, setMessage] = useState(() =>
+    app ? buildRelanceMessage(app, documents.filter((d) => d.application_id === app.id)) : "Choisis un modèle."
+  );
+  const [status, setStatus] = useState("");
+
+  useEffect(() => {
+    if (app) setMessage(buildRelanceMessage(app, documents.filter((d) => d.application_id === app.id)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [candidateId]);
 
   if (!app) {
     return (

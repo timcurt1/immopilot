@@ -4,13 +4,16 @@ import { ArrowLeft } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { DocumentChecklist } from "@/components/DocumentChecklist";
 import { ApplicationActions } from "@/components/ApplicationActions";
-import { getApplication, getDocuments, completionRate, nextBestAction } from "@/lib/data";
+import { VisitScheduler } from "@/components/VisitScheduler";
+import { getApplication, getDocuments, getVisits, completionRate, nextBestAction } from "@/lib/data";
 
 export const metadata: Metadata = { title: "Détail de candidature", robots: { index: false, follow: false } };
 
 export default async function ApplicationDetailPage({ params }: { params: { id: string } }) {
   const application = await getApplication(params.id);
   const documents = await getDocuments(params.id);
+  const allVisits = await getVisits();
+  const visits = allVisits.filter((v) => v.application_id === params.id);
 
   if (!application) {
     return (
@@ -68,10 +71,11 @@ export default async function ApplicationDetailPage({ params }: { params: { id: 
           </section>
           <aside className="rounded-2xl border border-line bg-white p-5">
             <h3 className="font-display font-bold text-lg text-ink mb-4">Documents</h3>
-            <DocumentChecklist documents={documents} />
+            <DocumentChecklist documents={documents} interactive />
           </aside>
         </div>
         <ApplicationActions application={application} documents={documents} />
+        <VisitScheduler applicationId={application.id} visits={visits} />
       </div>
     </AppShell>
   );
