@@ -5,14 +5,19 @@ import { AppShell } from "@/components/AppShell";
 import { DocumentChecklist } from "@/components/DocumentChecklist";
 import { ApplicationActions } from "@/components/ApplicationActions";
 import { VisitScheduler } from "@/components/VisitScheduler";
+import { Timeline } from "@/components/Timeline";
 import { getApplication, getDocuments, getVisits, completionRate, nextBestAction } from "@/lib/data";
+import { getTimeline } from "@/lib/timeline";
 
 export const metadata: Metadata = { title: "Détail de candidature", robots: { index: false, follow: false } };
 
 export default async function ApplicationDetailPage({ params }: { params: { id: string } }) {
-  const application = await getApplication(params.id);
-  const documents = await getDocuments(params.id);
-  const allVisits = await getVisits();
+  const [application, documents, allVisits, timeline] = await Promise.all([
+    getApplication(params.id),
+    getDocuments(params.id),
+    getVisits(),
+    getTimeline(params.id),
+  ]);
   const visits = allVisits.filter((v) => v.application_id === params.id);
 
   if (!application) {
@@ -74,7 +79,10 @@ export default async function ApplicationDetailPage({ params }: { params: { id: 
             <DocumentChecklist documents={documents} interactive />
           </aside>
         </div>
-        <ApplicationActions application={application} documents={documents} />
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6 items-start">
+          <ApplicationActions application={application} documents={documents} />
+          <Timeline events={timeline} />
+        </div>
         <VisitScheduler applicationId={application.id} visits={visits} />
       </div>
     </AppShell>

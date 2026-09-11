@@ -1,8 +1,17 @@
 import { createSupabaseServerClient, getCurrentProfile, getSupabaseUser, supabaseConfigured } from "./supabaseServer";
-import { demoApplications, demoDocuments, demoProperties, demoTasks, demoVisits } from "./demoData";
-import type { Application, Profile, Property, RentalDocument, Task, Visit } from "./types";
+import { demoApplications, demoDocuments, demoMessageTemplates, demoProperties, demoTasks, demoVisits } from "./demoData";
+import type { Application, MessageTemplate, Profile, Property, RentalDocument, Task, Visit } from "./types";
 
-export { missingDocuments, completionRate, nextBestAction, computeQualification, buildRelanceMessage, assembleVisitReport } from "./logic";
+export {
+  missingDocuments,
+  completionRate,
+  nextBestAction,
+  computeQualification,
+  buildRelanceMessage,
+  assembleVisitReport,
+  hoursSinceUpdate,
+  isInactive,
+} from "./logic";
 
 export async function getApplications(): Promise<Application[]> {
   if (!supabaseConfigured) return demoApplications;
@@ -67,7 +76,7 @@ export async function getDocuments(applicationId?: string): Promise<RentalDocume
 export async function getTasks(): Promise<Task[]> {
   if (!supabaseConfigured) return demoTasks;
   const supabase = createSupabaseServerClient();
-  const { data, error } = await supabase.from("tasks").select("*").eq("status", "open").order("created_at", { ascending: false });
+  const { data, error } = await supabase.from("tasks").select("*").order("created_at", { ascending: false });
   if (error) {
     console.error("getTasks:", error.message);
     return demoTasks;
@@ -122,6 +131,23 @@ export async function getVisits(): Promise<Visit[]> {
     return demoVisits;
   }
   return (data as Visit[]) ?? demoVisits;
+}
+
+export async function getMessageTemplates(): Promise<MessageTemplate[]> {
+  if (!supabaseConfigured) return demoMessageTemplates;
+  const profile = await getCurrentProfile();
+  if (!profile) return demoMessageTemplates;
+  const supabase = createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("message_templates")
+    .select("*")
+    .eq("agency_id", profile.agency_id)
+    .order("created_at", { ascending: true });
+  if (error) {
+    console.error("getMessageTemplates:", error.message);
+    return demoMessageTemplates;
+  }
+  return (data as MessageTemplate[]) ?? demoMessageTemplates;
 }
 
 export async function getVisit(id: string): Promise<Visit | undefined> {

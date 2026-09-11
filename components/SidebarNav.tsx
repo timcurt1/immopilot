@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { NAV_ITEMS } from "@/lib/navItems";
+import { visibleNavItems } from "@/lib/navItems";
 
-export function SidebarNav() {
+export function SidebarNav({ role = null }: { role?: string | null }) {
   const pathname = usePathname();
+  const items = visibleNavItems(role);
   return (
     <nav className="flex-1 overflow-y-auto px-3 py-4 grid gap-1" aria-label="Navigation de l'application">
-      {NAV_ITEMS.map((item) => {
+      {items.map((item) => {
         const Icon = item.icon;
         const active = pathname === item.href || pathname?.startsWith(`${item.href}/`);
         return (

@@ -5,7 +5,18 @@ const url = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 const supabaseConfigured = Boolean(url && key);
 
-const PROTECTED_PREFIXES = ["/dashboard", "/applications", "/properties", "/candidate", "/messages", "/settings", "/visits"];
+const PROTECTED_PREFIXES = [
+  "/dashboard",
+  "/applications",
+  "/properties",
+  "/candidate",
+  "/messages",
+  "/settings",
+  "/visits",
+  "/tasks",
+  "/assistant",
+  "/pilotage",
+];
 
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next({ request });
@@ -44,7 +55,7 @@ export async function middleware(request: NextRequest) {
   if (profile?.role === "candidate" && !pathname.startsWith("/candidate")) {
     return NextResponse.redirect(new URL("/candidate", request.url));
   }
-  if (profile?.role === "agent" && pathname.startsWith("/settings")) {
+  if (profile?.role === "agent" && (pathname.startsWith("/settings") || pathname.startsWith("/pilotage"))) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
@@ -60,5 +71,8 @@ export const config = {
     "/messages/:path*",
     "/settings/:path*",
     "/visits/:path*",
+    "/tasks/:path*",
+    "/assistant/:path*",
+    "/pilotage/:path*",
   ],
 };

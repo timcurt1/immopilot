@@ -8,7 +8,8 @@ import { getApplications, getDocuments, getTasks, getVisits, completionRate } fr
 export const metadata: Metadata = { title: "Tableau de bord", robots: { index: false, follow: false } };
 
 export default async function DashboardPage() {
-  const [applications, documents, tasks, visits] = await Promise.all([getApplications(), getDocuments(), getTasks(), getVisits()]);
+  const [applications, documents, allTasks, visits] = await Promise.all([getApplications(), getDocuments(), getTasks(), getVisits()]);
+  const tasks = allTasks.filter((t) => t.status === "open");
   const ready = applications.filter(
     (a) => a.stage === "Prêt à valider" || completionRate(documents.filter((d) => d.application_id === a.id)) >= 95
   ).length;

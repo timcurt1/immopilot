@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Upload } from "lucide-react";
-import { uploadDocument } from "@/lib/actions";
+import { suggestDocumentType, uploadDocument } from "@/lib/actions";
 import type { RentalDocument } from "@/lib/types";
 import { Field, inputClass } from "@/components/ui/Field";
 
@@ -11,6 +11,19 @@ export function CandidateUpload({ applicationId, documents }: { applicationId: s
   const [file, setFile] = useState<File | null>(null);
   const [status, setStatus] = useState("");
   const [pending, setPending] = useState(false);
+  const [suggestion, setSuggestion] = useState<{ label: string; source: "ai" | "fallback" } | null>(null);
+
+  async function handleFileChange(selected: File | null) {
+    setFile(selected);
+    setSuggestion(null);
+    if (!selected) return;
+    const result = await suggestDocumentType(applicationId, selected.name);
+    if (result.ok && result.type) {
+      const doc = documents.find((d) => d.type === result.type);
+      setType(result.type);
+      setSuggestion({ label: doc?.label || result.type, source: result.source || "fallback" });
+    }
+  }
 
   async function send() {
     if (!file) {
@@ -43,11 +56,16 @@ export function CandidateUpload({ applicationId, documents }: { applicationId: s
               </option>
             ))}
           </select>
+          {suggestion && (
+            <p className="mt-1.5 text-xs text-muted">
+              Suggestion automatique : {suggestion.label} ({suggestion.source === "ai" ? "IA" : "règles locales"})
+            </p>
+          )}
         </Field>
         <Field label="Fichier">
           <input
             type="file"
-            onChange={(e) => setFile(e.target.files?.[0] || null)}
+            onChange={(e) => handleFileChange(e.target.files?.[0] || null)}
             className="w-full text-sm text-ink-soft file:mr-3 file:h-9 file:px-3.5 file:rounded-lg file:border-0 file:bg-ink file:text-white file:text-sm file:font-semibold file:cursor-pointer"
           />
         </Field>

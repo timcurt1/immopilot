@@ -24,8 +24,13 @@ export type Application = {
   visit_status: string;
   score: number;
   signature_probability: number;
+  score_source?: "ai" | "fallback" | "manuel" | null;
   note?: string | null;
+  summary?: string | null;
   last_message?: string | null;
+  assigned_to?: string | null;
+  updated_at?: string | null;
+  created_at?: string | null;
   property?: Property | null;
 };
 
@@ -62,6 +67,9 @@ export type Task = {
   type: string;
   priority: "low" | "medium" | "high";
   status: "open" | "done" | "ignored";
+  assigned_to?: string | null;
+  created_at?: string | null;
+  application?: Application | null;
 };
 
 export type Profile = {
@@ -70,4 +78,24 @@ export type Profile = {
   role: string;
   full_name: string | null;
   email: string;
+};
+
+export type MessageTemplate = {
+  id: string;
+  agency_id: string;
+  title: string;
+  body: string;
+  created_at?: string | null;
+};
+
+export type TimelineEvent = {
+  id: string;
+  application_id: string;
+  label: string;
+  created_at: string;
+};
+
+export type AiResult<T> = {
+  source: "ai" | "fallback";
+  data: T;
 };

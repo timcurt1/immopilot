@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { CheckCircle2, XCircle, ClipboardCheck } from "lucide-react";
+import { CheckCircle2, XCircle, ClipboardCheck, Wand2 } from "lucide-react";
 import type { ComponentProps } from "react";
-import { updateVisitStatus, saveVisitReport } from "@/lib/actions";
+import { updateVisitStatus, saveVisitReport, structureVisitNotesAction } from "@/lib/actions";
 import { assembleVisitReport } from "@/lib/logic";
 import { Field, inputClass, textareaClass } from "@/components/ui/Field";
 import { Badge } from "@/components/marketing/Badge";
@@ -37,17 +37,59 @@ function ReportForm({
   const [likelihood, setLikelihood] = useState(visit.report_signature_likelihood || "Moyenne");
   const [nextStep, setNextStep] = useState(visit.report_next_step || "");
   const [status, setStatus] = useState("");
+  const [rawNotes, setRawNotes] = useState("");
+  const [structuring, setStructuring] = useState(false);
+  const [structureSource, setStructureSource] = useState<"ai" | "fallback" | null>(null);
 
   async function save() {
-    const result = await saveVisitReport(visit.id, { impression, positives, concerns, signatureLikelihood: likelihood, nextStep });
+    const result = await saveVisitReport(visit.id, { impression, positives, concerns, signatureLikelihood: likelihood, nextStep, rawNotes });
     setStatus(result.ok ? "Compte-rendu enregistré." : `Erreur : ${result.error}`);
     if (result.ok) {
       onSaved({ impression, positives, concerns, signatureLikelihood: likelihood, nextStep, generatedAt: new Date().toISOString() });
     }
   }
 
+  async function structure() {
+    if (!rawNotes.trim()) return;
+    setStructuring(true);
+    setStructureSource(null);
+    const result = await structureVisitNotesAction(rawNotes);
+    setStructuring(false);
+    if (result.ok) {
+      if (result.impression) setImpression(result.impression);
+      if (result.positives) setPositives(result.positives);
+      if (result.concerns) setConcerns(result.concerns);
+      if (result.signatureLikelihood) setLikelihood(result.signatureLikelihood);
+      if (result.nextStep) setNextStep(result.nextStep);
+      setStructureSource(result.source || "ai");
+      setStatus("");
+    } else {
+      setStatus(`Erreur : ${result.error}`);
+    }
+  }
+
   return (
     <div className="mt-3 rounded-xl border border-line bg-surface p-4">
+      <Field label="Notes libres (juste après la visite)">
+        <textarea
+          className={textareaClass}
+          value={rawNotes}
+          onChange={(e) => setRawNotes(e.target.value)}
+          placeholder="Notez à chaud vos impressions, ce qui a plu, les réserves, l’état d’esprit du candidat…"
+        />
+      </Field>
+      <div className="flex items-center gap-3 mb-4">
+        <button
+          onClick={structure}
+          disabled={!rawNotes.trim() || structuring}
+          className="inline-flex items-center gap-2 h-9 px-3 rounded-xl border border-line text-xs font-semibold text-ink-soft hover:text-ink hover:border-ink/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <Wand2 size={13} /> {structuring ? "Structuration…" : "Structurer avec l’IA"}
+        </button>
+        {structureSource && (
+          <Badge tone={structureSource === "ai" ? "brand" : "neutral"}>{structureSource === "ai" ? "IA" : "Repli local"}</Badge>
+        )}
+      </div>
       <Field label="Impression générale">
         <select className={inputClass} value={impression} onChange={(e) => setImpression(e.target.value)}>
           <option value="">Choisir…</option>

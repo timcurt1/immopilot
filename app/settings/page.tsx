@@ -3,12 +3,20 @@ import { Mail } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { TeamInviteForm } from "@/components/TeamInviteForm";
 import { BillingSection } from "@/components/BillingSection";
-import { getAgencyBilling, getAgencyTeam } from "@/lib/data";
+import { MessageTemplatesAdmin } from "@/components/MessageTemplatesAdmin";
+import { getAgencyBilling, getAgencyTeam, getMessageTemplates } from "@/lib/data";
+import { getCurrentProfile } from "@/lib/supabaseServer";
 
 export const metadata: Metadata = { title: "Paramètres", robots: { index: false, follow: false } };
 
 export default async function SettingsPage() {
-  const [team, billing] = await Promise.all([getAgencyTeam(), getAgencyBilling()]);
+  const [team, billing, templates, profile] = await Promise.all([
+    getAgencyTeam(),
+    getAgencyBilling(),
+    getMessageTemplates(),
+    getCurrentProfile(),
+  ]);
+  const canManageTemplates = profile?.role === "admin" || profile?.role === "manager";
 
   return (
     <AppShell title="Réglages" subtitle="Préparation agence, sécurité et RGPD.">
@@ -20,7 +28,29 @@ export default async function SettingsPage() {
             Invite tes collègues à rejoindre l&rsquo;agence. Ils reçoivent un email pour créer leur accès.
           </p>
           <div className="mt-5">
-            <TeamInviteForm team={team} />
+            <TeamInviteForm team={team} currentRole={profile?.role} currentProfileId={profile?.id} />
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-line bg-white p-6">
+          <span className="text-xs font-semibold uppercase tracking-wide text-muted">Administration</span>
+          <h2 className="mt-2 font-display font-bold text-2xl text-ink tracking-tight">Modèles de messages</h2>
+          <p className="mt-2 text-sm text-muted leading-relaxed">
+            Personnalise les messages proposés par l&rsquo;IA à tes candidats.
+          </p>
+          {canManageTemplates ? (
+            <div className="mt-5">
+              <MessageTemplatesAdmin templates={templates} />
+            </div>
+          ) : (
+            <p className="mt-5 text-sm text-muted">Réservé aux admins et managers.</p>
+          )}
+          <div className="mt-5 rounded-xl bg-surface border border-line p-4">
+            <p className="text-sm font-semibold text-ink">À venir</p>
+            <p className="mt-1 text-sm text-muted">
+              Les règles de priorité automatique et les intégrations externes ne sont pas encore fonctionnelles :
+              elles arrivent dans une prochaine itération.
+            </p>
           </div>
         </section>
 

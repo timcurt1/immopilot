@@ -2,18 +2,19 @@ import Link from "next/link";
 import { LogOut, LogIn } from "lucide-react";
 import { Logo } from "@/components/marketing/Logo";
 import { SidebarNav } from "./SidebarNav";
-import { getSupabaseUser, supabaseConfigured } from "@/lib/supabaseServer";
+import { getCurrentProfile, getSupabaseUser, supabaseConfigured } from "@/lib/supabaseServer";
 import { signOut } from "@/lib/actions";
 
 export async function Sidebar() {
   const user = supabaseConfigured ? await getSupabaseUser() : null;
+  const profile = supabaseConfigured ? await getCurrentProfile() : null;
 
   return (
     <aside className="hidden lg:flex flex-col w-64 shrink-0 border-r border-line bg-white h-screen sticky top-0">
       <Link href="/dashboard" className="flex items-center px-5 py-5 border-b border-line">
         <Logo />
       </Link>
-      <SidebarNav />
+      <SidebarNav role={supabaseConfigured ? profile?.role ?? null : "admin"} />
       <div className="border-t border-line p-3">
         {user ? (
           <form action={signOut}>

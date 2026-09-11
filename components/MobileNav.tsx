@@ -5,12 +5,13 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/marketing/Logo";
-import { NAV_ITEMS } from "@/lib/navItems";
+import { visibleNavItems } from "@/lib/navItems";
 
-export function MobileNav() {
+export function MobileNav({ role = null }: { role?: string | null }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const current = NAV_ITEMS.find((item) => pathname === item.href || pathname?.startsWith(`${item.href}/`));
+  const items = visibleNavItems(role);
+  const current = items.find((item) => pathname === item.href || pathname?.startsWith(`${item.href}/`));
 
   return (
     <div className="lg:hidden sticky top-0 z-30 bg-white border-b border-line">
@@ -30,7 +31,7 @@ export function MobileNav() {
       </div>
       {open && (
         <nav className="border-t border-line px-3 py-3 grid gap-1" aria-label="Navigation mobile">
-          {NAV_ITEMS.map((item) => {
+          {items.map((item) => {
             const Icon = item.icon;
             const active = item === current;
             return (

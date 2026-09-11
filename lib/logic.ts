@@ -103,6 +103,19 @@ export function buildRelanceMessage(app: Application, docs: RentalDocument[]): s
   return `Bonjour ${app.first_name},\n\nMerci pour votre candidature pour ${propertyTitle}. Nous revenons vers vous prochainement.`;
 }
 
+export function hoursSinceUpdate(app: Application): number | null {
+  if (!app.updated_at) return null;
+  const updated = new Date(app.updated_at).getTime();
+  if (Number.isNaN(updated)) return null;
+  return (Date.now() - updated) / 3600000;
+}
+
+export function isInactive(app: Application, thresholdHours = 48): boolean {
+  const hours = hoursSinceUpdate(app);
+  if (hours === null) return app.activity === "Pas d’activité 48h";
+  return hours >= thresholdHours && app.stage !== "Prêt à valider";
+}
+
 export function assembleVisitReport(input: {
   impression: string;
   positives: string;

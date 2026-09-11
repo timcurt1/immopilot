@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AppShell } from "@/components/AppShell";
 import { ApplicationTable } from "@/components/ApplicationTable";
+import { NewProspectForm } from "@/components/NewProspectForm";
 import { getApplications } from "@/lib/data";
 
 export const metadata: Metadata = { title: "Candidatures", robots: { index: false, follow: false } };
@@ -23,6 +24,7 @@ export default async function ApplicationsPage() {
             Chaque dossier est relié à un bien, des documents, une timeline, une visite et une prochaine action.
           </p>
         </section>
+        <NewProspectForm />
         <ApplicationTable applications={applications} />
       </div>
     </AppShell>

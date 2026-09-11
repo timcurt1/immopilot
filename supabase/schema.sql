@@ -37,8 +37,20 @@ do $$ begin
     alter table visits add constraint visits_status_check check (status in ('À confirmer','Confirmée','Effectuée','Annulée'));
   end if;
 end $$;
+alter table visits add column if not exists report_raw_notes text;
+alter table applications add column if not exists summary text;
+alter table applications add column if not exists score_source text;
+alter table tasks add column if not exists assigned_to uuid references profiles(id);
+
+-- Modèles de messages configurables par agence (Administration > Réglages).
+create table if not exists message_templates(id uuid primary key default gen_random_uuid(),agency_id uuid references agencies(id) on delete cascade,title text not null,body text not null,created_at timestamptz default now());
+alter table message_templates enable row level security;
+drop policy if exists "message templates agency access" on message_templates;
+create policy "message templates agency access" on message_templates for all using (agency_id in (select agency_id from profiles where id=auth.uid())) with check (agency_id in (select agency_id from profiles where id=auth.uid()));
 
 alter table agencies enable row level security;alter table profiles enable row level security;alter table properties enable row level security;alter table applications enable row level security;alter table documents enable row level security;alter table visits enable row level security;alter table messages enable row level security;alter table tasks enable row level security;alter table timeline_events enable row level security;
+drop policy if exists "tasks agency access" on tasks;
+create policy "tasks agency access" on tasks for all using (agency_id in (select agency_id from profiles where id=auth.uid())) with check (agency_id in (select agency_id from profiles where id=auth.uid()));
 drop policy if exists "profile read own" on profiles;
 create policy "profile read own" on profiles for select using (id=auth.uid());
 drop policy if exists "agency applications access" on applications;
