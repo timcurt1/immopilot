@@ -101,7 +101,7 @@ export function NewProspectForm() {
       {result && result.ok && result.extraction && (
         <div className="mt-4 rounded-xl border border-line bg-surface p-4">
           <div className="flex items-center gap-2 mb-2">
-            <Badge tone="green">Score {result.extraction.score}/100</Badge>
+            <Badge tone="green">Qualification du lead : {result.extraction.score}/100</Badge>
             <Badge tone={result.source === "ai" ? "brand" : "neutral"}>{result.source === "ai" ? "IA" : "Repli local"}</Badge>
           </div>
           <p className="text-sm text-ink-soft">
@@ -109,6 +109,11 @@ export function NewProspectForm() {
             {result.extraction.budget ? `${result.extraction.budget} €` : "budget non précisé"} · urgence {result.extraction.urgency}
           </p>
           <p className="mt-1 text-xs text-muted">{result.extraction.reasoning}</p>
+          <p className="mt-2 text-xs text-muted italic">
+            Ce score mesure la clarté et l&rsquo;urgence de la demande (type de bien, budget, localisation) — pas la solvabilité. Aucune
+            donnée financière (revenus, garant) n&rsquo;est encore disponible à ce stade ; le score sera à ajuster une fois le dossier
+            complété.
+          </p>
           {result.matchedProperty && <p className="mt-2 text-sm text-ink">Bien compatible proposé : {result.matchedProperty}</p>}
           {result.id && (
             <Link href={`/applications/${result.id}`} className="mt-3 inline-flex items-center text-sm font-semibold text-brand-600 hover:underline">

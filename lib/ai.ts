@@ -76,7 +76,10 @@ export async function aiQualifyProspect(freeText: string): Promise<AiOutcome<Pro
     "Tu es le moteur de qualification d'ImmoPilot, un copilote IA pour agences immobilières françaises. " +
     "Analyse la demande d'un prospect (email ou message libre) et réponds UNIQUEMENT avec un objet JSON de la forme " +
     '{"need":string,"propertyType":string,"budget":number|null,"location":string,"urgency":"faible"|"moyenne"|"élevée","score":number (0-100),"reasoning":string (une phrase courte)}. ' +
-    "Le score reflète la qualité/maturité du prospect (budget réaliste, urgence, précision de la demande). Ne réponds rien d'autre que ce JSON.";
+    "Le score reflète UNIQUEMENT la clarté et la maturité de la demande (budget réaliste annoncé, urgence, précision) — c'est un score " +
+    "de qualification de lead, PAS une évaluation de solvabilité. À ce stade tu n'as aucune donnée financière (revenus, garant) : ne les " +
+    "invente jamais, et si le texte n'en mentionne pas, le \"reasoning\" doit le dire explicitement (ex: \"aucune information sur la " +
+    "situation financière à ce stade\"). Ne réponds rien d'autre que ce JSON.";
   const text = await callClaude(system, freeText);
   if (text) {
     const parsed = extractJson<ProspectExtraction>(text, isProspectExtraction);
@@ -121,7 +124,8 @@ function fallbackQualify(freeText: string): ProspectExtraction {
     location,
     urgency,
     score: Math.min(100, score),
-    reasoning: "Extraction par mots-clés (repli local, sans appel IA).",
+    reasoning:
+      "Score de qualification du lead (clarté/urgence de la demande, repli local par mots-clés) — aucune information sur la situation financière à ce stade.",
   };
 }
 

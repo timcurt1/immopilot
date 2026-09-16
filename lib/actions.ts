@@ -411,7 +411,7 @@ export async function createProspectFromText(input: {
       score: extraction.data.score,
       signature_probability: Math.round(extraction.data.score * 0.8),
       score_source: extraction.source,
-      note: `Demande initiale : « ${input.rawText} »\n\nQualification automatique : ${extraction.data.reasoning}`,
+      note: `Demande initiale : « ${input.rawText} »\n\nQualification automatique (lead) : ${extraction.data.reasoning}\n\nLe score initial mesure la clarté/urgence de la demande, pas la solvabilité — à ajuster une fois le dossier complété (revenus, garant, documents).`,
     })
     .select("id")
     .single();
