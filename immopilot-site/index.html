@@ -309,13 +309,21 @@
 <section id="chiffres" class="section stats" aria-labelledby="stats-title">
   <div class="wrap">
     <h2 id="stats-title" class="h2 center reveal">En chiffres.</h2>
+    <!-- Chiffres produit comptés dans le code de l’application (aucune statistique d’usage : pas encore de données clients).
+         Les valeurs data-count = texte affiché sans JS = valeur finale du compteur. Sources (dépôt immopilot, 2026-11-04) :
+         10 modules : lib/navItems.ts:22-33 (entrées de NAV_ITEMS)
+         4 rôles : supabase/schema.sql:4 (role in ('admin','manager','agent','candidate'))
+         2 vues : lib/navItems.ts:38 (le candidat n’a que son portail) + app/candidate/page.tsx
+         5 statuts de pièce : supabase/schema.sql:7 (manquant, à vérifier, validé, refusé, non requis)
+         4 statuts de visite : supabase/schema.sql:37 (À confirmer, Confirmée, Effectuée, Annulée)
+         1 raccourci : components/CommandPalette.tsx:21 (⌘K / Ctrl+K) -->
     <div class="stat-grid">
-      <div class="stat reveal"><b class="stat-v" data-count="2">2</b><span>vues dédiées : Agent et Candidat</span></div>
-      <div class="stat reveal"><b class="stat-v" data-count="1">1</b><span>raccourci pour tout trouver : ⌘K</span></div>
-      <div class="stat reveal"><b class="stat-v"><span data-count="100">100</span>&nbsp;%</b><span>en français, pensé pour les agences françaises</span></div>
-      <div class="stat stat-todo reveal"><b class="stat-v">[À COMPLÉTER]</b><span>heures gagnées par agent et par semaine</span></div>
-      <div class="stat stat-todo reveal"><b class="stat-v">[À COMPLÉTER]</b><span>jours de vacance locative en moins</span></div>
-      <div class="stat stat-todo reveal"><b class="stat-v">[À COMPLÉTER]</b><span>dossiers traités chaque mois par nos agences</span></div>
+      <div class="stat reveal"><b class="stat-v" data-count="10">10</b><span>modules : candidatures, biens, visites, tâches, assistant IA, pilotage…</span></div>
+      <div class="stat reveal"><b class="stat-v" data-count="4">4</b><span>rôles d’accès : administrateur, manager, agent, candidat</span></div>
+      <div class="stat reveal"><b class="stat-v" data-count="2">2</b><span>vues dédiées : Agent et Candidat</span></div>
+      <div class="stat reveal"><b class="stat-v" data-count="5">5</b><span>statuts par pièce justificative, de « manquante » à « validée »</span></div>
+      <div class="stat reveal"><b class="stat-v" data-count="4">4</b><span>statuts de visite, de « à confirmer » à « effectuée »</span></div>
+      <div class="stat reveal"><b class="stat-v" data-count="1">1</b><span>raccourci pour tout trouver : ⌘K</span></div>
     </div>
   </div>
 </section>
