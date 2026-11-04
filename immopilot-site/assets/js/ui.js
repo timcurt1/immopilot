@@ -198,19 +198,34 @@ export function initReveals() {
 
 /* ---------- Tarifs : toggle mensuel / annuel ---------- */
 export function initPricing() {
-  const seg = $('[data-seg="billing"]'); if (!seg) return;
+  const sec = $("#tarifs"); const seg = $('[data-seg="billing"]'); if (!sec || !seg) return;
+  // Source unique : prix mensuel HT par offre (data-price-month) + remise annuelle (data-annual-discount, en %).
+  const discount = Number(sec.dataset.annualDiscount) || 0;
+  const fmt = (n) => new Intl.NumberFormat("fr-FR", { minimumFractionDigits: Number.isInteger(n) ? 0 : 2, maximumFractionDigits: 2 }).format(n) + " €";
+  const round2 = (n) => Math.round(n * 100) / 100;
   const amounts = $$("[data-price-month]");
+  const unitOf = (el) => el.parentElement.querySelector("[data-price-unit]");
+  // Partie variable de l’unité (« / par agence »…) lue une seule fois dans le HTML.
+  amounts.forEach((el) => { const u = unitOf(el); u.dataset.base = u.textContent.replace(/^HT \/ mois/, ""); });
+  const view = (el, yearly) => {
+    const raw = el.dataset.priceMonth; const month = Number(raw); const base = unitOf(el).dataset.base;
+    if (!raw || !Number.isFinite(month)) {
+      return { price: el.dataset.marker || (el.dataset.marker = el.textContent), unit: yearly ? `HT / mois${base}, facturé à l’année (−${discount} %)` : `HT / mois${base}` };
+    }
+    if (!yearly) return { price: fmt(month), unit: `HT / mois${base}` };
+    const perMonth = round2(month * (1 - discount / 100));
+    return { price: fmt(perMonth), unit: `HT / mois${base}, soit ${fmt(round2(perMonth * 12))} HT facturés à l’année` };
+  };
+  amounts.forEach((el) => { const v = view(el, false); el.textContent = v.price; unitOf(el).textContent = v.unit; });
   const springs = amounts.map((el) => new Spring(1, { response: 0.3, precision: 0.002, onUpdate: (v) => {
     el.style.opacity = v; el.style.transform = reduced.matches ? "" : `translate3d(0,${(1 - v) * 8}px,0)`;
   } }));
   segmented(seg, (i) => {
-    const k = i === 1 ? "priceYear" : "priceMonth";
     amounts.forEach((el, j) => {
-      const s = springs[j];
-      s.onRest = (v) => { if (v === 0) { el.textContent = el.dataset[k]; s.onRest = null; s.to(1); } };
+      const s = springs[j]; const v = view(el, i === 1);
+      s.onRest = (o) => { if (o === 0) { el.textContent = v.price; s.onRest = null; s.to(1); } };
       s.to(0);
-      const unit = el.parentElement.querySelector("[data-price-unit]");
-      unit.textContent = i === 1 ? "HT / mois, facturé à l’année" : "HT / mois";
+      unitOf(el).textContent = v.unit;
     });
     track("billing_toggle", { period: i ? "annuel" : "mensuel" });
   });

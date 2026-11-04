@@ -436,6 +436,7 @@
   .price-grid { margin-top: 3.5rem; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; align-items: stretch; }
   .price { position: relative; padding: 2rem; display: flex; flex-direction: column; }
   .price-hl { border-color: color-mix(in srgb, var(--accent) 55%, transparent); box-shadow: var(--shadow), 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent), 0 30px 90px -30px var(--glow); }
+  .price-note { margin: 2.5rem auto 0; max-width: 46rem; }
   .price-tag { position: absolute; top: 1.4rem; right: 1.4rem; padding: .25rem .7rem; border-radius: 99px; background: var(--grad); color: #fff; font-size: .75rem; font-weight: 700; letter-spacing: .01em; }
   [data-theme="dark"] .price-tag { color: #04112a; }
   .price h3 { font-size: 1.5rem; } .price-for { color: var(--text-2); margin-top: .35rem; font-size: .9375rem; }

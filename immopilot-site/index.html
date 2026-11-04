@@ -354,7 +354,9 @@
 </section>
 
 <!-- ============ 12. TARIFS ============ -->
-<section id="tarifs" class="section pricing" aria-labelledby="price-title">
+<section id="tarifs" class="section pricing" aria-labelledby="price-title" data-annual-discount="15">
+  <!-- Source unique des prix : data-price-month (prix mensuel HT, nombre ; vide = inconnu) sur chaque offre,
+       et data-annual-discount (remise annuelle en %) ci-dessus. Le prix annuel est calculé dans assets/js/ui.js (initPricing). -->
   <div class="wrap">
     <div class="center reveal">
       <p class="eyebrow">Tarifs</p>
@@ -362,30 +364,30 @@
       <div class="seg" role="radiogroup" aria-label="Période de facturation" data-seg="billing">
         <span class="seg-thumb" aria-hidden="true"></span>
         <button type="button" role="radio" aria-checked="true" data-billing="month">Mensuel</button>
-        <button type="button" role="radio" aria-checked="false" data-billing="year" tabindex="-1">Annuel <small class="save">[À COMPLÉTER] %</small></button>
+        <button type="button" role="radio" aria-checked="false" data-billing="year" tabindex="-1">Annuel <small class="save">−15 %</small></button>
       </div>
     </div>
     <div class="price-grid">
       <article class="price glass-thick reveal">
-        <h3>Starter</h3><p class="price-for">Pour démarrer, seul ou à deux.</p>
-        <p class="amount"><b data-price-month="[À COMPLÉTER] €" data-price-year="[À COMPLÉTER] €">[À COMPLÉTER] €</b><span data-price-unit>HT / mois</span></p>
-        <ul><li>Candidatures et dossiers illimités <span class="todo">[À VALIDER]</span></li><li>Vue Candidat</li><li>Palette ⌘K</li><li>Export CSV</li></ul>
-        <a class="btn btn-ghost" href="#demo" data-track="cta_price_starter">Demander une démo</a>
+        <h3>[À COMPLÉTER : nom de l’offre 1]</h3><p class="price-for">[À COMPLÉTER : cible de l’offre 1]</p>
+        <p class="amount"><b data-price-month="">[À COMPLÉTER : prix mensuel HT]</b><span data-price-unit>HT / mois / [À COMPLÉTER : par agence ou par utilisateur]</span></p>
+        <ul><li>[À COMPLÉTER : limites et fonctionnalités incluses]</li></ul>
+        <a class="btn btn-ghost" href="#demo" data-track="cta_price_1">Demander une démo</a>
       </article>
       <article class="price price-hl glass-thick reveal">
-        <span class="price-tag">Recommandé</span>
-        <h3>Croissance</h3><p class="price-for">Pour les agences qui louent en équipe.</p>
-        <p class="amount"><b data-price-month="[À COMPLÉTER] €" data-price-year="[À COMPLÉTER] €">[À COMPLÉTER] €</b><span data-price-unit>HT / mois</span></p>
-        <ul><li>Tout Starter</li><li>Plusieurs agents <span class="todo">[À COMPLÉTER : nombre]</span></li><li>Actions groupées et modèles de relance</li><li>Tableau de bord d’équipe</li></ul>
-        <a class="btn btn-primary" href="#demo" data-track="cta_price_croissance">Demander une démo</a>
+        <h3>[À COMPLÉTER : nom de l’offre 2]</h3><p class="price-for">[À COMPLÉTER : cible de l’offre 2]</p>
+        <p class="amount"><b data-price-month="">[À COMPLÉTER : prix mensuel HT]</b><span data-price-unit>HT / mois / [À COMPLÉTER : par agence ou par utilisateur]</span></p>
+        <ul><li>[À COMPLÉTER : limites et fonctionnalités incluses]</li></ul>
+        <a class="btn btn-primary" href="#demo" data-track="cta_price_2">Demander une démo</a>
       </article>
       <article class="price glass-thick reveal">
-        <h3>Premium</h3><p class="price-for">Pour les réseaux et multi-agences.</p>
-        <p class="amount"><b data-price-month="[À COMPLÉTER] €" data-price-year="[À COMPLÉTER] €">[À COMPLÉTER] €</b><span data-price-unit>HT / mois</span></p>
-        <ul><li>Tout Croissance</li><li>Plusieurs agences</li><li>Reprise de vos données <span class="todo">[À VALIDER]</span></li><li>Accompagnement dédié <span class="todo">[À VALIDER]</span></li></ul>
-        <a class="btn btn-ghost" href="#demo" data-track="cta_price_premium">Demander une démo</a>
+        <h3>[À COMPLÉTER : nom de l’offre 3]</h3><p class="price-for">[À COMPLÉTER : cible de l’offre 3]</p>
+        <p class="amount"><b data-price-month="">[À COMPLÉTER : prix mensuel HT]</b><span data-price-unit>HT / mois / [À COMPLÉTER : par agence ou par utilisateur]</span></p>
+        <ul><li>[À COMPLÉTER : limites et fonctionnalités incluses]</li></ul>
+        <a class="btn btn-ghost" href="#demo" data-track="cta_price_3">Demander une démo</a>
       </article>
     </div>
+    <p class="form-note price-note reveal">Prix hors taxes, TVA en sus. Facturation mensuelle, ou annuelle avec 15 % de remise. Engagement et résiliation : [À COMPLÉTER]. Essai gratuit : [À COMPLÉTER]. Frais de mise en place : [À COMPLÉTER]. Moyens de paiement : [À COMPLÉTER]. Offre sur mesure : [À COMPLÉTER].</p>
   </div>
 </section>
 
