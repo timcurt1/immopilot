@@ -54,6 +54,7 @@ export function initCmdk() {
     if (isOpen) return;
     isOpen = true; lastFocus = document.activeElement;
     root.hidden = false; document.documentElement.dataset.cmdk = "open";
+    root.style.pointerEvents = "";
     // La palette naît de son déclencheur (cohérence spatiale).
     const pr = panel.getBoundingClientRect();
     if (trigger && trigger.getBoundingClientRect) {
@@ -67,6 +68,7 @@ export function initCmdk() {
   function close(restore = true) {
     if (!isOpen) return;
     isOpen = false; delete document.documentElement.dataset.cmdk;
+    root.style.pointerEvents = "none"; // pendant le fondu de sortie, la page redevient cliquable immédiatement
     s.to(0);
     if (restore && lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
   }
