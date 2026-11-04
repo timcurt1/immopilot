@@ -61,14 +61,15 @@ export function initNav() {
   };
   const hide = new Spring(0, { response: 0.4, precision: 0.002, onUpdate: render });
   const comp = new Spring(0, { response: 0.35, precision: 0.002, onUpdate: render });
-  let lastY = scrollY;
+  let lastY = scrollY, run = 0; // run : distance cumulée dans le sens courant du défilement
   addEventListener("scroll", () => {
     const y = scrollY, dy = y - lastY; lastY = y;
+    run = Math.sign(dy) === Math.sign(run) ? run + dy : dy; // un défilement lent (petits pas) compte aussi
     const c = y > 48 ? 1 : y < 24 ? 0 : compact; // hystérésis : pas d’oscillation si le scroll hésite au seuil
     if (c !== compact) { compact = c; comp.to(c); }
     const open = links.classList.contains("is-open") || nav.contains(document.activeElement) || document.documentElement.dataset.cmdk === "open";
     let h = hidden;
-    if (y < 120 || open) h = 0; else if (dy > 6) h = 1; else if (dy < -6) h = 0;
+    if (y < 120 || open) h = 0; else if (run > 6) h = 1; else if (run < -6) h = 0;
     if (h !== hidden) { hidden = h; hide.to(h); }
   }, { passive: true });
   nav.addEventListener("focusin", () => { if (hidden) { hidden = 0; hide.to(0); } });
