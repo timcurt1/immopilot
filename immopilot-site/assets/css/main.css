@@ -132,7 +132,7 @@
     box-shadow: 0 10px 40px -16px rgb(0 0 0 / .45);
     transform-origin: 50% 0;
   }
-  .brand { display: inline-flex; align-items: center; gap: .55rem; font-weight: 700; letter-spacing: -0.02em; font-size: 1.0625rem; min-height: 2.75rem; }
+  .brand { flex: none; display: inline-flex; align-items: center; gap: .55rem; font-weight: 700; letter-spacing: -0.02em; font-size: 1.0625rem; min-height: 2.75rem; }
   .brand-mark { width: 1.9rem; height: 1.9rem; }
   /* Logo : « immo » léger + « PILOT » gras, comme le logotype officiel */
   .wm { font-weight: 400; letter-spacing: -0.01em; }
@@ -503,6 +503,11 @@
     .price-grid { grid-template-columns: 1fr; max-width: 28rem; margin-inline: auto; }
     .price-hl { order: -1; }
     .foot-grid { grid-template-columns: 1fr 1fr; }
+  }
+  /* ≤ 340 px : logo + 3 boutons de 44 px ne tiennent pas dans la barre ; on récupère la place sur les marges. */
+  @media (max-width: 340px) {
+    .nav { padding-inline: .5rem; }
+    .nav-bar { gap: .5rem; }
   }
   @media (max-width: 640px) {
     .chaos { --pin: 260vh; } .tri { --pin: 340vh; } .cmdk-scene { --pin: 240vh; } .hero { --pin: 160vh; } .theme-scene { --pin: 200vh; }

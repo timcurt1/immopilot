@@ -1,13 +1,13 @@
 // Audit complet : node _qa/audit.js <label>   → _qa/out/<label>/
 // Matrice viewports × thèmes, scroll par paliers de 2,5 %, logo à chaque palier,
 // débordements, console, requêtes, vitals. Chromium uniquement (WebKit/Firefox indisponibles ici).
-const { chromium, fs, path, VIEWPORTS, BASE, newPage, logoContrast, scrollToY, ensure } = require('./lib');
+const { launch, BROWSER, fs, path, VIEWPORTS, BASE, newPage, logoContrast, scrollToY, ensure } = require('./lib');
 const label = process.argv[2] || 'baseline';
-const OUT = ensure(path.join(__dirname, 'out', label));
+const OUT = ensure(path.join(__dirname, 'out', BROWSER === 'chromium' ? label : `${label}-${BROWSER}`));
 const STEPS = 40;
 
 (async () => {
-  const browser = await chromium.launch();
+  const browser = await launch();
   const report = { label, runs: [] };
   for (const [w, h, mobile, tag] of VIEWPORTS) for (const theme of ['dark', 'light']) {
     const name = `${w}x${h}-${theme}`;

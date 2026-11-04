@@ -1,5 +1,9 @@
 // Outils partagés de l’audit QA (hors livraison).
-const { chromium } = require('playwright');
+const pw = require('playwright');
+const { chromium } = pw;
+// QA_BROWSER = chromium | webkit | firefox
+const BROWSER = process.env.QA_BROWSER || 'chromium';
+const launch = () => pw[BROWSER].launch(BROWSER === 'firefox' ? { firefoxUserPrefs: { 'network.proxy.type': 0 } } : {});
 const fs = require('fs');
 const path = require('path');
 
@@ -66,7 +70,7 @@ async function logoContrast(page, sel = 'header .brand-mark') {
 }
 
 async function newPage(browser, { w, h, mobile, theme = 'dark', reduced = false }) {
-  const ctx = await browser.newContext({ viewport: { width: w, height: h }, isMobile: mobile, hasTouch: mobile, deviceScaleFactor: 1, reducedMotion: reduced ? 'reduce' : 'no-preference', acceptDownloads: true });
+  const ctx = await browser.newContext({ viewport: { width: w, height: h }, isMobile: BROWSER === 'firefox' ? undefined : mobile, hasTouch: mobile, deviceScaleFactor: 1, reducedMotion: reduced ? 'reduce' : 'no-preference', acceptDownloads: true });
   await ctx.addInitScript((t) => { try { localStorage.setItem('ip-theme', t); } catch (e) {} }, theme);
   await ctx.addInitScript(INIT);
   const page = await ctx.newPage();
@@ -81,4 +85,4 @@ async function newPage(browser, { w, h, mobile, theme = 'dark', reduced = false 
 const scrollToY = (page, y) => page.evaluate((y) => { document.documentElement.style.scrollBehavior = 'auto'; scrollTo(0, y); document.documentElement.style.scrollBehavior = ''; }, y);
 const ensure = (d) => { fs.mkdirSync(d, { recursive: true }); return d; };
 
-module.exports = { chromium, fs, path, BASE, VIEWPORTS, newPage, logoContrast, scrollToY, ensure };
+module.exports = { chromium, launch, BROWSER, fs, path, BASE, VIEWPORTS, newPage, logoContrast, scrollToY, ensure };
