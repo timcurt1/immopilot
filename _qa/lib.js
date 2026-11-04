@@ -38,7 +38,7 @@ const INIT = () => {
   window.__clipCheck = () => {
     const bad = [];
     for (const el of document.querySelectorAll('h1,h2,h3,p,li,.btn,label,summary,.stat-v')) {
-      if (el.closest('[aria-hidden="true"],.app,[hidden],.cmdk')) continue;
+      if (el.closest('[aria-hidden="true"],.app,[hidden],.cmdk,.car-track')) continue; // carrousel : cartes hors champ par conception
       const r = el.getBoundingClientRect();
       if (!r.width || r.bottom < 0 || r.top > innerHeight) continue;
       let op = 1, n = el; while (n && n.nodeType === 1) { op *= +getComputedStyle(n).opacity; n = n.parentElement; }

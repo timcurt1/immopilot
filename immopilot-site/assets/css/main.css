@@ -327,7 +327,7 @@
   .caret { display: inline-block; width: 2px; height: 1.2em; margin-left: -.6rem; background: var(--accent); animation: blink 1s steps(2) infinite; }
   @keyframes blink { 50% { opacity: 0; } }
   /* Ancré à la scène épinglée (bas de l’écran), pas au mockup qui déborde volontairement sous l’écran. */
-  .toast-demo { position: absolute; z-index: 2; left: 50%; bottom: max(1.5rem, env(safe-area-inset-bottom)); translate: -50% 0; }
+  .toast-demo { position: absolute; z-index: 2; left: 50%; bottom: max(1.5rem, env(safe-area-inset-bottom)); translate: -50% 0; width: max-content; max-width: calc(100vw - 2 * var(--gutter)); } /* sans largeur explicite, left: 50 % ne lui laisse que la moitié de la largeur */
   .js .toast-demo { opacity: 0; }
 
   /* ---- ACTIONS ---- */

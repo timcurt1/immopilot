@@ -45,7 +45,7 @@ const STEPS = 40;
       }
     }
     // Footer : logo en bas de page.
-    await scrollToY(page, total); await page.waitForTimeout(500);
+    await page.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; document.querySelector('footer .brand').scrollIntoView({ block: 'center' }); }); await page.waitForTimeout(500);
     const F = (await page.evaluate(() => window.__logoCheck())).find((x) => x.where === 'footer');
     const fc = await logoContrast(page, 'footer .brand-mark');
     if (!F.mark.inVp || F.mark.op < 0.99 || F.mark.covered) run.logo.push(`footer ${JSON.stringify(F)}`);

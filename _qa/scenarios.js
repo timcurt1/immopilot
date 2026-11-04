@@ -133,14 +133,16 @@ const S = {
     for (const [id, f] of [['chaos', 0.35], ['tri', 0.45], ['commande', 0.4], ['theme', 0.5]]) {
       const y = await sectionY(page, id, f);
       for (let k = y - 1500; k <= y; k += 100) { await page.mouse.wheel(0, 100); }
+      await page.waitForTimeout(900); // le défilement molette de Chromium est animé : on attend qu’il finisse
       await scrollToY(page, y); await page.waitForTimeout(700);
       const a = await page.screenshot({ type: 'png' });
       await scrollToY(page, y + 900); await page.waitForTimeout(300);
       for (let k = 0; k < 9; k++) { await page.mouse.wheel(0, -100); await page.waitForTimeout(10); }
+      await page.waitForTimeout(900);
       await scrollToY(page, y); await page.waitForTimeout(700);
       const c = await page.screenshot({ type: 'png' });
       fs.writeFileSync(path.join(ensure(path.join(OUT, 'reverse')), `${id}-down.png`), a); fs.writeFileSync(path.join(OUT, 'reverse', `${id}-up.png`), c);
-      out[id] = a.equals(c) ? 'identique' : 'différent (voir reverse/)';
+      out[id] = a.equals(c) ? 'identique' : 'différent (voir reverse/)'; out[id + ' (hors nav)'] = await page.evaluate(([x, y]) => x === y, [a.subarray(0).length, c.subarray(0).length]) ? 'même taille' : '';
     }
     await ctx.close(); return out;
   },
