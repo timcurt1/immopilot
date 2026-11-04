@@ -39,6 +39,10 @@ export function scene(el, update, { onResize } = {}) {
   scenes.push(s);
   io.observe(el);
   onResize && onResize();
+  // Scène déjà à l’écran (rechargement en pleine page) : premier état calculé tout de suite,
+  // sans attendre le callback asynchrone de l’observer (sinon une image dans l’état brut).
+  const r = el.getBoundingClientRect();
+  if (r.bottom > -0.25 * innerHeight && r.top < 1.25 * innerHeight) { s.on = true; s.p = measure(s); update(s.p); }
 }
 
 export function refresh() {
