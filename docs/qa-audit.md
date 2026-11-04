@@ -80,7 +80,7 @@ Scripts et captures : `_qa/` (hors livraison ; captures dans `_qa/out/`, non ver
 **Observations sans correction** (non-bugs ou choix de design) :
 - **Long task de 52–67 ms au chargement** (forçage de layout à l’initialisation des maquettes) : sous le seuil LCP/INP, pas d’effet visible.
 - **Captures « aller » ≠ « retour »** dans `reverse` : le défilement à la molette de Chromium est animé et continue après le positionnement instantané. Le test a été corrigé.
-- **Bascule de thème** : fondu de ~400 ms, sans saut de luminosité. Délai de ~300 ms avant le début du fondu mesuré dans Chromium headless, à vérifier sur appareil réel.
+- **Bascule de thème** : fondu de ~400 ms, sans saut de luminosité. Le délai de ~300 ms observé au départ était un démarrage à froid ; mesuré à chaud : 23–82 ms selon le moteur (voir section Safari / Firefox).
 
 **Ajouts découverts pendant les corrections** :
 
@@ -189,10 +189,71 @@ Un commit par défaut ou par groupe cohérent : `git log 5ac17c8..HEAD`.
 - **Ordinateur** : les maquettes ⌘K et thème débordent volontairement sous l’écran (composition « à fond perdu »). Conservé.
 - **Révélations** : un bloc qui n’est entré que dans les 8 % du bas de l’écran reste invisible jusqu’à franchir ce seuil, y compris en mouvement réduit (fondu court). C’est le design de la révélation.
 - **`legal.html`** n’a ni logo ni navigation (seulement « Retour à l’accueil »).
-- **Délai d’environ 300 ms entre le clic et le début du fondu de thème**, mesuré dans Chromium headless. À vérifier sur un appareil réel avant d’y toucher.
 - **Long task de 50–60 ms au chargement** (mise en place des maquettes) : sans effet mesuré sur le LCP. On pourrait la différer, mais ce serait une restructuration.
 
 ## 5. Annuler
 
 - Tout le site d’avant l’audit : `git checkout 5ac17c8 -- immopilot-site`.
 - Une correction précise : `git revert <commit>` (liste : `git log --oneline 5ac17c8..HEAD`).
+
+
+---
+
+# Audit Safari (WebKit) et Firefox
+
+**Moteurs** : WebKit 26.6 (moteur de Safari), Firefox 155, en plus de Chromium 153. Ils ont été installés après l’ouverture du réseau de l’environnement.
+
+**Réalisé** :
+- matrice complète (11 viewports × 2 thèmes × 41 paliers) sur WebKit et sur Firefox ;
+- interactions ;
+- scénarios de comportement ;
+- tests ciblés.
+
+## Défauts trouvés et corrigés
+
+| ID | Moteurs | Symptôme | Preuve | Cause racine | Correctif | Après |
+|---|---|---|---|---|---|---|
+| B18 | Les 3 (manifestations différentes) | À 320 px, la barre de navigation déborde de ~19 px. Chromium : le bouton menu sort de la barre de 13 px. WebKit / Firefox : le texte « immoPILOT » mord de 5 px sur la zone tactile de la recherche. | Rectangles mesurés dans les 3 moteurs | Logo + 3 boutons de 44 px > largeur disponible ; le bloc logo pouvait rétrécir. | `main.css` : `.brand { flex: none }` et, sous 340 px, marges et espacement réduits (boutons inchangés, 44 px). | Mêmes mesures exactes dans les 3 moteurs, aucun chevauchement ; inchangé au-delà de 340 px |
+| B19 | Les 3 | La nav cachée ne réapparaît pas sur un défilement **lent** vers le haut (doigt, trackpad). | 15 × 3 px vers le haut : toujours cachée dans les 3 moteurs | Seuil de 6 px appliqué à chaque événement de scroll. | `ui.js` `initNav` : distance cumulée dans le même sens. | Réapparaît dans les 3 moteurs ; hystérésis de compaction (B4) intacte |
+| B21 | Firefox | Sauts de 3 à 22 px pendant le défilement, avec l’avertissement « Scroll anchoring was disabled… ». | Script `_qa/anchor-ab.js` : 3 écarts sur 3 tailles | L’ancrage de défilement prenait des repères dans les scènes épinglées (sticky), qui bougent par conception. | `main.css` : `html { overflow-anchor: none }` (aucun contenu n’est inséré au-dessus de l’écran sur ce site). | 0 écart, 0 avertissement |
+| B22 | Les 3 | Un clic juste après la fermeture de ⌘K (Échap) est perdu. | 120 ms après Échap, l’élément sous le bouton « Demander une démo » est le voile | Le voile restait cliquable pendant le fondu de sortie. | `interactive.js` : `pointer-events: none` dès la fermeture. | Le bouton reçoit le clic dans les 3 moteurs |
+
+## Matrice réalisée
+
+| | Chromium | WebKit (Safari) | Firefox |
+|---|---|---|---|
+| Matrice 11 viewports × 2 thèmes × 41 paliers | ✅ (re-passée après B18–B22) | ✅ | ✅ |
+| Erreurs console (site) | 0 | 0 | 0 |
+| Requêtes en échec | 0 | 0 | 0 |
+| Débordement horizontal | 0 | 0 | 0 |
+| Logo : visible, non recouvert, ratio 1:1 | ✅ partout | ✅ après B18 | ✅ |
+| Interactions : ⌘K, sélection, CSV, annuler, swipe, vues, carrousel, FAQ, tarifs, formulaire, thème | ✅ | ✅ | ✅ |
+| Scénarios : compteurs, FAQ, rechargement, verrou ⌘K, retour/resize, mouvement réduit, menu | ✅ | ✅ | ✅ |
+| Fondu de thème (View Transition 420 ms) | ✅ | ✅ | ✅ |
+| Délai clic → début du fondu (à chaud) | 82 ms | 63 ms | 23 ms |
+
+Les quelques avertissements console de Firefox proviennent du script de mesure (`layout-shift`, `longtask` non supportés), pas du site.
+
+**Non-régression Chromium après B18–B22** : 902 paliers comparés, 685 identiques. Les écarts sont la correction B17 (toast sur une ligne) et 1 à 2 px de position de scroll (corrections d’ancrage supprimées par B21), sans changement de contenu.
+
+## Ce qui reste non vérifié
+
+- **Safari et Firefox réels** : on a testé leurs moteurs (WebKit, Gecko) dans un environnement Linux sans GPU, ce qui reste proche de ces navigateurs sans être identique.
+- **iPhone / iPad physiques** : Safari iOS, barre d’URL rétractable, rebond élastique, safe-areas réelles, survol tactile réel.
+- **Écran 120 Hz.**
+- **Fluidité sur GPU réel** : ici le rendu est logiciel, voir ci-dessous.
+
+## Décision pour vous : flou animé de la palette ⌘K
+
+Pendant l’ouverture et la fermeture de la palette, le flou animé du panneau (8 → 0 px, au-dessus du flou d’arrière-plan du verre) coûte cher sans GPU.
+
+| Moteur (rendu logiciel) | Avec flou animé | Sans flou animé |
+|---|---|---|
+| WebKit | 82 ms / frame | 19 ms / frame |
+| Chromium | 33 ms / frame | 17 ms / frame |
+
+La palette met donc 0,8 à 1 s à disparaître ici, au lieu de ~0,45 s. Sur un Mac ou un iPhone, ce travail est fait par le GPU, et c’est le type d’effet qu’Apple utilise lui-même.
+
+Retirer ou réduire ce flou changerait l’effet de « matérialisation » voulu, donc je ne l’ai pas fait. Si un test sur un vrai appareil montre une saccade :
+- soit réduire le flou animé de 8 à 4 px ;
+- soit ne plus animer le flou et ne garder que l’échelle et l’opacité.
