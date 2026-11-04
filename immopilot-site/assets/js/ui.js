@@ -276,12 +276,16 @@ export function initFaq() {
 }
 
 /* ---------- Formulaire de démo ---------- */
-// [À COMPLÉTER] URL de destination (Formspree, CRM, webhook…). Vide = repli mailto.
-const FORM_ENDPOINT = "";
-const CONTACT_EMAIL = "contact@immopilot.world"; // [À COMPLÉTER] adresse de réception
+// Destination : attribut action du <form> (URL publique du service d’envoi). Vide = envoi pas encore activé.
+const MIN_FILL_MS = 3000; // anti-spam : délai minimal entre la première interaction et l’envoi
 
 export function initForm() {
   const form = $("[data-demo-form]"); if (!form) return;
+  const status = $("[data-form-status]", form);
+  const btn = $('button[type="submit"]', form); const label = $("[data-submit-label]", form);
+  const idle = label.textContent;
+  let startedAt = 0, sending = false;
+  form.addEventListener("focusin", () => { if (!startedAt) startedAt = performance.now(); });
   const rules = {
     nom: (v) => v.trim().length >= 2 || "Indiquez votre nom.",
     email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) || "Cette adresse e-mail semble incomplète.",
@@ -302,36 +306,43 @@ export function initForm() {
     el.addEventListener("blur", () => { if (el.value) check(el); });
     el.addEventListener("input", () => { if (el.closest(".field").classList.contains("bad") || el.tagName === "SELECT") check(el); });
   }
+  const setSending = (on) => {
+    sending = on; btn.disabled = on; btn.classList.toggle("is-loading", on);
+    btn.setAttribute("aria-busy", String(on)); label.textContent = on ? "Envoi en cours…" : idle;
+  };
+  const showDone = () => {
+    const done = $("[data-form-done]", form);
+    done.hidden = false;
+    new Spring(0, { response: 0.4, precision: 0.002, onUpdate: (v) => { done.style.opacity = v; done.style.transform = reduced.matches ? "" : `scale(${0.97 + v * 0.03})`; } }).set(0).to(1);
+    done.focus();
+  };
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    if (sending) return; // double clic : un seul envoi
+    status.textContent = "";
     const fields = [...form.elements].filter((el) => rules[el.name]);
     const bad = fields.filter((el) => !check(el));
     if (bad.length) { bad[0].focus(); return; }
+    // Anti-spam : champ piège rempli, ou envoi sans interaction humaine plausible → succès simulé, aucun envoi.
+    const bot = form.elements._gotcha.value !== "" || !startedAt || performance.now() - startedAt < MIN_FILL_MS;
+    if (bot) { showDone(); return; }
+    const endpoint = form.getAttribute("action");
+    if (!endpoint) { status.textContent = "L’envoi du formulaire n’est pas encore activé. Merci de réessayer plus tard."; track("demo_not_configured"); return; }
+    if (navigator.onLine === false) { status.textContent = "Vous semblez hors ligne. Vérifiez votre connexion, puis réessayez."; return; }
     const data = Object.fromEntries(new FormData(form));
-    const btn = $('button[type="submit"]', form);
-    btn.classList.add("is-loading"); btn.disabled = true;
+    delete data._gotcha;
+    setSending(true);
     track("demo_submit", { lots: data.lots });
-    let msg = "Merci ! Nous vous recontactons très vite pour fixer un créneau.";
     try {
-      if (FORM_ENDPOINT) {
-        const res = await fetch(FORM_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) });
-        if (!res.ok) throw new Error(String(res.status));
-      } else {
-        const body = `Nom : ${data.nom}\nE-mail : ${data.email}\nAgence : ${data.agence}\nLots gérés : ${data.lots}`;
-        location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Demande de démo ImmoPilot")}&body=${encodeURIComponent(body)}`;
-        msg = "Votre messagerie s’ouvre avec la demande pré-remplie : il ne reste qu’à l’envoyer.";
-      }
-      const done = $("[data-form-done]", form);
-      $("[data-form-done-msg]", form).textContent = msg;
-      done.hidden = false;
-      new Spring(0, { response: 0.4, precision: 0.002, onUpdate: (v) => { done.style.opacity = v; done.style.transform = reduced.matches ? "" : `scale(${0.97 + v * 0.03})`; } }).set(0).to(1);
-      done.focus();
+      const res = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) });
+      if (!res.ok) throw new Error(String(res.status));
+      showDone();
     } catch (err) {
-      const note = $(".form-note", form);
-      note.innerHTML = "";
-      note.append(Object.assign(document.createElement("span"), { className: "err", textContent: `L’envoi n’a pas abouti. Réessayez, ou écrivez-nous à ${CONTACT_EMAIL}.` }));
+      status.textContent = navigator.onLine === false || err instanceof TypeError
+        ? "L’envoi n’a pas abouti : la connexion semble interrompue. Vérifiez-la, puis réessayez."
+        : "L’envoi n’a pas abouti. Merci de réessayer dans un instant.";
       track("demo_error");
-    } finally { btn.classList.remove("is-loading"); btn.disabled = false; }
+    } finally { setSending(false); }
   });
 }
 

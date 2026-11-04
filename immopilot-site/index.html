@@ -420,18 +420,23 @@
   <div class="wrap narrow center">
     <h2 id="cta-title" class="display-2 reveal">Plus aucun dossier<br><span class="grad">ne vous échappe.</span></h2>
     <p class="sub reveal">Trente minutes, sur vos propres biens. Nous vous montrons ImmoPilot et répondons à vos questions.</p>
-    <form class="demo-form glass-thick reveal" data-demo-form novalidate action="mailto:contact@immopilot.world" method="post" enctype="text/plain">
+    <!-- Réception des demandes : renseigner action="…" avec l’URL publique du service d’envoi
+         [À COMPLÉTER : service et URL, ex. https://formspree.io/f/XXXX]. Pour Web3Forms, ajouter aussi
+         <input type="hidden" name="access_key" value="CLÉ_PUBLIQUE">. Aucune clé secrète côté client. -->
+    <form class="demo-form glass-thick reveal" data-demo-form novalidate method="post" accept-charset="utf-8">
       <div class="field"><label for="f-name">Nom et prénom</label><input id="f-name" name="nom" autocomplete="name" required aria-describedby="e-name"><p class="err" id="e-name" aria-live="polite"></p></div>
       <div class="field"><label for="f-mail">E-mail professionnel</label><input id="f-mail" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="e-mail"><p class="err" id="e-mail" aria-live="polite"></p></div>
       <div class="field"><label for="f-agency">Nom de l’agence</label><input id="f-agency" name="agence" autocomplete="organization" required aria-describedby="e-agency"><p class="err" id="e-agency" aria-live="polite"></p></div>
       <div class="field"><label for="f-lots">Nombre de lots gérés</label>
         <select id="f-lots" name="lots" required aria-describedby="e-lots"><option value="">Choisir…</option><option>Moins de 100</option><option>100 à 300</option><option>300 à 1 000</option><option>Plus de 1 000</option></select><p class="err" id="e-lots" aria-live="polite"></p></div>
-      <button class="btn btn-primary btn-block" type="submit" data-track="demo_submit"><span>Demander ma démo</span></button>
-      <p class="form-note">Réponse sous 24 h ouvrées <span class="todo">[À VALIDER]</span>. Vos informations servent uniquement à vous recontacter.</p>
+      <div class="hp" aria-hidden="true"><label for="f-site">Ne pas remplir ce champ</label><input id="f-site" name="_gotcha" tabindex="-1" autocomplete="off"></div>
+      <button class="btn btn-primary btn-block" type="submit" data-track="demo_submit"><span data-submit-label>Demander ma démo</span></button>
+      <p class="err form-status" data-form-status role="alert"></p>
+      <p class="form-note">Vos informations servent uniquement à répondre à votre demande de démonstration. Responsable du traitement : <span class="todo">[À COMPLÉTER : éditeur]</span>. Conservation : 3 ans après le dernier contact <span class="todo">[À VALIDER]</span>. <a class="link" href="legal.html#formulaire">Politique de confidentialité</a></p>
       <div class="form-done" data-form-done hidden tabindex="-1">
         <svg aria-hidden="true"><use href="#i-check"/></svg>
         <h3>Demande envoyée.</h3>
-        <p data-form-done-msg>Merci ! Nous vous recontactons très vite pour fixer un créneau.</p>
+        <p data-form-done-msg>Merci, votre demande est bien envoyée. Nous revenons vers vous pour convenir d’un créneau.</p>
       </div>
     </form>
   </div>

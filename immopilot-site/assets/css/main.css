@@ -468,7 +468,11 @@
   .field.bad input, .field.bad select { border-color: var(--ko); }
   .field.good input, .field.good select { border-color: color-mix(in srgb, var(--ok) 60%, transparent); }
   .err { min-height: 1.1rem; font-size: .8125rem; color: var(--ko); }
-  .demo-form .btn-block, .form-note { grid-column: 1 / -1; }
+  .demo-form .btn-block, .form-note, .form-status { grid-column: 1 / -1; }
+  .form-status { min-height: 0; text-align: center; }
+  .form-status:empty { display: none; }
+  /* Champ piège anti-spam : hors écran, ignoré par les lecteurs d’écran et le clavier. */
+  .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
   .form-note { font-size: .8125rem; color: var(--text-3); text-align: center; }
   .btn.is-loading span { opacity: .6; }
   .form-done { position: absolute; inset: 0; z-index: 2; display: grid; place-content: center; justify-items: center; gap: .6rem; text-align: center; padding: 2rem; border-radius: inherit; background: var(--elev); }
