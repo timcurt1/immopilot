@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ImmoPilot — Vos candidatures locatives, sous contrôle</title>
+<meta name="description" content="ImmoPilot, le logiciel des agences immobilières pour gérer les candidatures locatives : dossiers complets, tri, relances et suivi au même endroit. Louez plus vite, n’oubliez plus aucun candidat.">
+<link rel="canonical" href="https://immopilot.world/">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#05060a">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="ImmoPilot">
+<meta property="og:url" content="https://immopilot.world/">
+<meta property="og:title" content="ImmoPilot — Vos candidatures. Sous contrôle.">
+<meta property="og:description" content="Dossiers, pièces, relances et décisions dans un seul flux. Le logiciel des agences immobilières qui louent plus vite.">
+<meta property="og:image" content="https://immopilot.world/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ImmoPilot — Vos candidatures. Sous contrôle.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ImmoPilot — Vos candidatures. Sous contrôle.">
+<meta name="twitter:description" content="Le logiciel des agences immobilières pour gérer les candidatures locatives.">
+<meta name="twitter:image" content="https://immopilot.world/assets/img/og.png">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<script>
+  // Avant le premier rendu : thème mémorisé + drapeau JS (aucun flash).
+  (function (d) {
+    var r = d.documentElement;
+    // Les états initiaux « cachés » ne s’appliquent que si les modules ES peuvent s’exécuter.
+    if ("noModule" in HTMLScriptElement.prototype) r.classList.add("js");
+    try { var t = localStorage.getItem("ip-theme"); if (t === "light" || t === "dark") r.dataset.theme = t; } catch (e) {}
+    if (r.dataset.theme === "light") d.querySelector('meta[name="theme-color"]').content = "#fbfbfd";
+  })(document);
+</script>
+<link rel="stylesheet" href="assets/css/main.css">
+<script type="module" src="assets/js/main.js" onerror="document.documentElement.classList.remove('js')"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "ImmoPilot",
+  "url": "https://immopilot.world/",
+  "applicationCategory": "BusinessApplication",
+  "applicationSubCategory": "Logiciel de gestion d’agence immobilière",
+  "operatingSystem": "Web",
+  "inLanguage": "fr-FR",
+  "description": "Gestion des candidatures locatives pour agences immobilières : dossiers, tri, relances, suivi, vues Agent et Candidat.",
+  "publisher": { "@type": "Organization", "name": "ImmoPilot", "url": "https://immopilot.world/" },
+  "offers": [
+    { "@type": "Offer", "name": "Essentiel", "price": "39", "priceCurrency": "EUR", "description": "Prix HT par mois et par agence, sans engagement" },
+    { "@type": "Offer", "name": "Agence", "price": "79", "priceCurrency": "EUR", "description": "Prix HT par mois et par agence, sans engagement" }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="g-accent" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3557ff"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+  </defs>
+  <symbol id="i-logo" viewBox="0 0 100 100"><path d="M87.59 36.32A40 40 0 1 1 62.69 12.07" fill="none" stroke="currentColor" stroke-width="12.8" stroke-linecap="round"/><circle cx="78.28" cy="21.72" r="5.6" style="fill: var(--logo-dot)" stroke="none"/></symbol>
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 13.5 6.2 6h11.6l2.2 7.5V18a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M4 13.5h4.5l1.2 2h4.6l1.2-2H20"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.2"/><path d="M3.5 19c.6-3 2.8-4.6 5.5-4.6s4.9 1.6 5.5 4.6"/><path d="M15.5 5.6a3 3 0 0 1 0 5.8M17.5 14.6c1.7.6 2.7 2 3 4.4"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4.5 10.5 12 4.5l7.5 6V19a.5.5 0 0 1-.5.5h-4.5v-5h-5v5H5a.5.5 0 0 1-.5-.5z"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 2H5z"/><path d="M10 20.5h4"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 4.5h2.6l1.3 3.9-1.8 1.2a10 10 0 0 0 5.7 5.7l1.2-1.8 3.9 1.3v2.6a1.6 1.6 0 0 1-1.7 1.6A14.5 14.5 0 0 1 5 6.2a1.6 1.6 0 0 1 1.6-1.7z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4 7 8 6 8-6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4.5v11M7.5 11l4.5 4.5 4.5-4.5M5 19.5h14"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5.5 12.5 4 4 9-9"/></symbol>
+    <symbol id="i-archive" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="4" rx="1"/><path d="M5 8.5V18a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 18V8.5M10 12.5h4"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 7.5 5 11.5l4 4"/><path d="M5 11.5h9.5a4.5 4.5 0 0 1 0 9H11"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.5 5 6v5.5c0 4.3 2.9 7.6 7 9 4.1-1.4 7-4.7 7-9V6z"/><path d="m9 12 2.2 2.2L15.5 10"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></symbol>
+    <symbol id="i-erase" viewBox="0 0 24 24"><path d="M5 7h14M9.5 7V4.5h5V7M7 7l.8 12.5h8.4L17 7"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6.5h10.5M9 12h10.5M9 17.5h10.5M4.5 6.5h.01M4.5 12h.01M4.5 17.5h.01"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6.5 3.5h7l4 4v13h-11z"/><path d="M13.5 3.5v4h4"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13.5 6.5 19 12l-5.5 5.5"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="m7 9.5 5 5 5-5"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4.5 8h15M4.5 16h15"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="m6.5 6.5 11 11M17.5 6.5l-11 11"/></symbol>
+    <symbol id="i-cmd" viewBox="0 0 24 24"><path d="M9 9V6.8A2.3 2.3 0 1 0 6.8 9H17.2A2.3 2.3 0 1 0 15 6.8v10.4a2.3 2.3 0 1 0 2.2-2.2H6.8A2.3 2.3 0 1 0 9 17.2z"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 4v4M12 16v4M4 12h4M16 12h4M7 7l2 2M15 15l2 2M7 17l2-2M15 9l2-2"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 18h7.5a3 3 0 0 0 0-6h-7a3 3 0 0 1 0-6H16"/></symbol>
+  </g>
+</svg>
+
+<!-- ============ 1. NAV ============ -->
+<header class="nav" data-nav>
+  <div class="nav-bar">
+    <a class="brand" href="#top" aria-label="ImmoPilot, retour en haut">
+      <svg class="brand-mark" aria-hidden="true"><use href="#i-logo"/></svg><span class="wm">immo<b>PILOT</b></span>
+    </a>
+    <nav class="nav-links" id="nav-links" aria-label="Navigation principale">
+      <a href="#tri">Produit</a>
+      <a href="#actions">Fonctionnalités</a>
+      <a href="#securite">Sécurité</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-tools">
+      <button class="icon-btn" type="button" data-cmdk-open aria-label="Ouvrir la palette de commandes" aria-keyshortcuts="Meta+K Control+K">
+        <svg aria-hidden="true"><use href="#i-search"/></svg>
+      </button>
+      <button class="icon-btn theme-btn" type="button" data-theme-toggle aria-label="Passer en thème clair">
+        <svg class="ic-sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="ic-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+      </button>
+      <a class="btn btn-primary btn-sm nav-cta" href="#demo" data-track="cta_nav">Demander une démo</a>
+      <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-controls="nav-links" aria-label="Ouvrir le menu">
+        <svg aria-hidden="true"><use href="#i-menu"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="contenu">
+
+<!-- ============ 2. HERO ============ -->
+<section id="top" class="pin hero" data-scene="hero" aria-labelledby="hero-title">
+  <div class="stage">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-copy" data-hero-copy>
+      <p class="eyebrow cascade" style="--i:0">Gestion des candidatures locatives</p>
+      <h1 id="hero-title" class="display">
+        <span class="w cascade" style="--i:1">Vos</span> <span class="w cascade" style="--i:2">candidatures.</span><br>
+        <span class="w cascade grad" style="--i:3">Sous</span> <span class="w cascade grad" style="--i:4">contrôle.</span>
+      </h1>
+      <p class="lead cascade" style="--i:5">ImmoPilot réunit dossiers, pièces, relances et décisions dans un seul flux. Vos agents louent plus vite — et plus aucun candidat n’est oublié.</p>
+      <div class="cta-row cascade" style="--i:6">
+        <a class="btn btn-primary" href="#demo" data-track="cta_hero">Demander une démo</a>
+        <a class="btn btn-ghost" href="#chaos">Voir comment ça marche <svg aria-hidden="true"><use href="#i-chev"/></svg></a>
+      </div>
+    </div>
+    <div class="hero-visual cascade" style="--i:5" data-hero-visual aria-hidden="true">
+      <div class="tilt" data-tilt>
+        <div class="app app-hero" data-mock="dashboard"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. LE CHAOS ============ -->
+<section id="chaos" class="pin chaos" data-scene="chaos" aria-labelledby="chaos-title">
+  <div class="stage">
+    <div class="chaos-copy">
+      <p class="eyebrow">Avant / après</p>
+      <h2 id="chaos-title" class="h2">
+        <span class="swap" data-chaos-before>Des e-mails. Des PDF.<br>Des tableurs. <span class="muted">Le chaos.</span></span>
+        <span class="swap" data-chaos-after>Chaque pièce.<br><span class="grad">À sa place.</span></span>
+      </h2>
+      <p class="sub">Les pièces arrivent de partout : portails, e-mails, messages. ImmoPilot les rattache au bon candidat et au bon bien, et vous montre ce qui manque.</p>
+    </div>
+    <div class="chaos-field" data-chaos-field aria-hidden="true"></div>
+    <div class="chaos-app glass-thick" data-chaos-app aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ============ 4. LE TRI ============ -->
+<section id="tri" class="pin tri" data-scene="tri" aria-labelledby="tri-title">
+  <div class="stage">
+    <div class="tri-copy">
+      <p class="eyebrow">Le tri intelligent</p>
+      <h2 id="tri-title" class="h2">Les bons dossiers <span class="grad">remontent seuls.</span></h2>
+      <ol class="steps" data-tri-steps>
+        <li class="is-active"><b>Tout arrive ici.</b> Portails, e-mails, formulaire : chaque candidature crée sa fiche.</li>
+        <li><b>Filtrez en un geste.</b> « Dossier complet », « À relancer » : la liste suit.</li>
+        <li><b>Repérez les plus solides.</b> Le score de chaque dossier vous dit où regarder d’abord.</li>
+        <li><b>Toute l’équipe est à jour.</b> Les compteurs de la barre latérale bougent en direct.</li>
+      </ol>
+    </div>
+    <div class="tri-visual" aria-hidden="true">
+      <div class="app app-tri" data-mock="tri"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. ⌘K ============ -->
+<section id="commande" class="pin cmdk-scene" data-scene="cmdk" aria-labelledby="cmdk-title">
+  <div class="stage">
+    <div class="cmdk-copy">
+      <p class="eyebrow">Palette de commandes</p>
+      <h2 id="cmdk-title" class="h2"><span class="kbd-xl" data-mod-key>⌘</span><span class="kbd-xl">K</span>. Tout, tout de suite.</h2>
+      <p class="sub">Un candidat, un bien, une action : tapez trois lettres, Entrée, c’est fait. Sans quitter le clavier.</p>
+      <button class="btn btn-ghost" type="button" data-cmdk-open data-track="cmdk_try">Essayez ici : <kbd data-mod-key>⌘</kbd><kbd>K</kbd></button>
+    </div>
+    <div class="cmdk-demo" aria-hidden="true">
+      <div class="app app-dim" data-mock="dim"></div>
+      <div class="palette palette-demo" data-cmdk-demo>
+        <div class="palette-input"><svg><use href="#i-search"/></svg><span data-cmdk-typed></span><i class="caret"></i></div>
+        <ul class="palette-list" data-cmdk-results></ul>
+      </div>
+    </div>
+    <div class="toast toast-demo" data-cmdk-toast aria-hidden="true"><svg><use href="#i-check"/></svg><span>3 relances envoyées</span><b>Annuler</b></div>
+  </div>
+</section>
+
+<!-- ============ 6. ACTIONS ============ -->
+<section id="actions" class="section actions" aria-labelledby="actions-title">
+  <div class="wrap split">
+    <div class="reveal">
+      <p class="eyebrow">Bientôt : actions en un geste</p>
+      <h2 id="actions-title" class="h2">Dix dossiers.<br><span class="grad">Une seule action.</span></h2>
+      <p class="sub">En préparation : cochez, glissez, c’est réglé. Relancer tout un groupe, appeler ou écrire depuis la liste, exporter vers Excel, et annuler en cas d’erreur.</p>
+      <ul class="feat-list">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>Sélection multiple et actions groupées — <em>à venir</em></li>
+        <li><svg aria-hidden="true"><use href="#i-phone"/></svg>Appel et e-mail en un geste — <em>à venir</em></li>
+        <li><svg aria-hidden="true"><use href="#i-down"/></svg>Export CSV compatible Excel (format français) — <em>à venir</em></li>
+        <li><svg aria-hidden="true"><use href="#i-undo"/></svg>Annuler, toujours, partout — <em>à venir</em></li>
+      </ul>
+    </div>
+    <div class="demo-card glass-thick reveal" data-actions-demo>
+      <div class="demo-head">
+        <span class="demo-tag">Essayez</span>
+        <span class="demo-hint">Aperçu d’une fonctionnalité à venir : cochez des lignes, ou glissez-les vers la gauche</span>
+      </div>
+      <ul class="act-list" data-act-list aria-label="Candidatures de démonstration"></ul>
+      <div class="act-empty" data-act-empty hidden>Tout est traité. <button type="button" class="link" data-act-reset>Recommencer</button></div>
+      <div class="act-bar" data-act-bar role="toolbar" aria-label="Actions groupées" hidden>
+        <span data-act-count>0 sélectionné</span>
+        <button type="button" class="chip-btn" data-act="relance"><svg aria-hidden="true"><use href="#i-mail"/></svg>Relancer</button>
+        <button type="button" class="chip-btn" data-act="csv"><svg aria-hidden="true"><use href="#i-down"/></svg>Export CSV</button>
+        <button type="button" class="chip-btn" data-act="archive"><svg aria-hidden="true"><use href="#i-archive"/></svg>Archiver</button>
+      </div>
+      <p class="mock-note">Données fictives de démonstration.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. DEUX VUES ============ -->
+<section id="vues" class="section vues" aria-labelledby="vues-title">
+  <div class="wrap center reveal">
+    <p class="eyebrow">Deux vues, un flux</p>
+    <h2 id="vues-title" class="h2">Votre agent pilote.<br><span class="grad">Votre candidat avance.</span></h2>
+    <p class="sub">L’agent voit les priorités et décide. Le candidat voit ce qu’il lui reste à fournir et dépose ses pièces lui-même. Le même dossier, des deux côtés.</p>
+  </div>
+  <div class="wrap">
+    <div class="seg seg-lg" role="tablist" aria-label="Choisir la vue" data-seg="views">
+      <span class="seg-thumb" aria-hidden="true"></span>
+      <button type="button" role="tab" id="tab-agent" aria-selected="true" aria-controls="view-panel" data-view="agent">Vue Agent</button>
+      <button type="button" role="tab" id="tab-cand" aria-selected="false" aria-controls="view-panel" data-view="candidat" tabindex="-1">Vue Candidat</button>
+    </div>
+    <div class="views reveal" id="view-panel" role="tabpanel" aria-labelledby="tab-agent" data-views>
+      <div class="app app-views" data-view-stage>
+        <article class="v-card" data-shared>
+          <span class="av av-lg">CD</span>
+          <div><b>Camille Durand</b><small>T2 · Lyon 3e · 890 € CC</small></div>
+          <span class="badge b-warn" data-v-badge>Dossier en cours</span>
+        </article>
+        <div class="v-pane v-agent" data-pane="agent">
+          <div class="v-grid">
+            <div class="v-box"><h3 class="v-h">Pièces</h3>
+              <p class="doc ok"><svg aria-hidden="true"><use href="#i-check"/></svg>Pièce d’identité</p>
+              <p class="doc ok"><svg aria-hidden="true"><use href="#i-check"/></svg>Justificatif de domicile</p>
+              <p class="doc ko"><svg aria-hidden="true"><use href="#i-x"/></svg>Contrat de travail</p>
+              <p class="doc ko"><svg aria-hidden="true"><use href="#i-x"/></svg>Avis d’imposition</p>
+            </div>
+            <div class="v-box"><h3 class="v-h">Prochaine action</h3>
+              <p class="next">Relancer pour 2 pièces manquantes</p>
+              <div class="v-actions"><span class="chip-btn"><svg aria-hidden="true"><use href="#i-phone"/></svg>Appeler</span><span class="chip-btn"><svg aria-hidden="true"><use href="#i-mail"/></svg>Relancer</span></div>
+              <h3 class="v-h">Historique</h3>
+              <p class="tl">Il y a 3 j · Demande reçue depuis un portail</p><p class="tl">Hier · Visite réalisée</p>
+            </div>
+          </div>
+        </div>
+        <div class="v-pane v-cand" data-pane="candidat" hidden>
+          <div class="v-progress"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" class="ring-bg"/><circle cx="60" cy="60" r="52" class="ring" pathLength="100" stroke-dasharray="50 100"/></svg><span><b>50 %</b><small>de votre dossier</small></span></div>
+          <div class="v-box"><h3 class="v-h">Il vous reste 2 pièces</h3>
+            <p class="doc up"><svg aria-hidden="true"><use href="#i-file"/></svg>Contrat de travail <span class="chip-btn">Déposer</span></p>
+            <p class="doc up"><svg aria-hidden="true"><use href="#i-file"/></svg>Avis d’imposition <span class="chip-btn">Déposer</span></p>
+            <p class="next">Prochaine étape : votre agence vous propose un créneau de signature.</p>
+          </div>
+        </div>
+      </div>
+      <p class="mock-note">Données fictives de démonstration.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. BÉNÉFICES ============ -->
+<section id="benefices" class="section benefits" aria-labelledby="ben-title">
+  <div class="wrap reveal">
+    <p class="eyebrow">Ce que ça change</p>
+    <h2 id="ben-title" class="h2">Louez plus vite.<br><span class="grad">Sans rien oublier.</span></h2>
+  </div>
+  <div class="carousel" data-carousel>
+    <div class="car-track" data-car-track>
+      <article class="ben-card glass-thick"><svg aria-hidden="true"><use href="#i-clock"/></svg><h3>Du temps rendu</h3><p>Fini la chasse aux pièces dans la boîte mail : chaque document est rangé dans le bon dossier, et ce qui manque saute aux yeux.</p></article>
+      <article class="ben-card glass-thick"><svg aria-hidden="true"><use href="#i-bell"/></svg><h3>Zéro oubli</h3><p>Chaque candidat a un statut et une prochaine action. Personne ne reste sans réponse, même en pleine saison.</p></article>
+      <article class="ben-card glass-thick"><svg aria-hidden="true"><use href="#i-mail"/></svg><h3>Relances sans effort</h3><p>Des modèles de messages prêts à l’emploi, ou une réponse rédigée par l’IA, envoyés au candidat depuis sa fiche.</p></article>
+      <article class="ben-card glass-thick"><svg aria-hidden="true"><use href="#i-route"/></svg><h3>Tout est tracé</h3><p>Demande, visite, pièces, décision : l’historique de chaque dossier est là quand un propriétaire vous le demande.</p></article>
+      <article class="ben-card glass-thick"><svg aria-hidden="true"><use href="#i-users"/></svg><h3>Des candidats rassurés</h3><p>Leur espace leur montre où en est le dossier. Moins d’appels « Alors, ça avance ? », plus de dossiers complets.</p></article>
+    </div>
+    <div class="car-ctrl wrap">
+      <button type="button" class="icon-btn" data-car-prev aria-label="Bénéfice précédent"><svg aria-hidden="true" style="transform:rotate(180deg)"><use href="#i-arrow"/></svg></button>
+      <div class="car-dots" data-car-dots aria-hidden="true"></div>
+      <button type="button" class="icon-btn" data-car-next aria-label="Bénéfice suivant"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9. CHIFFRES ============ -->
+<section id="chiffres" class="section stats" aria-labelledby="stats-title">
+  <div class="wrap">
+    <h2 id="stats-title" class="h2 center reveal">En chiffres.</h2>
+    <!-- Chiffres produit comptés dans le code de l’application (aucune statistique d’usage : pas encore de données clients).
+         Les valeurs data-count = texte affiché sans JS = valeur finale du compteur. Sources (dépôt immopilot, 2026-11-04) :
+         10 modules : lib/navItems.ts:22-33 (entrées de NAV_ITEMS)
+         4 rôles : supabase/schema.sql:4 (role in ('admin','manager','agent','candidate'))
+         2 vues : lib/navItems.ts:38 (le candidat n’a que son portail) + app/candidate/page.tsx
+         5 statuts de pièce : supabase/schema.sql:7 (manquant, à vérifier, validé, refusé, non requis)
+         13 candidats / annonce : baromètre Manda de la tension locative, 1er semestre 2026 (manda.fr), consulté le 2026-11-04
+         1 raccourci : components/CommandPalette.tsx:21 (⌘K / Ctrl+K) -->
+    <div class="stat-grid">
+      <div class="stat reveal"><b class="stat-v" data-count="10">10</b><span>modules : candidatures, biens, visites, tâches, assistant IA, pilotage…</span></div>
+      <div class="stat reveal"><b class="stat-v" data-count="4">4</b><span>rôles d’accès : administrateur, manager, agent, candidat</span></div>
+      <div class="stat reveal"><b class="stat-v" data-count="2">2</b><span>vues dédiées : Agent et Candidat</span></div>
+      <div class="stat reveal"><b class="stat-v" data-count="5">5</b><span>statuts par pièce justificative, de « manquante » à « validée »</span></div>
+      <div class="stat reveal"><b class="stat-v" data-count="13">13</b><span>candidats en moyenne par annonce de location en France (source : baromètre Manda, 1er semestre 2026)</span></div>
+      <div class="stat reveal"><b class="stat-v" data-count="1">1</b><span>raccourci pour tout trouver : ⌘K</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10. THÈME ============ -->
+<section id="theme" class="pin theme-scene" data-scene="theme" aria-labelledby="theme-title">
+  <div class="stage">
+    <div class="center theme-copy">
+      <p class="eyebrow">Clair ou sombre</p>
+      <h2 id="theme-title" class="h2">Le jour. La nuit.<br><span class="grad">Votre écran.</span></h2>
+      <p class="sub">Un thème clair pour l’agence, un thème sombre pour les soirs de dossiers : le mode sombre de l’application est en préparation.</p>
+    </div>
+    <div class="theme-frame" aria-hidden="true">
+      <div class="theme-layer" data-theme="dark"><div class="app" data-mock="dashboard"></div></div>
+      <div class="theme-wipe" data-theme-wipe><div class="theme-wipe-in" data-theme-wipe-in><div class="theme-layer" data-theme="light"><div class="app" data-mock="dashboard"></div></div></div></div>
+      <span class="theme-edge" data-theme-edge></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11. SÉCURITÉ ============ -->
+<section id="securite" class="section security" aria-labelledby="sec-title">
+  <div class="wrap">
+    <div class="center reveal">
+      <p class="eyebrow">Sécurité &amp; RGPD</p>
+      <h2 id="sec-title" class="h2">Des données sensibles.<br><span class="grad">Traitées comme telles.</span></h2>
+      <p class="sub">Un dossier de location, c’est une pièce d’identité, des revenus, parfois un garant. Nous le savons.</p>
+    </div>
+    <div class="sec-grid">
+      <div class="sec-item reveal"><svg aria-hidden="true"><use href="#i-users"/></svg><h3>Accès par rôle</h3><p>Un candidat ne voit que son propre dossier. Vos agents voient ceux de l’agence.</p></div>
+      <div class="sec-item reveal"><svg aria-hidden="true"><use href="#i-lock"/></svg><h3>Hébergement</h3><p><span class="todo">[À COMPLÉTER : hébergeur et pays d’hébergement des données]</span></p></div>
+      <div class="sec-item reveal"><svg aria-hidden="true"><use href="#i-erase"/></svg><h3>Droit à l’effacement</h3><p>Suppression d’un dossier sur demande du candidat <span class="todo">[À COMPLÉTER : délai et procédure]</span>.</p></div>
+      <div class="sec-item reveal"><svg aria-hidden="true"><use href="#i-shield"/></svg><h3>Traçabilité</h3><p>Les étapes clés de chaque dossier sont horodatées dans son historique. <span class="todo">[À COMPLÉTER : durée de conservation, contact RGPD]</span></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 12. TARIFS ============ -->
+<section id="tarifs" class="section pricing" aria-labelledby="price-title" data-annual-discount="15">
+  <!-- Source unique des prix : data-price-month (prix mensuel HT, nombre ; vide = inconnu) sur chaque offre,
+       et data-annual-discount (remise annuelle en %) ci-dessus. Le prix annuel est calculé dans assets/js/ui.js (initPricing). -->
+  <div class="wrap">
+    <div class="center reveal">
+      <p class="eyebrow">Tarifs</p>
+      <h2 id="price-title" class="h2">Simple. <span class="grad">Sans surprise.</span></h2>
+      <div class="seg" role="radiogroup" aria-label="Période de facturation" data-seg="billing">
+        <span class="seg-thumb" aria-hidden="true"></span>
+        <button type="button" role="radio" aria-checked="true" data-billing="month">Mensuel</button>
+        <button type="button" role="radio" aria-checked="false" data-billing="year" tabindex="-1">Annuel <small class="save">−15 %</small></button>
+      </div>
+    </div>
+    <div class="price-grid">
+      <article class="price glass-thick reveal">
+        <h3>Essentiel</h3><p class="price-for">Pour la petite agence qui loue, jusqu’à 3 utilisateurs.</p>
+        <p class="amount"><b data-price-month="39">39 €</b><span data-price-unit>HT / mois / agence</span></p>
+        <ul><li>Candidatures, statuts et score</li><li>Formulaire de candidature par bien</li><li>Portail candidat et pièces classées par l’IA</li><li>Modèles de messages et e-mails aux candidats</li><li>Recherche ⌘K</li><li>Jusqu’à 10 biens actifs</li></ul>
+        <a class="btn btn-ghost" href="#demo" data-track="cta_price_essentiel">Essayer 30 jours</a>
+      </article>
+      <article class="price price-hl glass-thick reveal">
+        <span class="price-tag">Recommandé</span>
+        <h3>Agence</h3><p class="price-for">Pour l’agence avec un service location, jusqu’à 10 utilisateurs.</p>
+        <p class="amount"><b data-price-month="79">79 €</b><span data-price-unit>HT / mois / agence</span></p>
+        <ul><li>Tout Essentiel</li><li>Synthèse des dossiers et réponses rédigées par l’IA</li><li>Qualification des prospects par l’IA</li><li>Visites et comptes rendus</li><li>Tâches d’équipe et pilotage de l’activité</li><li>Jusqu’à 50 biens actifs</li></ul>
+        <a class="btn btn-primary" href="#demo" data-track="cta_price_agence">Demander une démo</a>
+      </article>
+      <article class="price glass-thick reveal">
+        <h3>Réseau</h3><p class="price-for">Pour plusieurs agences.</p>
+        <p class="amount"><b>Sur devis</b><span>selon le nombre d’agences</span></p>
+        <ul><li>Tout Agence</li><li>Utilisateurs et biens selon vos besoins</li><li>Accompagnement au déploiement</li></ul>
+        <a class="btn btn-ghost" href="#demo" data-track="cta_price_reseau">Nous contacter</a>
+      </article>
+    </div>
+    <p class="form-note price-note reveal">Prix hors taxes ; TVA selon le statut de l’éditeur <span class="todo">[À COMPLÉTER]</span>. Sans engagement, résiliable chaque mois. Essai gratuit de 30 jours, sans carte bancaire. Aucun frais de mise en place. Paiement par carte bancaire. Facturation annuelle : −15 %.</p>
+  </div>
+</section>
+
+<!-- ============ 13. FAQ ============ -->
+<section id="faq" class="section faq" aria-labelledby="faq-title">
+  <div class="wrap narrow">
+    <h2 id="faq-title" class="h2 center reveal">Questions fréquentes.</h2>
+    <div class="faq-list" data-faq>
+      <details><summary>Faut-il installer quelque chose ?<svg aria-hidden="true"><use href="#i-chev"/></svg></summary><div class="faq-a"><p>Non. ImmoPilot fonctionne dans le navigateur, sur ordinateur comme sur téléphone. Vos candidats n’ont rien à installer non plus.</p></div></details>
+      <details><summary>Combien de temps faut-il pour démarrer ?<svg aria-hidden="true"><use href="#i-chev"/></svg></summary><div class="faq-a"><p>Votre espace est prêt dès la démo, et la mise en route est accompagnée pendant l’essai gratuit de 30 jours.</p></div></details>
+      <details><summary>Mes candidats ont-ils un accès ?<svg aria-hidden="true"><use href="#i-chev"/></svg></summary><div class="faq-a"><p>Oui. Chaque candidat dispose d’une vue Candidat : il voit l’avancement de son dossier et dépose lui-même les pièces manquantes.</p></div></details>
+      <details><summary>Puis-je récupérer mes données ?<svg aria-hidden="true"><use href="#i-chev"/></svg></summary><div class="faq-a"><p>Oui. L’export de vos données (format CSV) est en préparation ; d’ici là, nous vous les transmettons sur simple demande <span class="todo">[À VALIDER]</span>. L’import de données existantes n’est pas encore disponible.</p></div></details>
+      <details><summary>Les données des candidats sont-elles protégées ?<svg aria-hidden="true"><use href="#i-chev"/></svg></summary><div class="faq-a"><p>Les accès sont cloisonnés par rôle et les étapes clés de chaque dossier sont horodatées. <span class="todo">[À COMPLÉTER : hébergement, conformité RGPD, sous-traitants]</span></p></div></details>
+      <details><summary>Y a-t-il un engagement ?<svg aria-hidden="true"><use href="#i-chev"/></svg></summary><div class="faq-a"><p>Non. Les abonnements sont sans engagement et résiliables chaque mois. L’essai de 30 jours est gratuit, sans carte bancaire.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 14. CTA FINAL ============ -->
+<section id="demo" class="section cta" aria-labelledby="cta-title">
+  <div class="cta-glow" aria-hidden="true"></div>
+  <div class="wrap narrow center">
+    <h2 id="cta-title" class="display-2 reveal">Plus aucun dossier<br><span class="grad">ne vous échappe.</span></h2>
+    <p class="sub reveal">Trente minutes, sur vos propres biens. Nous vous montrons ImmoPilot et répondons à vos questions.</p>
+    <!-- Réception des demandes : renseigner action="…" avec l’URL publique du service d’envoi
+         [À COMPLÉTER : service et URL, ex. https://formspree.io/f/XXXX]. Pour Web3Forms, ajouter aussi
+         <input type="hidden" name="access_key" value="CLÉ_PUBLIQUE">. Aucune clé secrète côté client. -->
+    <form class="demo-form glass-thick reveal" data-demo-form novalidate method="post" accept-charset="utf-8">
+      <div class="field"><label for="f-name">Nom et prénom</label><input id="f-name" name="nom" autocomplete="name" required aria-describedby="e-name"><p class="err" id="e-name" aria-live="polite"></p></div>
+      <div class="field"><label for="f-mail">E-mail professionnel</label><input id="f-mail" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="e-mail"><p class="err" id="e-mail" aria-live="polite"></p></div>
+      <div class="field"><label for="f-agency">Nom de l’agence</label><input id="f-agency" name="agence" autocomplete="organization" required aria-describedby="e-agency"><p class="err" id="e-agency" aria-live="polite"></p></div>
+      <div class="field"><label for="f-lots">Nombre de lots gérés</label>
+        <select id="f-lots" name="lots" required aria-describedby="e-lots"><option value="">Choisir…</option><option>Moins de 100</option><option>100 à 300</option><option>300 à 1 000</option><option>Plus de 1 000</option></select><p class="err" id="e-lots" aria-live="polite"></p></div>
+      <div class="hp" aria-hidden="true"><label for="f-site">Ne pas remplir ce champ</label><input id="f-site" name="_gotcha" tabindex="-1" autocomplete="off"></div>
+      <button class="btn btn-primary btn-block" type="submit" data-track="demo_submit"><span data-submit-label>Demander ma démo</span></button>
+      <p class="err form-status" data-form-status role="alert"></p>
+      <p class="form-note">Vos informations servent uniquement à répondre à votre demande de démonstration. Responsable du traitement : <span class="todo">[À COMPLÉTER : éditeur]</span>. Conservation : 3 ans après le dernier contact <span class="todo">[À VALIDER]</span>. <a class="link" href="legal.html#formulaire">Politique de confidentialité</a></p>
+      <div class="form-done" data-form-done hidden tabindex="-1">
+        <svg aria-hidden="true"><use href="#i-check"/></svg>
+        <h3>Demande envoyée.</h3>
+        <p data-form-done-msg>Merci, votre demande est bien envoyée. Nous revenons vers vous pour convenir d’un créneau.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ 15. FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap foot-grid">
+    <div><a class="brand" href="#top"><svg class="brand-mark" aria-hidden="true"><use href="#i-logo"/></svg><span class="wm">immo<b>PILOT</b></span></a><p class="foot-tag">Vendez des résultats, pas des outils.</p></div>
+    <nav aria-label="Produit"><h3>Produit</h3><a href="#tri">Le tri</a><a href="#commande">Palette ⌘K</a><a href="#actions">Actions groupées</a><a href="#tarifs">Tarifs</a></nav>
+    <nav aria-label="Ressources"><h3>Ressources</h3><a href="#faq">FAQ</a><a href="#securite">Sécurité &amp; RGPD</a><a href="#demo">Demander une démo</a><span class="todo">[À COMPLÉTER : e-mail de contact]</span></nav>
+    <nav aria-label="Informations légales"><h3>Légal</h3><a href="legal.html#mentions">Mentions légales</a><a href="legal.html#confidentialite">Confidentialité</a><a href="legal.html#cgv">CGV</a></nav>
+  </div>
+  <div class="wrap foot-bottom"><p>© <span data-year>2026</span> ImmoPilot. <span class="todo">[À COMPLÉTER : raison sociale, SIREN]</span></p><p>Aucun cookie traceur.</p></div>
+</footer>
+
+<!-- Palette ⌘K réelle -->
+<div class="cmdk" data-cmdk hidden>
+  <div class="cmdk-scrim" data-cmdk-close></div>
+  <div class="palette" role="dialog" aria-modal="true" aria-label="Palette de commandes" data-cmdk-panel>
+    <div class="palette-input"><svg aria-hidden="true"><use href="#i-search"/></svg>
+      <input type="text" data-cmdk-input placeholder="Rechercher une section, une action…" aria-label="Rechercher" role="combobox" aria-expanded="true" aria-controls="cmdk-list" aria-autocomplete="list" autocomplete="off" spellcheck="false">
+      <kbd>Échap</kbd>
+    </div>
+    <ul class="palette-list" id="cmdk-list" role="listbox" aria-label="Résultats" data-cmdk-list></ul>
+  </div>
+</div>
+
+<div class="toast-region" aria-live="polite" data-toasts></div>
+</body>
+</html>
