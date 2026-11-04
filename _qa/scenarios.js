@@ -91,9 +91,9 @@ const S = {
     const { ctx, page } = await newPage(b, { w: 1440, h: 900, mobile: false });
     await page.goto(BASE, { waitUntil: 'load' }); await page.waitForTimeout(400);
     const seq = [];
-    for (const y of [36, 44, 38, 42, 39, 41, 37, 43]) { await scrollToY(page, y); await page.waitForTimeout(60); seq.push(await page.evaluate(() => document.querySelector('.nav-bar').style.transform.match(/scale\(([^)]+)\)/)?.[1])); }
+    for (const y of [30, 52, 30, 50, 34, 46, 30, 52]) { await scrollToY(page, y); await page.waitForTimeout(60); seq.push(await page.evaluate(() => document.querySelector('.nav-bar').style.transform.match(/scale\(([^)]+)\)/)?.[1])); }
     await ctx.close();
-    return { scaleAt_36_44_38_42_39_41_37_43: seq };
+    return { scaleAt_30_52_30_50_34_46_30_52: seq };
   },
   // H. Palette ⌘K : la page défile-t-elle derrière la boîte de dialogue ?
   async cmdkLock(b) {

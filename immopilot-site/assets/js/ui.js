@@ -64,7 +64,7 @@ export function initNav() {
   let lastY = scrollY;
   addEventListener("scroll", () => {
     const y = scrollY, dy = y - lastY; lastY = y;
-    const c = y > 40 ? 1 : 0;
+    const c = y > 48 ? 1 : y < 24 ? 0 : compact; // hystérésis : pas d’oscillation si le scroll hésite au seuil
     if (c !== compact) { compact = c; comp.to(c); }
     const open = links.classList.contains("is-open") || nav.contains(document.activeElement) || document.documentElement.dataset.cmdk === "open";
     let h = hidden;
