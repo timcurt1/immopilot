@@ -17,7 +17,7 @@ Puis ouvrez http://localhost:8080.
 
 Le dossier `immopilot-site/` se déploie tel quel.
 
-- **Vercel** : « Add New Project » → importez le dépôt → *Root Directory* : `immopilot-site` → Framework : *Other* → aucune commande de build.
+- **Vercel** : « Add New Project » → importez le dépôt → *Root Directory* : `immopilot-site` (seul réglage à faire : le reste — pas de build, en-têtes de cache et de sécurité — est dans `vercel.json`). Si l’application Next.js du même dépôt est déjà sur Vercel, créez un **second** projet pour le site : les deux cohabitent.
 - **Netlify** / **Cloudflare Pages** : dossier de publication `immopilot-site`, pas de commande de build. Le fichier `_headers` (cache + en-têtes de sécurité) est lu automatiquement.
 
 ### Brancher le domaine immopilot.world
