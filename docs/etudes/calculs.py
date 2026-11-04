@@ -104,3 +104,14 @@ for i, lab in enumerate(["basse", "centrale", "haute"]):
 for s, (_, _, m12) in SCEN.items():
     p(f"SOM 12 mois ({s}) : ARR €", r(m12 * arr, 0), f"{m12} clients × ARPA annuel")
     p(f"  part du SAM central", f"{r(m12 / (FAIT['cartes_gestion_cci_2025']*0.6)*100, 2)} %", f"{m12} / (15 437 × 0,6)")
+
+# ---------- 7. Offre fondateurs et contrôle du site ----------
+for k, m in PRIX.items():
+    p(f"Tarif fondateurs {k} (−30 %) €", r(m * 0.7), f"{m} × 0,70")
+import re, pathlib
+html = pathlib.Path(__file__).resolve().parents[2].joinpath("immopilot-site/index.html").read_text(encoding="utf-8")
+site = [int(x) for x in re.findall(r'data-price-month="(\d+)"', html)]
+p("Prix lus dans le site (data-price-month)", str(site), "doit être égal à la grille Phase 4")
+assert site == [PRIX["essentiel"], PRIX["agence"]], "Écart entre le site et la grille !"
+assert 'data-annual-discount="15"' in html and FAIT["remise_annuelle"] == 0.15, "Remise annuelle incohérente !"
+p("Contrôle de cohérence site ↔ calculs", "OK", "assertions passées")
