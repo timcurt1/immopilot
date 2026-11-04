@@ -1,6 +1,6 @@
 # Audit QA — site immopilot.world (`immopilot-site/`)
 
-Rétablir l’état d’avant l’audit : `git checkout avant-qa -- immopilot-site` (tag `avant-qa`).
+Rétablir l’état d’avant l’audit : `git checkout 5ac17c8 -- immopilot-site` (commit d’avant l’audit ; tag local `avant-qa`).
 Scripts et captures : `_qa/` (hors livraison ; captures dans `_qa/out/`, non versionnées).
 
 ## Phase 0 — Reconnaissance
@@ -133,7 +133,7 @@ Scripts et captures : `_qa/` (hors livraison ; captures dans `_qa/out/`, non ver
 | B16 | Visuel fixe > hauteur disponible | `scenes.js` : `fitScale()` (chaos, tri), uniquement si ça dépasse | Dépassement 92–215 px → 0 (−16 px de marge) ; inchangé dès 390 px |
 | B17 | Absolu sans largeur | `main.css` `.toast-demo` : `width: max-content` | 3 lignes → 1 ligne |
 
-Un commit par défaut ou par groupe cohérent : `git log avant-qa..HEAD`.
+Un commit par défaut ou par groupe cohérent : `git log 5ac17c8..HEAD`.
 
 ## 3. Matrice réalisée
 
@@ -194,5 +194,5 @@ Un commit par défaut ou par groupe cohérent : `git log avant-qa..HEAD`.
 
 ## 5. Annuler
 
-- Tout le site d’avant l’audit : `git checkout avant-qa -- immopilot-site`.
-- Une correction précise : `git revert <commit>` (liste : `git log --oneline avant-qa..HEAD`).
+- Tout le site d’avant l’audit : `git checkout 5ac17c8 -- immopilot-site`.
+- Une correction précise : `git revert <commit>` (liste : `git log --oneline 5ac17c8..HEAD`).
