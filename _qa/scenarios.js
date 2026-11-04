@@ -1,8 +1,9 @@
 // Scénarios ciblés : node _qa/scenarios.js <label> [filtre]  → _qa/out/<label>/scenarios/
-const { chromium, fs, path, BASE, newPage, scrollToY, ensure } = require('./lib');
+const { launch, BROWSER, fs, path, BASE, newPage, scrollToY, ensure } = require('./lib');
 const label = process.argv[2] || 'baseline';
 const only = process.argv[3];
-const OUT = ensure(path.join(__dirname, 'out', label, 'scenarios'));
+const OUT = ensure(path.join(__dirname, 'out', BROWSER === 'chromium' ? label : `${label}-${BROWSER}`, 'scenarios'));
+const CDP_ONLY = ['profile', 'fps']; // protocole Chromium uniquement
 const R = {};
 const sectionY = (page, id, f = 0) => page.evaluate(([id, f]) => { const el = document.getElementById(id); const top = el.getBoundingClientRect().top + scrollY; return Math.round(top + f * Math.max(0, el.offsetHeight - innerHeight)); }, [id, f]);
 async function frames(page, dir, n, every, clip) {
@@ -201,9 +202,10 @@ const S = {
 };
 
 (async () => {
-  const b = await chromium.launch();
+  const b = await launch();
   for (const [k, fn] of Object.entries(S)) {
     if (only && !only.split(',').includes(k)) continue;
+    if (BROWSER !== 'chromium' && CDP_ONLY.includes(k)) { R[k] = 'non applicable (Chromium seulement)'; continue; }
     try { R[k] = await fn(b); } catch (e) { R[k] = 'ERREUR ' + e.message.split('\n')[0]; }
     console.log(`== ${k}\n${JSON.stringify(R[k], null, 1).slice(0, 2500)}`);
   }
