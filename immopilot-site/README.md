@@ -35,12 +35,34 @@ Le dossier `immopilot-site/` se déploie tel quel.
 | Les prix | `index.html`, section `#tarifs` : attributs `data-price-month` et `data-price-year` de chaque `<b>`, plus le texte affiché |
 | La couleur d’accent | `assets/css/main.css`, couche `tokens` : `--accent`, `--accent-strong`, `--grad` (une fois pour le thème sombre, une fois pour le clair) |
 | Les autres couleurs, rayons, tailles de titre | `assets/css/main.css`, couches `tokens` et `base` |
-| La destination du formulaire de démo | `assets/js/ui.js` : `FORM_ENDPOINT` (URL Formspree, CRM, webhook) et `CONTACT_EMAIL`. Sans URL, le formulaire ouvre la messagerie du visiteur avec la demande pré-remplie. |
+| La destination du formulaire de démo | Attribut `action` du `<form data-demo-form>` dans `index.html` (voir « Formulaire de démo » ci-dessous). |
+| Les prix | `data-price-month` de chaque offre et `data-annual-discount` de la section `#tarifs` (le prix annuel est calculé) |
 | Les données fictives des maquettes | `assets/js/mock.js` (`PEOPLE`) |
 | Les commandes de la palette ⌘K | `assets/js/interactive.js` (`CMDS`) |
 | Le logo | Symbole SVG `#i-logo` en haut de `index.html` (blanc en sombre, marine `#1e2742` en clair, point bleu `--logo-dot`) ; favicon `assets/img/favicon.svg` ; fichier d’origine : `assets/img/logo-immopilot-original.webp` |
 | Les pages légales | `legal.html` |
 | Titre, description, image de partage | `<head>` de `index.html` ; image : `assets/img/og.png` (1200×630) |
+
+## Formulaire de démo
+
+Le formulaire envoie les champs `nom`, `email`, `agence` et `lots` en JSON (`POST`) à l’URL indiquée dans son attribut `action`. Tant que l’attribut est vide, il affiche « L’envoi du formulaire n’est pas encore activé » et n’envoie rien.
+
+**Option A — Formspree** (le plus simple) :
+1. Créez un formulaire sur formspree.io et confirmez l’e-mail de réception.
+2. Collez l’URL `https://formspree.io/f/XXXX` dans `action="…"`.
+
+L’adresse de réception reste chez Formspree et n’apparaît pas dans le HTML. Le champ piège `_gotcha` est reconnu nativement. Inconvénient : plan gratuit limité en nombre d’envois.
+
+**Option B — Web3Forms** :
+1. Créez une clé d’accès (clé publique, prévue pour être côté client).
+2. Mettez `action="https://api.web3forms.com/submit"`.
+3. Ajoutez dans le formulaire `<input type="hidden" name="access_key" value="VOTRE_CLE">`.
+
+Gratuit, sans compte complet. Inconvénients : moins d’options, et la clé est visible dans le HTML (elle est publique par conception).
+
+**Anti-spam intégré** : champ piège caché (`_gotcha`) et délai minimal de 3 s entre la première interaction et l’envoi. Dans ces deux cas, un succès est affiché mais rien n’est envoyé.
+
+Ne mettez jamais de clé secrète (API privée, mot de passe SMTP) dans le site : il est entièrement public.
 
 ## Suivi de conversion (sans cookie)
 

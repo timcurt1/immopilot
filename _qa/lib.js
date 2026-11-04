@@ -85,4 +85,6 @@ async function newPage(browser, { w, h, mobile, theme = 'dark', reduced = false 
 const scrollToY = (page, y) => page.evaluate((y) => { document.documentElement.style.scrollBehavior = 'auto'; scrollTo(0, y); document.documentElement.style.scrollBehavior = ''; }, y);
 const ensure = (d) => { fs.mkdirSync(d, { recursive: true }); return d; };
 
+// QA_VP=375,768,1440 : limite la matrice à ces largeurs
+if (process.env.QA_VP) { const keep = process.env.QA_VP.split(',').map(Number); VIEWPORTS.splice(0, VIEWPORTS.length, ...VIEWPORTS.filter((v) => keep.includes(v[0]))); }
 module.exports = { chromium, launch, BROWSER, fs, path, BASE, VIEWPORTS, newPage, logoContrast, scrollToY, ensure };

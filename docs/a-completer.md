@@ -1,49 +1,84 @@
-# ImmoPilot — Reste à compléter / à valider
+# ImmoPilot — Reste à compléter (mis à jour le 4 novembre 2026)
 
-Tout ce qui n’a pas été fourni est balisé dans le site par `[À COMPLÉTER]` ou `[À VALIDER]` (pastille ambre, bien visible). Rien n’a été inventé : aucun témoignage, aucun logo client, aucune statistique de résultat.
+Tout ce qui n’a pas été fourni reste visible sur le site sous forme de marqueur ambre `[À COMPLÉTER : …]` ou `[À VALIDER]` : rien n’est inventé.
 
-Pour tout retrouver : `grep -rn "À COMPLÉTER\|À VALIDER" immopilot-site`
+Pour tout retrouver :
 
-## 1. Tarifs (`index.html`, section `#tarifs`)
-- [ ] Prix Starter / Croissance / Premium, en mensuel **et** en annuel (attributs `data-price-month` / `data-price-year`, plus le texte affiché).
-- [ ] Remise annuelle en % (bouton « Annuel »).
-- [ ] Nombre d’agents inclus dans Croissance.
-- [ ] À valider : « dossiers illimités » (Starter), « reprise de vos données » et « accompagnement dédié » (Premium).
-- [ ] À valider : badge « Recommandé » sur Croissance.
+```bash
+python3 _qa/content-check.py
+```
 
-## 2. Chiffres clés (`#chiffres`)
-Les 3 premiers compteurs sont des faits produit (2 vues, 1 raccourci ⌘K, 100 % en français). Les 3 suivants attendent de **vraies mesures** :
-- [ ] Heures gagnées par agent et par semaine.
-- [ ] Jours de vacance locative en moins.
-- [ ] Dossiers traités chaque mois.
-Pour activer l’animation : remplacer `[À COMPLÉTER]` par `<span data-count="42">42</span>`.
+Ce script liste chaque marqueur avec `fichier:ligne`, les anciens placeholders, les liens cassés et la cohérence des prix et e-mails.
 
-## 3. Sécurité & RGPD (`#securite`, FAQ, `legal.html`)
-- [ ] Hébergeur, pays d’hébergement, certification éventuelle.
-- [ ] Délai et procédure de droit à l’effacement.
-- [ ] Durée de conservation des dossiers, DPO / contact RGPD, sous-traitants.
-- [ ] À vérifier dans l’app : l’affirmation « chaque action est horodatée dans l’historique » (la timeline existe, sa couverture exhaustive est à confirmer).
+## 1. Tarifs — `immopilot-site/index.html`, section `#tarifs`
 
-## 4. FAQ (`#faq`)
-- [ ] Délai moyen de mise en route, accompagnement inclus.
-- [ ] Import de données existantes (l’export CSV, lui, existe).
-- [ ] Engagement et préavis de résiliation.
+**Source unique** :
+- Chaque offre a un attribut `data-price-month=""` sur sa balise `<b>` : mettez-y le prix mensuel HT, en nombre (`49` ou `129.9`), et remplacez le texte du marqueur par le même prix (`49 €`).
+- La remise annuelle est l’attribut `data-annual-discount="15"` de la section.
 
-## 5. Formulaire de démo (`assets/js/ui.js`)
-- [ ] `FORM_ENDPOINT` : URL de destination (Formspree, CRM, webhook). **Tant qu’elle est vide**, le formulaire ouvre la messagerie du visiteur avec la demande pré-remplie (aucune demande n’est perdue silencieusement, mais le visiteur doit cliquer « Envoyer »).
-- [ ] `CONTACT_EMAIL` (actuellement `contact@immopilot.world`) : confirmer que la boîte existe. Elle apparaît aussi dans le footer, la palette ⌘K et `legal.html`.
-- [ ] À valider : « Réponse sous 24 h ouvrées ».
+**Calcul automatique** : le prix annuel est calculé par `assets/js/ui.js` (`initPricing`). Exemple vérifié dans le navigateur avec 49 :
 
-## 6. Mentions légales (`legal.html`, footer)
-- [ ] Raison sociale, forme, capital, siège, SIREN/RCS, TVA, directeur de publication, hébergeur du site.
-- [ ] Politique de confidentialité complète et CGV (à faire relire par un juriste).
+| | Calcul | Résultat |
+|---|---|---|
+| Prix mensuel en facturation annuelle | 49 × (1 − 0,15) = 41,65 | 41,65 € HT / mois |
+| Total facturé à l’année | 41,65 × 12 = 499,80 | 499,80 € HT |
 
-## 7. Choix à valider
-- Accent : bleu de l’app `#3557ff` → cyan `#22d3ee` (dégradé réservé aux mots-clés et au CTA).
-- Titre hero : « Vos candidatures. Sous contrôle. » (variantes dans `docs/brief.md`).
-- Thème sombre par défaut ; le choix du visiteur est mémorisé dans son navigateur.
-- Le carrousel des bénéfices n’est **pas** épinglé au scroll : on le fait glisser (élan + snap + rubber-band). L’épingler aurait détourné le scroll vertical, ce que le cahier des charges interdit (« jamais de piège »).
-- Pas de GSAP, Lenis ni Motion : moteur de ressorts maison de 2 Ko (justification dans `docs/brief.md`, § 5).
-- Prénom fictif « Julie » et candidats fictifs dans les maquettes, marqués « Données fictives de démonstration ».
-- Les boutons Appeler / E-mail de la démo affichent un toast au lieu de lancer un vrai `tel:` / `mailto:` vers une personne fictive.
-- L’ancienne vitrine Next.js (`app/(marketing)`) est toujours dans le dépôt : à retirer quand le nouveau site sera en ligne.
+Arrondi au centime.
+
+| Marqueur | Ce qu’il faut fournir |
+|---|---|
+| nom de l’offre 1 / 2 / 3 | Nom commercial de chaque offre |
+| cible de l’offre 1 / 2 / 3 | Une phrase : pour qui est l’offre |
+| prix mensuel HT (×3) | Montant, ou « Sur devis » |
+| par agence ou par utilisateur | Unité de facturation |
+| limites et fonctionnalités incluses (×3) | Liste pour chaque offre |
+| Engagement et résiliation | Sans engagement, ou durée minimale et préavis |
+| Essai gratuit | Durée, ou « aucun » ; carte bancaire demandée ou non |
+| Frais de mise en place | Montant, ou « aucun » |
+| Moyens de paiement | Carte, prélèvement SEPA, virement… |
+| Offre sur mesure | Oui / non |
+
+**Mise en avant** : la carte du milieu garde le style mis en avant (design), mais son badge « Recommandé » a été retiré, faute de désignation.
+
+**À arbitrer** : le code contient deux jeux d’offres contradictoires (voir le rapport `docs/contenu-rapport.md`).
+
+## 2. Chiffres clés — `#chiffres`
+
+Faits. Les six chiffres sont des faits produit comptés dans le code ; la source de chacun est en commentaire dans le HTML.
+
+**À ajouter quand vous aurez des données réelles, avec leur source** : heures gagnées, jours de vacance locative en moins, dossiers traités, nombre d’agences clientes.
+
+## 3. Mentions légales, confidentialité, CGV — `immopilot-site/legal.html`
+
+| Bloc | Ce qu’il faut fournir |
+|---|---|
+| Éditeur (1.1) | Nom complet, forme juridique, capital (si société), adresse, SIREN/SIRET, RCS ou RNE, TVA (ou mention art. 293 B du CGI), directeur de la publication, e-mail, téléphone |
+| Hébergeur du site (1.2) | Nom, adresse, téléphone |
+| Contact RGPD (1.4, 2.1, 2.5) | E-mail du contact RGPD ou du DPO |
+| Tribunal (1.6, art. 13) | Ressort du tribunal compétent |
+| Hébergement de l’app (2.4, art. 9) | Hébergeur, pays, garanties de transfert hors UE |
+| Prestataires (2.4) | Confirmer Supabase, Stripe, Resend, Anthropic en production |
+| CGV art. 5 | Prix, moyens de paiement, échéance, préavis de révision, taux de pénalité de retard (au moins trois fois le taux d’intérêt légal), frais de mise en place |
+| CGV art. 6 et 7 | Engagement, préavis, délai d’export puis de suppression, essai gratuit |
+| CGV art. 8 | Support : canaux, horaires, délais |
+| CGV art. 9 | Délai d’information sur les sous-traitants ; DPA disponible ou non |
+| CGV art. 12 et 13 | Durée de confidentialité après le contrat ; délai de notification des modifications |
+| À valider | Nom « ImmoPilot », base légale du formulaire, conservation 3 ans, plafond de responsabilité (12 mois), médiation non applicable |
+
+**À faire relire par un juriste ou un avocat avant la mise en ligne.**
+
+## 4. Formulaire de démo — `immopilot-site/index.html`, `#demo`
+
+| Marqueur | Ce qu’il faut faire |
+|---|---|
+| service et URL | Choisir un service, créer le compte, puis coller l’URL publique dans l’attribut `action="…"` du `<form>`. Mode d’emploi : README, section Formulaire |
+| éditeur (mention RGPD) | Identité du responsable du traitement |
+| 3 ans [À VALIDER] | Confirmer la durée de conservation |
+
+Tant que `action` est vide, le formulaire affiche « L’envoi du formulaire n’est pas encore activé » et n’envoie rien.
+
+## 5. Autres marqueurs existants (hors des 4 blocs)
+
+- **Sécurité** (`#securite`) : hébergeur et pays, délai et procédure d’effacement, durée de conservation et contact RGPD.
+- **FAQ** : délai de mise en route, import de données, hébergement et sous-traitants, engagement.
+- **Pied de page** : e-mail de contact, raison sociale et SIREN.
