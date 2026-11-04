@@ -221,20 +221,40 @@ export function initFaq() {
   const items = $$("details", list);
   for (const d of items) {
     const sum = $("summary", d); const ans = $(".faq-a", d);
+    const after = () => items.slice(items.indexOf(d) + 1);
+    let closing = 0; // > 0 : fermeture en cours, vaut la hauteur repliée (px)
     const fade = new Spring(1, { response: 0.35, precision: 0.002, onUpdate: (v) => {
       ans.style.opacity = v; ans.style.transform = reduced.matches ? "" : `translate3d(0,${(1 - v) * -6}px,0)`;
+    }, onRest: (v) => {
+      if (v !== 0 || !closing) return;
+      // Fin de la sortie : on replie réellement ; les éléments suivants, déjà remontés en transform, ne bougent pas.
+      const h = closing; closing = 0; d.open = false;
+      for (const el of after()) { const s = flipSpring(el); s.set(s.value + h).to(0, { velocity: s.velocity }); }
     } });
     sum.addEventListener("click", (e) => {
       e.preventDefault();
-      const after = items.slice(items.indexOf(d) + 1);
-      const before = after.map((el) => el.getBoundingClientRect().top);
-      d.open = !d.open;
-      if (d.open) { fade.set(0).to(1); track("faq_open", { q: sum.textContent.trim() }); }
-      if (reduced.matches) return;
-      after.forEach((el, i) => {
-        const dy = before[i] - el.getBoundingClientRect().top;
-        const s = flipSpring(el); s.set(s.value + dy).to(0, { velocity: s.velocity });
-      });
+      const next = after();
+      if (closing) { // interrompue : la réponse revient, les suivants redescendent, depuis leur position affichée
+        closing = 0; fade.to(1);
+        for (const el of next) flipSpring(el).to(0, { velocity: flipSpring(el).velocity });
+        return;
+      }
+      if (!d.open) {
+        const before = next.map((el) => el.getBoundingClientRect().top);
+        d.open = true; fade.set(0).to(1); track("faq_open", { q: sum.textContent.trim() });
+        if (reduced.matches) return;
+        next.forEach((el, i) => { const s = flipSpring(el); s.set(s.value + before[i] - el.getBoundingClientRect().top).to(0, { velocity: s.velocity }); });
+        return;
+      }
+      if (reduced.matches) { d.open = false; return; }
+      // Sortie symétrique de l’entrée : la réponse s’efface pendant que les suivants remontent.
+      const ref = next[0] || list;
+      const top = ref.getBoundingClientRect().top; d.open = false;
+      const h = top - ref.getBoundingClientRect().top; d.open = true; // mesure synchrone, sans rendu intermédiaire
+      if (!next.length) { closing = 1; fade.to(0, { response: 0.3 }); return; } // dernière question : fondu puis repli
+      if (h <= 0) { d.open = false; return; }
+      closing = h; fade.to(0, { response: 0.4 });
+      for (const el of next) flipSpring(el).to(-h, { velocity: flipSpring(el).velocity });
     });
   }
 }
