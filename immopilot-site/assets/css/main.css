@@ -326,7 +326,8 @@
   .palette-demo .palette-input span { min-height: 1.4em; }
   .caret { display: inline-block; width: 2px; height: 1.2em; margin-left: -.6rem; background: var(--accent); animation: blink 1s steps(2) infinite; }
   @keyframes blink { 50% { opacity: 0; } }
-  .toast-demo { position: absolute; left: 50%; bottom: 6%; translate: -50% 0; }
+  /* Ancré à la scène épinglée (bas de l’écran), pas au mockup qui déborde volontairement sous l’écran. */
+  .toast-demo { position: absolute; z-index: 2; left: 50%; bottom: max(1.5rem, env(safe-area-inset-bottom)); translate: -50% 0; }
   .js .toast-demo { opacity: 0; }
 
   /* ---- ACTIONS ---- */
@@ -492,9 +493,9 @@
     .chaos .stage, .tri .stage { grid-template-columns: 1fr; align-content: start; padding-top: calc(var(--nav-h) + 2.5rem); gap: 1.5rem; }
     .chaos-app { width: min(100%, 30rem); justify-self: center; }
     .tri .steps { display: grid; margin-top: 1rem; }
-    .tri .steps li { padding-top: .2rem; }
-    .tri .steps li:not(.is-active) { position: absolute; visibility: hidden; } /* garde le compteur juste */
-    .tri .steps li.is-active { display: block; }
+    /* Étapes superposées dans une seule cellule : hauteur = la plus haute, le mockup ne bouge plus. */
+    .tri .steps li { grid-area: 1 / 1; padding-top: .2rem; }
+    .tri .steps li:not(.is-active) { visibility: hidden; }
     .tri .steps li::before { top: .2rem; }
     .split { grid-template-columns: 1fr; }
     .sec-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -528,7 +529,7 @@
   /* Sans JS : sections statiques lisibles, maquettes et commandes inertes masquées */
   html:not(.js) [data-chaos-after], html:not(.js) .chaos-field, html:not(.js) [data-mock], html:not(.js) .chaos-app,
   html:not(.js) .hero-visual, html:not(.js) .tri-visual, html:not(.js) .cmdk-demo, html:not(.js) .theme-frame,
-  html:not(.js) [data-cmdk-open], html:not(.js) [data-theme-toggle], html:not(.js) .demo-card, html:not(.js) .seg, html:not(.js) .car-ctrl { display: none; }
+  html:not(.js) [data-cmdk-open], html:not(.js) [data-theme-toggle], html:not(.js) .demo-card, html:not(.js) .seg, html:not(.js) .car-ctrl, html:not(.js) .toast-demo { display: none; }
   html:not(.js) .pin > .stage { position: static; height: auto; min-height: 0; padding-block: 7rem 3rem; }
   @media (max-width: 960px) { html:not(.js) .nav-links { display: none; } }
   /* Écran très bas (zoom 200 %) : pas d’épinglage, état final */

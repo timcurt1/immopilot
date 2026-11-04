@@ -6,6 +6,8 @@ import { PEOPLE, tone, icon, placeHighlights } from "./mock.js";
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const T = (el, t) => { el.style.transform = t; };
+/** Échelle (≤ 1) pour qu’un visuel tienne dans la hauteur restante de sa scène épinglée (petits écrans). */
+const fitScale = (el, stage, gap = 16) => Math.min(1, (stage.clientHeight - el.offsetTop - gap) / el.offsetHeight);
 
 /* ================= HERO ================= */
 export function initHero() {
@@ -65,9 +67,13 @@ export function initChaos() {
   const chips = $$(".doc-chip", field);
   const rand = rng(7);
   const items = chips.map((el, i) => ({ el, row: i % rows.length, slot: Math.floor(i / rows.length) % 4, sx: rand(), sy: rand(), rot: (rand() - 0.5) * 24, depth: 0.6 + rand() * 0.8 }));
-  let W = 0, H = 0;
+  let W = 0, H = 0, fit = 1;
   const measure = () => {
     W = stage.clientWidth; H = stage.clientHeight;
+    fit = fitScale(app, stage);
+    app.style.transformOrigin = fit < 1 ? "50% 0" : "";
+    T(app, `scale(${fit})`); // mesure des emplacements dans l’état final de la carte, pas sous une échelle intermédiaire
+    for (const it of items) T(it.el, "");
     const sr = stage.getBoundingClientRect();
     for (const it of items) {
       it.w = it.el.offsetWidth; it.h = it.el.offsetHeight;
@@ -84,7 +90,7 @@ export function initChaos() {
   scene(sec, (p) => {
     const order = smooth(range(p, 0.08, 0.5));
     app.style.opacity = String(0.55 + order * 0.45);
-    T(app, `scale(${0.96 + order * 0.04})`);
+    T(app, `scale(${fit * (0.96 + order * 0.04)})`);
     const counts = rows.map(() => 0);
     items.forEach((it, i) => {
       const st = 0.1 + (i / items.length) * 0.4;
@@ -105,7 +111,7 @@ export function initChaos() {
     const b = range(p, 0.42, 0.56), a = range(p, 0.52, 0.66);
     before.style.opacity = String(1 - b); T(before, `translate3d(0,${-b * 20}px,0)`);
     after.style.opacity = String(a); T(after, `translate3d(0,${(1 - a) * 20}px,0)`);
-  }, { onResize: () => { for (const it of items) T(it.el, ""); measure(); } });
+  }, { onResize: measure });
 }
 
 /* ================= TRI ================= */
@@ -167,11 +173,15 @@ export function initTri() {
     const step = Math.round(s);
     if (step !== lastStep) { lastStep = step; steps.forEach((li, i) => li.classList.toggle("is-active", i === step)); }
   }, { onResize: () => {
+    const vis = $(".tri-visual", sec), fit = fitScale(vis, $(".stage", sec));
+    T(vis, ""); // mesures (pilule, lignes) dans le repère non transformé
     rowH = rows[0].offsetHeight + parseFloat(getComputedStyle(rowsBox).rowGap || "0") + 6;
     const bx = chipBox.getBoundingClientRect();
     cr = chips.slice(0, 2).map((c) => { const r = c.getBoundingClientRect(); return { x: r.left - bx.left, y: r.top - bx.top, w: r.width, h: r.height }; });
     pill.style.width = cr[0].w + "px"; pill.style.height = cr[0].h + "px";
     placeHighlights(sec);
+    vis.style.transformOrigin = fit < 1 ? "50% 0" : "";
+    T(vis, fit < 1 ? `scale(${fit})` : "");
   } });
 }
 
