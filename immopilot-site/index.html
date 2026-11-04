@@ -29,12 +29,14 @@
 <script>
   // Avant le premier rendu : thème mémorisé + drapeau JS (aucun flash).
   (function (d) {
-    var r = d.documentElement; r.classList.add("js");
+    var r = d.documentElement;
+    // Les états initiaux « cachés » ne s’appliquent que si les modules ES peuvent s’exécuter.
+    if ("noModule" in HTMLScriptElement.prototype) r.classList.add("js");
     try { var t = localStorage.getItem("ip-theme"); if (t === "light" || t === "dark") r.dataset.theme = t; } catch (e) {}
   })(document);
 </script>
 <link rel="stylesheet" href="assets/css/main.css">
-<script type="module" src="assets/js/main.js"></script>
+<script type="module" src="assets/js/main.js" onerror="document.documentElement.classList.remove('js')"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
