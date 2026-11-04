@@ -221,6 +221,7 @@
   .rows { position: relative; display: grid; gap: .45em; }
   .row { display: grid; grid-template-columns: 2.3em minmax(0, 1.4fr) auto minmax(5em, .8fr); align-items: center; gap: .9em; height: 3.3em; padding: 0 .9em; border-radius: .8em; background: var(--app-row); border: 1px solid var(--line); }
   .av { display: grid; place-items: center; width: 2.3em; height: 2.3em; border-radius: 50%; font-size: .85em; font-weight: 700; color: #fff; background: hsl(var(--h, 230) 70% 52%); }
+  [data-theme="light"] .av { background: hsl(var(--h, 230) 62% 38%); }
   .who { min-width: 0; } .who b, .who small { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .who b { font-weight: 600; } .who small { color: var(--text-3); font-size: .85em; }
   .score { display: flex; align-items: center; gap: .6em; font-variant-numeric: tabular-nums; font-weight: 650; font-size: .9em; }
@@ -336,7 +337,8 @@
   .act-under button { width: 4.75rem; display: grid; place-items: center; align-content: center; gap: .15rem; font-size: .7rem; font-weight: 650; color: #fff; }
   .act-under button svg { width: 1.2rem; height: 1.2rem; }
   .act-under .u-call { background: #30a14e; } .act-under .u-mail { background: #3557ff; } .act-under .u-arch { background: #8e8e93; }
-  .act-front { position: relative; display: grid; grid-template-columns: auto 2.4rem minmax(0, 1fr) auto; align-items: center; gap: .75rem; padding: .7rem .8rem; min-height: 4rem; background: var(--elev); border: 1px solid var(--line); border-radius: 16px; touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: grab; }
+  .act-under { z-index: 0; }
+  .act-front { position: relative; z-index: 1; display: grid; grid-template-columns: auto 2.4rem minmax(0, 1fr) auto; align-items: center; gap: .75rem; padding: .7rem .8rem; min-height: 4rem; background: var(--elev); border: 1px solid var(--line); border-radius: 16px; touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: grab; }
   [data-theme="dark"] .act-front { background: #161922; }
   .act-front:active { cursor: grabbing; }
   .act-front .av { width: 2.4rem; height: 2.4rem; font-size: .8rem; }
@@ -483,7 +485,8 @@
     .chaos .stage, .tri .stage { grid-template-columns: 1fr; align-content: start; padding-top: calc(var(--nav-h) + 2.5rem); gap: 1.5rem; }
     .chaos-app { width: min(100%, 30rem); justify-self: center; }
     .tri .steps { display: grid; margin-top: 1rem; }
-    .tri .steps li { display: none; padding-top: .2rem; }
+    .tri .steps li { padding-top: .2rem; }
+    .tri .steps li:not(.is-active) { position: absolute; visibility: hidden; } /* garde le compteur juste */
     .tri .steps li.is-active { display: block; }
     .tri .steps li::before { top: .2rem; }
     .split { grid-template-columns: 1fr; }
@@ -515,6 +518,19 @@
 
 /* ================= ACCESSIBILITÉ ================= */
 @layer a11y {
+  /* Sans JS : sections statiques lisibles, maquettes et commandes inertes masquées */
+  html:not(.js) [data-chaos-after], html:not(.js) .chaos-field, html:not(.js) [data-mock], html:not(.js) .chaos-app,
+  html:not(.js) .hero-visual, html:not(.js) .tri-visual, html:not(.js) .cmdk-demo, html:not(.js) .theme-frame,
+  html:not(.js) [data-cmdk-open], html:not(.js) [data-theme-toggle], html:not(.js) .demo-card, html:not(.js) .seg, html:not(.js) .car-ctrl { display: none; }
+  html:not(.js) .pin > .stage { position: static; height: auto; min-height: 0; padding-block: 7rem 3rem; }
+  @media (max-width: 960px) { html:not(.js) .nav-links { display: none; } }
+  /* Écran très bas (zoom 200 %) : pas d’épinglage, état final */
+  @media (max-height: 560px) {
+    .js .pin { height: auto; }
+    .pin > .stage { position: relative; height: auto; min-height: 100svh; overflow: visible; padding-bottom: 3rem; }
+    .chaos-field { display: none; }
+    .js [data-chaos-before] { opacity: 0; } .js [data-chaos-after] { opacity: 1; }
+  }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .js .pin { height: auto; }

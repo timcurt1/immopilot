@@ -11,7 +11,12 @@ const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 export function initCmdk() {
   const root = $("[data-cmdk]"); const panel = $("[data-cmdk-panel]", root);
   const scrim = $(".cmdk-scrim", root); const input = $("[data-cmdk-input]", root); const list = $("[data-cmdk-list]", root);
-  const go = (id) => () => { const el = document.getElementById(id); if (el) { el.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth" }); history.replaceState(null, "", `#${id}`); } };
+  const go = (id) => () => {
+    const el = document.getElementById(id); if (!el) return;
+    el.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth" }); history.replaceState(null, "", `#${id}`);
+    if (!el.hasAttribute("tabindex")) el.setAttribute("tabindex", "-1");
+    el.focus({ preventScroll: true }); // le focus suit la navigation
+  };
   const CMDS = [
     ["arrow", "Demander une démo", "Action", () => { go("demo")(); setTimeout(() => $("#f-name").focus({ preventScroll: true }), 600); }],
     ["sun", "Basculer le thème clair / sombre", "Action", toggleTheme],
@@ -65,7 +70,11 @@ export function initCmdk() {
     s.to(0);
     if (restore && lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
   }
-  function run(i) { const c = res[i]; if (!c) return; close(false); track("cmdk_run", { cmd: c[1] }); c[3](); }
+  function run(i) {
+    const c = res[i]; if (!c) return;
+    close(false); track("cmdk_run", { cmd: c[1] }); c[3]();
+    if (document.activeElement === document.body && lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+  }
 
   document.addEventListener("keydown", (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); isOpen ? close() : open(); return; }
@@ -98,12 +107,12 @@ export function initActions() {
     const li = document.createElement("li");
     li.className = "act-row"; li.dataset.id = p.id;
     li.innerHTML =
-      `<div class="act-under"><button type="button" class="u-call" data-u="call" tabindex="-1">${icon("phone")}Appeler</button>` +
-      `<button type="button" class="u-mail" data-u="mail" tabindex="-1">${icon("mail")}E-mail</button>` +
-      `<button type="button" class="u-arch" data-u="archive" tabindex="-1">${icon("archive")}Archiver</button></div>` +
       `<div class="act-front"><button type="button" class="ck" role="checkbox" aria-checked="false" aria-label="Sélectionner ${p.n}" aria-keyshortcuts="ArrowLeft ArrowRight"><span>${icon("check")}</span></button>` +
       `<span class="av" style="--h:${p.h}">${p.i}</span><span class="who"><b>${p.n}</b><small>${p.bien}</small></span>` +
-      `<span class="badge ${tone(p.st)}" data-st>${p.st}</span></div>`;
+      `<span class="badge ${tone(p.st)}" data-st>${p.st}</span></div>` +
+      `<div class="act-under"><button type="button" class="u-call" data-u="call" tabindex="-1">${icon("phone")}Appeler</button>` +
+      `<button type="button" class="u-mail" data-u="mail" tabindex="-1">${icon("mail")}E-mail</button>` +
+      `<button type="button" class="u-arch" data-u="archive" tabindex="-1">${icon("archive")}Archiver</button></div>`;
     const front = $(".act-front", li);
     const x = new Spring(0, { response: 0.35, precision: 0.3, onUpdate: (v) => { front.style.transform = v ? `translate3d(${v.toFixed(1)}px,0,0)` : ""; } });
     const r = { li, front, x, p, open: false };
@@ -195,20 +204,23 @@ export function initActions() {
   function archive(ids) {
     const removed = ids.map((id) => ({ p: data.find((d) => d.id === id), at: data.findIndex((d) => d.id === id) })).sort((a, b) => a.at - b.at);
     const fade = removed.map(({ p }) => rows.get(p.id));
-    let left = fade.length;
+    let left = fade.length, cancelled = false;
+    const springs = [];
     for (const r of fade) {
       selected.delete(r.p.id);
-      new Spring(1, { response: 0.28, precision: 0.01, onUpdate: (v) => { r.li.style.opacity = v; r.front.style.transform = `translate3d(${(1 - v) * -40}px,0,0)`; },
-        onRest: () => { if (--left === 0) commit(); } }).to(0);
+      springs.push(new Spring(1, { response: 0.28, precision: 0.01, onUpdate: (v) => { r.li.style.opacity = v; r.front.style.transform = `translate3d(${(1 - v) * -40}px,0,0)`; },
+        onRest: () => { if (--left === 0) commit(); } }).to(0));
     }
     syncBar();
     function commit() {
+      if (cancelled || !fade.every((r) => r.li.isConnected)) return; // annulé ou démo réinitialisée entre-temps
       flip($$(".act-row", list), () => { fade.forEach((r) => { r.li.remove(); rows.delete(r.p.id); }); });
       data = data.filter((d) => !ids.includes(d.id));
       empty.hidden = data.length > 0;
     }
     toast(`${ids.length} dossier${ids.length > 1 ? "s" : ""} archivé${ids.length > 1 ? "s" : ""}`, { undo: () => {
       // Annuler : on réinsère à la place d’origine, les voisins glissent (FLIP).
+      cancelled = true; springs.forEach((sp) => sp.stop());
       const cur = $$(".act-row", list);
       flip(cur, () => {
         for (const { p, at } of removed) {
@@ -345,6 +357,10 @@ export function initCarousel() {
     o.stop(); raw = clamp(o.value + e.deltaX, -80, max + 80); o.set(band(raw));
     clearTimeout(wt); wt = setTimeout(() => goTo(nearest(raw)), 90);
   }, { passive: false });
+  root.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") { e.preventDefault(); goTo(idx - 1); }
+    else if (e.key === "ArrowRight") { e.preventDefault(); goTo(idx + 1); }
+  });
   $("[data-car-prev]", root).addEventListener("click", () => goTo(idx - 1));
   $("[data-car-next]", root).addEventListener("click", () => goTo(idx + 1));
   addEventListener("resize", measure);

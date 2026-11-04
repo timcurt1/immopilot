@@ -3,6 +3,8 @@
 import { clamp, reduced } from "./spring.js";
 
 const scenes = [];
+// Écran très bas (ex. zoom 200 %) : scènes non épinglées, état final (cf. main.css).
+export const short = matchMedia("(max-height: 560px)");
 let queued = false;
 
 const io = new IntersectionObserver((entries) => {
@@ -13,7 +15,7 @@ const io = new IntersectionObserver((entries) => {
 }, { rootMargin: "25% 0px" });
 
 function measure(s) {
-  if (reduced.matches) return 1;
+  if (reduced.matches || short.matches) return 1;
   const r = s.el.getBoundingClientRect();
   const total = r.height - innerHeight;
   return total > 1 ? clamp(-r.top / total) : clamp((innerHeight - r.top) / (innerHeight + r.height));
@@ -48,3 +50,4 @@ addEventListener("scroll", tick, { passive: true });
 let rt;
 addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(refresh, 120); });
 reduced.addEventListener("change", refresh);
+short.addEventListener("change", refresh);

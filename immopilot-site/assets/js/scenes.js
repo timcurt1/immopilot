@@ -1,6 +1,6 @@
 // Scènes scrubbées au scroll (réversibles, aucune capture du scroll) : hero, chaos, tri, ⌘K, thème.
 import { Spring, reduced, clamp, lerp, range, smooth } from "./spring.js";
-import { scene } from "./scroll.js";
+import { scene, short } from "./scroll.js";
 import { PEOPLE, tone, icon, placeHighlights } from "./mock.js";
 
 const $ = (s, r = document) => r.querySelector(s);
@@ -13,7 +13,7 @@ export function initHero() {
   const copy = $("[data-hero-copy]", sec); const vis = $("[data-hero-visual]", sec); const tilt = $("[data-tilt]", sec);
   let dy = 0;
   scene(sec, (p) => {
-    if (reduced.matches) { T(copy, ""); copy.style.opacity = ""; T(vis, ""); return; }
+    if ((reduced.matches || short.matches)) { T(copy, ""); copy.style.opacity = ""; T(vis, ""); return; }
     const a = smooth(range(p, 0, 0.55));
     copy.style.opacity = String(1 - range(p, 0.05, 0.4));
     T(copy, `translate3d(0,${-a * 60}px,0) scale(${1 - a * 0.05})`);
@@ -188,7 +188,7 @@ export function initCmdkDemo() {
   const word = "relancer";
   let lastQ = null, lastSel = null;
   scene(sec, (p) => {
-    if (reduced.matches) p = 0.7; // mouvement réduit : on montre la palette ouverte, statique
+    if ((reduced.matches || short.matches)) p = 0.7; // mouvement réduit : on montre la palette ouverte, statique
     const open = smooth(range(p, 0.04, 0.18)) * (1 - smooth(range(p, 0.8, 0.88)));
     const blur = (1 - open) * 10; // flou animé < 20 px
     pal.style.opacity = String(open);
@@ -218,7 +218,7 @@ export function initThemeScene() {
   const frame = $(".theme-frame", sec);
   let w = 0;
   scene(sec, (p) => {
-    if (reduced.matches) { T(wipe, ""); T(inner, ""); return; }
+    if ((reduced.matches || short.matches)) { T(wipe, ""); T(inner, ""); return; }
     const t = smooth(range(p, 0.2, 0.75));
     T(wipe, `translate3d(${(1 - t) * 100}%,0,0)`);
     T(inner, `translate3d(${-(1 - t) * 100}%,0,0)`);
