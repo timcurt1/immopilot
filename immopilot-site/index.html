@@ -33,6 +33,7 @@
     // Les états initiaux « cachés » ne s’appliquent que si les modules ES peuvent s’exécuter.
     if ("noModule" in HTMLScriptElement.prototype) r.classList.add("js");
     try { var t = localStorage.getItem("ip-theme"); if (t === "light" || t === "dark") r.dataset.theme = t; } catch (e) {}
+    if (r.dataset.theme === "light") d.querySelector('meta[name="theme-color"]').content = "#fbfbfd";
   })(document);
 </script>
 <link rel="stylesheet" href="assets/css/main.css">
