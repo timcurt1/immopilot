@@ -25,7 +25,7 @@ export function initCmdk() {
     ["check", "Actions groupées, export CSV", "Aller à", go("actions")], ["users", "Vue Agent et vue Candidat", "Aller à", go("vues")],
     ["spark", "Bénéfices", "Aller à", go("benefices")], ["shield", "Sécurité et RGPD", "Aller à", go("securite")],
     ["file", "Tarifs", "Aller à", go("tarifs")], ["bell", "Questions fréquentes", "Aller à", go("faq")],
-    ["mail", "Écrire à l’équipe", "Action", () => { location.href = "mailto:contact@immopilot.world"; }],
+    ["mail", "Écrire à l’équipe", "Action", () => { go("demo")(); setTimeout(() => $("#f-name").focus({ preventScroll: true }), 600); }],
   ];
   let res = CMDS, sel = 0, isOpen = false, lastFocus = null;
   const s = new Spring(0, { response: 0.3, precision: 0.002, onUpdate: (v) => {
