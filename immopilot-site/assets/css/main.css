@@ -441,9 +441,9 @@
   [data-theme="dark"] .price-tag { color: #04112a; }
   .price h3 { font-size: 1.5rem; } .price-for { color: var(--text-2); margin-top: .35rem; font-size: .9375rem; }
   .amount { margin: 1.75rem 0; display: grid; gap: .2rem; }
-  .amount b { font-size: 1.5rem; letter-spacing: -0.01em; color: var(--warn); display: inline-block; }
+  .amount b { font-size: 1.5rem; letter-spacing: -0.01em; color: var(--text); display: inline-block; } /* couleur ambre réservée aux marqueurs [À COMPLÉTER] */
   .amount span { color: var(--text-3); font-size: .875rem; }
-  .price ul { display: grid; gap: .7rem; margin-bottom: 2rem; flex: 1; }
+  .price ul { display: grid; gap: .7rem; margin-bottom: 2rem; flex: 1; align-content: start; }
   .price li { padding-left: 1.6rem; position: relative; font-size: .9375rem; }
   .price li::before { content: ""; position: absolute; left: .1rem; top: .35rem; width: .85rem; height: .45rem; border-left: 1.5px solid var(--accent); border-bottom: 1.5px solid var(--accent); transform: rotate(-45deg); }
 
