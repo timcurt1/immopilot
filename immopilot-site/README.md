@@ -38,6 +38,7 @@ Le dossier `immopilot-site/` se déploie tel quel.
 | La destination du formulaire de démo | `assets/js/ui.js` : `FORM_ENDPOINT` (URL Formspree, CRM, webhook) et `CONTACT_EMAIL`. Sans URL, le formulaire ouvre la messagerie du visiteur avec la demande pré-remplie. |
 | Les données fictives des maquettes | `assets/js/mock.js` (`PEOPLE`) |
 | Les commandes de la palette ⌘K | `assets/js/interactive.js` (`CMDS`) |
+| Le logo | Symbole SVG `#i-logo` en haut de `index.html` (blanc en sombre, marine `#1e2742` en clair, point bleu `--logo-dot`) ; favicon `assets/img/favicon.svg` ; fichier d’origine : `assets/img/logo-immopilot-original.webp` |
 | Les pages légales | `legal.html` |
 | Titre, description, image de partage | `<head>` de `index.html` ; image : `assets/img/og.png` (1200×630) |
 

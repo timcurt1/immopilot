@@ -13,7 +13,7 @@
     --gutter: max(1rem, env(safe-area-inset-left));
     --wrap: 72rem;
     --nav-h: 3.5rem;
-    --brand: #3557ff; --cyan: #22d3ee;
+    --brand: #3557ff; --cyan: #22d3ee; --logo-dot: #3a72ec;
   }
   [data-theme="dark"] {
     color-scheme: dark;
@@ -130,7 +130,11 @@
     transform-origin: 50% 0;
   }
   .brand { display: inline-flex; align-items: center; gap: .55rem; font-weight: 700; letter-spacing: -0.02em; font-size: 1.0625rem; min-height: 2.75rem; }
-  .brand-mark { width: 1.75rem; height: 1.75rem; }
+  .brand-mark { width: 1.9rem; height: 1.9rem; }
+  /* Logo : « immo » léger + « PILOT » gras, comme le logotype officiel */
+  .wm { font-weight: 400; letter-spacing: -0.01em; }
+  .wm b { font-weight: 800; letter-spacing: -0.02em; }
+  [data-theme="light"] .brand { color: #1e2742; } /* marine du logotype officiel */
   .nav-links { display: flex; gap: .25rem; margin-inline: auto; }
   .nav-links a { padding: .5rem .8rem; border-radius: 999px; font-size: .875rem; letter-spacing: .005em; color: var(--text-2); transition: color 150ms ease, background-color 150ms ease; }
   .nav-links a:hover { color: var(--text); background: var(--line); }

@@ -27,7 +27,7 @@ function shell(title, inner, hl) {
   const items = SIDE.map(([ic, label, b], i) =>
     `<span class="s-item${i === hl ? " on" : ""}">${icon(ic)}${label}${b === "c" ? '<span class="s-badge" data-badge="c">24</span>' : b === "r" ? '<span class="s-badge warn" data-badge="r">5</span>' : ""}</span>`).join("");
   return `<div class="app-in"><div class="chrome"><i></i><i></i><i></i><span class="url">app.immopilot.world</span></div>` +
-    `<aside class="side"><div class="s-logo"><svg><use href="#i-logo"/></svg>ImmoPilot</div><span class="side-hl" data-hl></span>${items}</aside>` +
+    `<aside class="side"><div class="s-logo"><svg><use href="#i-logo"/></svg><span class="wm">immo<b>PILOT</b></span></div><span class="side-hl" data-hl></span>${items}</aside>` +
     `<div class="main"><div class="m-top"><h5>${title}</h5><div class="m-search">${icon("search")}<span>Rechercher…</span><kbd>⌘K</kbd></div><span class="m-av"></span></div>${inner}</div></div>`;
 }
 
